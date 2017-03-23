@@ -17,15 +17,16 @@ export default class Dashboard extends React.Component {
         fcm.removeListeners();
     }
 
-    render(): any {
+    render() {
         return (
             <View style={{flex: 1}}>
                 <Text>This is a test!</Text>
+                <View><Text>test 123</Text></View>
                 <Text>This is a test!</Text>
                 <Text>This is a test!</Text>
                 <Text>This is a test!</Text>
                 <Text>This is a test!</Text>
             </View>
-        )
+        );
     }
 }

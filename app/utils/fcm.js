@@ -6,14 +6,14 @@ class fcm {
 
     notificationListener: any;
     refreshTokenListener: any;
-
+    
     requestPermissions() {
         FCM.requestPermissions(); // for iOS
     }
-
+    
     getFCMToken() {
         return FCM.getFCMToken().then(token => {
-            console.log(token)
+            console.log(token);
             // store fcm token in your server
         });
     }
@@ -37,20 +37,20 @@ class fcm {
                 //notif._notificationType is available for iOS platfrom
                 switch (notif._notificationType) {
                     case NotificationType.Remote:
-                        notif.finish(RemoteNotificationResult.NewData) //other types available: RemoteNotificationResult.NewData, RemoteNotificationResult.ResultFailed
+                        notif.finish(RemoteNotificationResult.NewData); //other types available: RemoteNotificationResult.NewData, RemoteNotificationResult.ResultFailed
                         break;
                     case NotificationType.NotificationResponse:
                         notif.finish();
                         break;
                     case NotificationType.WillPresent:
-                        notif.finish(WillPresentNotificationResult.All) //other types available: WillPresentNotificationResult.None
+                        notif.finish(WillPresentNotificationResult.All); //other types available: WillPresentNotificationResult.None
                         break;
                 }
             }
         });
 
         this.refreshTokenListener = FCM.on(FCMEvent.RefreshToken, (token) => {
-            console.log(token)
+            console.log(token);
             // fcm token may not be available on first load, catch it here
         });
     }
