@@ -1474,6 +1474,10 @@ eslint-plugin-flowtype@^2.30.4:
   dependencies:
     lodash "^4.15.0"
 
+eslint-plugin-prefer-object-spread@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-prefer-object-spread/-/eslint-plugin-prefer-object-spread-1.1.0.tgz#e07ff58a096704deaff503ef260195a3159fa6c3"
+
 eslint-plugin-react-native@^2.3.1:
   version "2.3.1"
   resolved "https://registry.yarnpkg.com/eslint-plugin-react-native/-/eslint-plugin-react-native-2.3.1.tgz#9ecd1df4f29c23a9a20c415c8e88466ff3724f0e"
