@@ -6,4 +6,4 @@ import { Provider } from 'react-redux';
 import store from './redux/store';
 
 registerScreens(store, Provider);
-navigation.startDashboard();
+navigation.Dashboard();

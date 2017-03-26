@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const serverURL = 'http://192.168.1.6:8080';
+const serverURL = 'http://localhost:8080';
 
 let api = axios.create();
 api.defaults.baseURL = serverURL;

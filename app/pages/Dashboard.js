@@ -5,9 +5,10 @@ import { View, Text } from 'react-native';
 // redux
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import * as appActions from '../redux/actions/app';
 
-import facebook from '../utils/facebook';
+import userActions from '../redux/actions/user';
+import groupActions from '../redux/actions/group';
+
 import fcm from '../utils/fcm';
 
 class Dashboard extends React.Component {
@@ -43,13 +44,15 @@ class Dashboard extends React.Component {
 
 function mapStateToProps(state) {
   return {
-    app: state.app,
+    user: state.user,
+    group: state.group,
   };
 }
 
 function mapDispatchToProps(dispatch) {
   return {
-    appActions: bindActionCreators(appActions, dispatch),
+    userActions: bindActionCreators(userActions, dispatch),
+    groupActions: bindActionCreators(groupActions, dispatch),
   };
 }
 

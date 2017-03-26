@@ -1,8 +1,8 @@
 import { Navigation } from 'react-native-navigation';
 
-class n {
+class nav {
 
-    startDashboard() {
+    Dashboard() {
         Navigation.startSingleScreenApp({
             screen: {
                 screen: 'Dashboard',
@@ -21,6 +21,30 @@ class n {
             animationType: 'slide-down',
         });
     }
+
+    CreateUser() {
+        Navigation.startSingleScreenApp({
+            screen: {
+                screen: 'CreateUser',
+                navigatorStyle: {
+                    navBarHidden: true
+                }
+            },
+            animationType: 'slide-down',
+        });
+    }
+
+    Login() {
+        Navigation.startSingleScreenApp({
+            screen: {
+                screen: 'Login',
+                navigatorStyle: {
+                    navBarHidden: true
+                }
+            },
+            animationType: 'slide-down',
+        });
+    }
 }
 
-export default new n();
+export default new nav();
