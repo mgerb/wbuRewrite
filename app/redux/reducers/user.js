@@ -15,10 +15,6 @@ const defaultState = {
     loginFetchSucceeded: false,
     loginFetchFailed: false,
 
-    createUserFetchRequested: false,
-    createUserFetchSucceeded: false,
-    createUserFetchFailed: false,
-
     searchUserByNameFetchRequested: false,
     searchUserByNameFetchSucceeded: false,
     searchUserByNameFetchFailed: false,
@@ -64,27 +60,6 @@ function user(state = defaultState, action) {
 
         case types.LOGOUT:
             return defaultState;
-
-        case types.CREATE_USER_FETCH_REQUESTED:
-            return {state,
-                createUserFetchRequested: true,
-                createUserFetchSucceeded: false,
-                createUserFetchFailed: false,
-            };
-
-        case types.CREATE_USER_FETCH_SUCCEEDED:
-            return {state,
-                createUserFetchRequested: false,
-                createUserFetchSucceeded: true,
-                createUserFetchFailed: false,
-            };
-
-        case types.CREATE_USER_FETCH_FAILED:
-            return {state,
-                createUserFetchRequested: false,
-                createUserFetchSucceeded: false,
-                createUserFetchFailed: true,
-            };
 
         case types.SEARCH_USER_BY_NAME_FETCH_REQUESTED:
             return {state,

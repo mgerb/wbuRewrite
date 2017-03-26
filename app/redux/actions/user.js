@@ -28,26 +28,6 @@ export function loginFetchFailed() {
     };
 }
 
-export function createUserFetchRequested(email, password) {
-    return {
-        type: types.CREATE_USER_FETCH_REQUESTED,
-        email,
-        password,
-    };
-}
-
-export function createUserFetchSucceeded() {
-    return {
-        type: types.CREATE_USER_FETCH_SUCCEEDED,
-    };
-}
-
-export function createUserFetchFailed() {
-    return {
-        type: types.CREATE_USER_FETCH_FAILED,
-    };
-}
-
 export function searchUserByNameFetchRequested(name) {
     return {
         type: types.SEARCH_USER_BY_NAME_FETCH_REQUESTED,
