@@ -1,3 +1,5 @@
+// @flow
+
 import { Navigation } from 'react-native-navigation';
 
 class nav {

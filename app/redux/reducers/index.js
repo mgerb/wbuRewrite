@@ -1,3 +1,5 @@
+// @flow
+
 //just using one reducer - use combineReducers from redux to modularize things
 import { combineReducers } from 'redux';
 

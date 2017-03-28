@@ -1,6 +1,15 @@
+// @flow
+
 import * as types from '../constants';
 
-const defaultState = {
+type stateType = {
+}
+
+type actionType = {
+    type: string,
+}
+
+const defaultState: stateType = {
     userID: '',
     email: '',
     firstName: '',
@@ -26,7 +35,7 @@ const defaultState = {
     refreshJWTFetchFailed: false,
 };
 
-function user(state = defaultState, action) {
+function user(state: stateType = defaultState, action: actionType) {
     switch (action.type) {
         case types.LOGIN_FETCH_SUCCEEDED:
             return {state, 

@@ -1,3 +1,5 @@
+// @flow
+
 import axios from 'axios';
 
 const serverURL = 'http://localhost:8080';

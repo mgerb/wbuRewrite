@@ -1,6 +1,8 @@
+// @flow
+
 import * as types from '../constants';
 
-export function loginFetchRequested(email: string, password: string, facebookAccessToken: string = null) {
+export function loginFetchRequested(email: string, password: string, facebookAccessToken?: string = '') {
     return {
         type: types.LOGIN_FETCH_REQUESTED,
         email,
@@ -28,14 +30,18 @@ export function loginFetchFailed() {
     };
 }
 
-export function searchUserByNameFetchRequested(name) {
+export function searchUserByNameFetchRequested(name: string) {
     return {
         type: types.SEARCH_USER_BY_NAME_FETCH_REQUESTED,
         name,
     };
 }
 
-export function searchUserByNameFetchSucceeded(userSearchList) {
+type typeDef = {
+    test: string,
+};
+
+export function searchUserByNameFetchSucceeded(userSearchList: Array<typeDef>) {
     return {
         type: types.SEARCH_USER_BY_NAME_FETCH_SUCCEEDED,
         userSearchList,
@@ -48,14 +54,14 @@ export function searchUserByNameFetchFailed() {
     };
 }
 
-export function refreshJWTFetchRequested(jwt) {
+export function refreshJWTFetchRequested(jwt: string) {
     return {
         type: types.REFRESH_JWT_FETCH_REQUESTED,
         jwt,
     };
 }
 
-export function refreshJWTFetchSucceeded(jwt) {
+export function refreshJWTFetchSucceeded(jwt: string) {
     return {
         type: types.REFRESH_JWT_FETCH_SUCCEEDED,
         jwt,

@@ -1,9 +1,11 @@
+// @flow
+
 import api from './api';
 import querystring from 'querystring';
 
 export default class user {
 
-    createUser(email, password, firstName, lastName) {
+    createUser(email: string, password: string, firstName: string, lastName: string) {
         return api.post('/user/createUser', querystring.stringify({
             email,
             password,
@@ -12,20 +14,20 @@ export default class user {
         }));
     }
 
-    login(email, password) {
+    login(email: string, password: string) {
         return api.post('/user/login', querystring.stringify({
             email,
             password,
         }));
     }
 
-    loginFacebook(accesstoken) {
+    loginFacebook(accesstoken: string) {
         return api.post('/user/loginFacebook', querystring.stringify({
             accesstoken,
         }));
     }
 
-    searchUserByName(name) {
+    searchUserByName(name: string) {
         return api.get(`/user/searchUserByName/${name}`);
     }
 
@@ -33,7 +35,7 @@ export default class user {
         return api.get('/user/refreshJWT');
     }
 
-    updateFCMToken(token) {
+    updateFCMToken(token: string) {
         return api.post('/user/updateFCMToken', querystring.stringify({
             token,
         }));

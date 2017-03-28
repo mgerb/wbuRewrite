@@ -1,4 +1,5 @@
 // @flow
+
 import React from 'react';
 import { View, Text } from 'react-native';
 
@@ -6,20 +7,22 @@ import { View, Text } from 'react-native';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import userActions from '../redux/actions/user';
-import groupActions from '../redux/actions/group';
+import * as userActions from '../redux/actions/user';
+import * as groupActions from '../redux/actions/group';
 
 import fcm from '../utils/fcm';
+import navigation from '../navigation';
 
 class Dashboard extends React.Component {
+
+    componentWillMount() {
+        navigation.Login();
+    }
 
     componentDidMount() {
         fcm.requestPermissions();
         fcm.getFCMToken();
         fcm.startListeners();
-
-
-        this.props.appActions.fetchLogin();
     }
 
     componentWillUnmount() {
@@ -36,7 +39,7 @@ class Dashboard extends React.Component {
                 <Text>This is a test!</Text>
                 <Text>This is a test!</Text>
 
-                {this.props.app.loggedIn ? <Text>Logged in!</Text> : null}
+                {this.props.user.loggedIn ? <Text>Logged in!</Text> : null}
             </View>
         );
     }

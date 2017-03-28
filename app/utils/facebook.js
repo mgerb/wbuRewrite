@@ -1,4 +1,5 @@
 // @flow
+
 import { AccessToken, LoginManager } from 'react-native-fbsdk';
 
 const readPermissions = ['user_friends', 'email', 'public_profile'];

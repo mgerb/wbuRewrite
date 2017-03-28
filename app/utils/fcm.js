@@ -1,4 +1,5 @@
 // @flow
+
 import { Platform } from 'react-native';
 import FCM, { FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType } from 'react-native-fcm';
 
