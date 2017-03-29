@@ -2,18 +2,18 @@ import { delay } from 'redux-saga';
 import { put, takeEvery } from 'redux-saga/effects';
 
 import * as types from '../constants';
-import * as appActions from '../actions/app';
+import userActions from '../actions/user';
 
 function* fetchLogin() {
   yield delay(2000);
-  yield put(appActions.login());
+  yield put(userActions.login());
 }
 
 function* watchFetchLogin() {
-  yield takeEvery(types.FETCH_LOGIN, fetchLogin);
+  yield takeEvery(types.LOGIN_FETCH_REQUESTED, fetchLogin);
 }
 
-export default function* rootSaga() {
+export default function* rootSaga(): any {
   yield [
     watchFetchLogin()
   ];

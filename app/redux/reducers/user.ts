@@ -1,13 +1,43 @@
 import * as types from '../constants';
 
-const defaultState = {
+export interface UserType {
+
+}
+
+export interface UserStateType {
+    userID: string, 
+    email: string,
+    firstName: string,
+    lastName: string,
+    facebookUser: boolean,
+    jwt: string,
+    lastRefreshTime: number,
+
+    loggedIn: boolean,
+
+    loginFetchRequested: boolean,
+    loginFetchSucceeded: boolean,
+    loginFetchFailed: boolean,
+
+    searchUserByNameFetchRequested: boolean,
+    searchUserByNameFetchSucceeded: boolean,
+    searchUserByNameFetchFailed: boolean,
+
+    userSearchList: Array<UserType>,
+
+    refreshJWTFetchRequested: boolean,
+    refreshJWTFetchSucceeded: boolean,
+    refreshJWTFetchFailed: boolean,
+}
+
+const defaultState: UserStateType = {
     userID: '',
     email: '',
     firstName: '',
     lastName: '',
     facebookUser: false,
     jwt: '',
-    lastRefreshTime: '',
+    lastRefreshTime: 0,
 
     loggedIn: false,
 
@@ -26,10 +56,10 @@ const defaultState = {
     refreshJWTFetchFailed: false,
 };
 
-function user(state = defaultState, action) {
+function user(state: UserStateType = defaultState, action: any): any {
     switch (action.type) {
         case types.LOGIN_FETCH_SUCCEEDED:
-            return {state, 
+            return {...state, 
                 userID: action.userID,
                 email: action.email,
                 firstName: action.firstName,
@@ -45,14 +75,14 @@ function user(state = defaultState, action) {
             };
 
         case types.LOGIN_FETCH_REQUESTED:
-            return {state,
+            return {...state,
                 loginFetchRequested: true,
                 loginFetchSucceeded: false,
                 loginFetchFailed: false,
             };
 
         case types.LOGIN_FETCH_FAILED:
-            return {state,
+            return {...state,
                 loginFetchRequested: false,
                 loginFetchSucceeded: false,
                 loginFetchFailed: true,
@@ -62,7 +92,7 @@ function user(state = defaultState, action) {
             return defaultState;
 
         case types.SEARCH_USER_BY_NAME_FETCH_REQUESTED:
-            return {state,
+            return {...state,
                 searchUserByNameFetchRequested: true,
                 searchUserByNameFetchSucceeded: false,
                 searchUserByNameFetchFailed: false,
@@ -70,7 +100,7 @@ function user(state = defaultState, action) {
             };
 
         case types.SEARCH_USER_BY_NAME_FETCH_SUCCEEDED:
-            return {state,
+            return {...state,
                 searchUserByNameFetchRequested: false,
                 searchUserByNameFetchSucceeded: true,
                 searchUserByNameFetchFailed: false,
@@ -78,28 +108,28 @@ function user(state = defaultState, action) {
             };
 
         case types.SEARCH_USER_BY_NAME_FETCH_FAILED:
-            return {state,
+            return {...state,
                 searchUserByNameFetchRequested: false,
                 searchUserByNameFetchSucceeded: false,
                 searchUserByNameFetchFailed: true,
             };
 
         case types.REFRESH_JWT_FETCH_REQUESTED:
-            return {state,
+            return {...state,
                 refreshJWTFetchRequested: true,
                 refreshJWTFetchSucceeded: false,
                 refreshJWTFetchFailed: false,
             };
 
         case types.REFRESH_JWT_FETCH_SUCCEEDED:
-            return {state,
+            return {...state,
                 refreshJWTFetchRequested: false,
                 refreshJWTFetchSucceeded: true,
                 refreshJWTFetchFailed: false,
             };
 
         case types.REFRESH_JWT_FETCH_FAILED:
-            return {state,
+            return {...state,
                 refreshJWTFetchRequested: false,
                 refreshJWTFetchSucceeded: false,
                 refreshJWTFetchFailed: true,

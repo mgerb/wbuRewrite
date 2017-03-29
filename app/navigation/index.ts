@@ -2,7 +2,7 @@ import { Navigation } from 'react-native-navigation';
 
 class nav {
 
-    Dashboard() {
+    Dashboard(): void {
         Navigation.startSingleScreenApp({
             screen: {
                 screen: 'Dashboard',
@@ -22,7 +22,7 @@ class nav {
         });
     }
 
-    CreateUser() {
+    CreateUser(): void {
         Navigation.startSingleScreenApp({
             screen: {
                 screen: 'CreateUser',
@@ -34,7 +34,7 @@ class nav {
         });
     }
 
-    Login() {
+    Login(): void {
         Navigation.startSingleScreenApp({
             screen: {
                 screen: 'Login',

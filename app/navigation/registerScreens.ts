@@ -1,4 +1,5 @@
 import { Navigation } from 'react-native-navigation';
+import { Store } from 'redux';
 
 import Dashboard from '../pages/Dashboard';
 import CreateUser from '../pages/CreateUser';
@@ -7,7 +8,7 @@ import RightDrawer from '../components/RightDrawer';
 import LeftDrawer from '../components/LeftDrawer';
 
 // register all screens of the app (including internal ones)
-export default function registerScreens(store, Provider) {
+export default function registerScreens(store: Store<any>, Provider: any) {
   Navigation.registerComponent('Dashboard', () => Dashboard, store, Provider);
   Navigation.registerComponent('RightDrawer', () => RightDrawer,  store, Provider);
   Navigation.registerComponent('LeftDrawer', () => LeftDrawer, store, Provider);
