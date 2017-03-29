@@ -1,14 +1,22 @@
-// @flow
-
 import React from 'react';
-import { bindActionCreators } from 'redux';
+import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 
-import { View, Text, StyleSheet, TouchableHighlight } from 'react-native';
+import ReactNative, { View, Text, StyleSheet, TouchableHighlight } from 'react-native';
 
-import * as userActions from '../redux/actions/user';
+import userActions from '../redux/actions/user';
+import { UserStateType } from '../redux/reducers/user';
 
-class Login extends React.Component {
+interface Props {
+    navigator: any,
+    userActions: any,
+}
+
+interface State {
+    user: UserStateType,
+}
+
+class Login extends React.Component<Props, State> {
 
     render() {
         return (
@@ -27,7 +35,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-    },
+    } as ReactNative.ViewStyle,
     textInput: {
         textAlign: 'center',
         paddingRight: 10,
@@ -39,21 +47,21 @@ const styles = StyleSheet.create({
         borderColor: 'gray',
         borderWidth: 1,
         borderRadius: 2,
-    },
+    } as ReactNative.TextStyle,
     loginButton: {
         marginBottom: 10,
         marginTop: 5,
         fontSize: 20,
-    },
+    } as ReactNative.ViewStyle,
 });
 
-function mapStateToProps(state) {
+function mapStateToProps(state: State): any {
     return {
         user: state.user
     };
 }
 
-function mapDispatchToProps(dispatch) {
+function mapDispatchToProps(dispatch: Dispatch<any>): any {
     return {
         userActions: bindActionCreators(userActions, dispatch)
     };

@@ -3,12 +3,16 @@
   "version": "0.0.1",
   "private": true,
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "clean": "rimraf artifacts",
+    "build": "npm run clean && npm run tsc --",
+    "start": "node node_modules/react-native/local-cli/cli.js start --root app",
+    "test": "jest",
+    "watch": "tsc --watch"
   },
   "dependencies": {
     "axios": "^0.15.3",
     "lodash": "^4.17.4",
+    "query-string": "^4.3.2",
     "react": "~15.4.1",
     "react-native": "0.42.3",
     "react-native-fbsdk": "^0.5.0",
@@ -19,6 +23,15 @@
     "redux-saga": "^0.14.3"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
+    "@types/jest": "^19.2.2",
+    "@types/lodash": "^4.14.58",
+    "@types/query-string": "^4.3.0",
+    "@types/react": "^15.0.20",
+    "@types/react-native": "^0.42.12",
+    "@types/react-redux": "^4.4.38",
+    "@types/redux": "^3.6.0",
+    "@types/redux-saga": "^0.10.5",
     "babel-eslint": "^7.2.0",
     "babel-jest": "19.0.0",
     "babel-preset-react-native": "1.9.1",
@@ -27,7 +40,9 @@
     "eslint-plugin-react": "^6.10.3",
     "eslint-plugin-react-native": "^2.3.1",
     "jest": "19.0.2",
-    "react-test-renderer": "~15.4.1"
+    "react-test-renderer": "~15.4.1",
+    "tslint": "^4.5.1",
+    "typescript": "^2.2.2"
   },
   "jest": {
     "preset": "react-native"

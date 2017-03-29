@@ -1,9 +1,15 @@
-// @flow
-
 import React from 'react';
 import { View, Text } from 'react-native';
 
-export default class LeftDrawer extends React.Component {
+interface Props {
+
+}
+
+interface State {
+
+}
+
+export default class LeftDrawer extends React.Component<Props, State> {
 
     render() {
         return (

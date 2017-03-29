@@ -1,37 +1,34 @@
-// @flow
-
 import _ from 'lodash';
 import React from 'react';
-import { View, KeyboardAvoidingView, Text, TextInput, StyleSheet, TouchableHighlight } from 'react-native';
+import ReactNative, { View, KeyboardAvoidingView, Text, TextInput, StyleSheet, TouchableHighlight } from 'react-native';
 
-export default class CreateUser extends React.Component {
+interface Props {
+    navigator: any,
+}
 
-    defaultState: {
-        firstName: string;
-        lastName: string;
-        email: string;
-        password: string;
-        confirmPassword: string;
-    }
+interface State {
+    firstName: string;
+    lastName: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+    errorMessage: string,
+}
 
-    state: {
-        firstName: string;
-        lastName: string;
-        email: string;
-        password: string;
-        confirmPassword: string;
-        errorMessage: string,
-    }
+
+export default class CreateUser extends React.Component<Props, State> {
+
+    private defaultState: State = {
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        errorMessage: "",
+    };
 
     constructor() {
         super();
-        this.defaultState = {
-            firstName: '',
-            lastName: '',
-            email: '',
-            password: '',
-            confirmPassword: '',
-        };
 
         this.state = _.clone(this.defaultState);
     }
@@ -50,8 +47,8 @@ export default class CreateUser extends React.Component {
                     <TextInput placeholder="First Name" autoCapitalize="none" style={styles.textInput} value={this.state.firstName} onChangeText={(firstName) => this.setState({firstName})}/>
                     <TextInput placeholder="Last Name" autoCapitalize="none" style={styles.textInput} value={this.state.lastName} onChangeText={(lastName) => this.setState({lastName})}/>
                     <TextInput placeholder="Email" autoCapitalize="none" style={styles.textInput} value={this.state.email} onChangeText={(email) => this.setState({email})}/>
-                    <TextInput placeholder="Password" autoCapitalize="none" style={styles.textInput} value={this.state.password} type="password" onChangeText={(password) => this.setState({password})}/>
-                    <TextInput placeholder="Confirm Password" autoCapitalize="none" style={styles.textInput} value={this.state.confirmPassword} type="password" onChangeText={(confirmPassword) => this.setState({confirmPassword})}/>
+                    <TextInput placeholder="Password" autoCapitalize="none" style={styles.textInput} value={this.state.password} onChangeText={(password) => this.setState({password})}/>
+                    <TextInput placeholder="Confirm Password" autoCapitalize="none" style={styles.textInput} value={this.state.confirmPassword} onChangeText={(confirmPassword) => this.setState({confirmPassword})}/>
                 </View>
 
                 <TouchableHighlight>
@@ -59,7 +56,6 @@ export default class CreateUser extends React.Component {
                 </TouchableHighlight>
                 <Text>{this.state.errorMessage}</Text>
 
-                <View style={styles.test}/>
             </KeyboardAvoidingView>
         );
     }
@@ -71,7 +67,7 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'center',
-    },
+    } as ReactNative.ViewStyle,
     textInput: {
         marginBottom: 5,
         padding: 10,
@@ -80,10 +76,10 @@ const styles = StyleSheet.create({
         borderColor: 'gray',
         borderWidth: 1,
         borderRadius: 2,
-    },
+    } as ReactNative.TextStyle,
     submitButton: {
         marginBottom: 10,
         marginTop: 5,
         fontSize: 20,
-    },
+    } as ReactNative.ViewStyle,
 });

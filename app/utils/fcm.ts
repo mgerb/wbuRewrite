@@ -1,5 +1,3 @@
-// @flow
-
 import { Platform } from 'react-native';
 import FCM, { FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType } from 'react-native-fcm';
 
@@ -8,20 +6,20 @@ class fcm {
     notificationListener: any;
     refreshTokenListener: any;
     
-    requestPermissions() {
+    requestPermissions(): void {
         FCM.requestPermissions(); // for iOS
     }
     
-    getFCMToken() {
-        return FCM.getFCMToken().then(token => {
+    getFCMToken(): Promise<any> {
+        return FCM.getFCMToken().then((token: string) => {
             console.log(token);
             // store fcm token in your server
         });
     }
 
-    startListeners() {
+    startListeners(): void {
 
-        this.notificationListener = FCM.on(FCMEvent.Notification, (notif) => {
+        this.notificationListener = FCM.on(FCMEvent.Notification, (notif: any) => {
             alert(notif);
             // there are two parts of notif. notif.notification contains the notification payload, notif.data contains data payload
             if (notif.local_notification) {
@@ -50,7 +48,7 @@ class fcm {
             }
         });
 
-        this.refreshTokenListener = FCM.on(FCMEvent.RefreshToken, (token) => {
+        this.refreshTokenListener = FCM.on(FCMEvent.RefreshToken, (token: string) => {
             console.log(token);
             // fcm token may not be available on first load, catch it here
         });

@@ -1,7 +1,5 @@
-// @flow
-
 import api from './api';
-import querystring from 'querystring';
+import querystring from 'query-string';
 
 export default class user {
 
