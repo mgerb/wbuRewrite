@@ -16,11 +16,11 @@ interface Props {
     navigator: any,
     userActions: any,
     groupActions: any,
+    user: UserStateType,
+    group: any,
 }
 
 interface State {
-    user: UserStateType,
-    group: any,
 }
 
 class Dashboard extends React.Component<Props, State> {
@@ -49,13 +49,13 @@ class Dashboard extends React.Component<Props, State> {
                 <Text>This is a test!</Text>
                 <Text>This is a test!</Text>
 
-                {this.state.user.loggedIn ? <Text>Logged in!</Text> : null}
+                {this.props.user.loggedIn ? <Text>Logged in!</Text> : null}
             </View>
         );
     }
 }
 
-function mapStateToProps(state: State): any {
+function mapStateToProps(state: Props): any {
   return {
     user: state.user,
     group: state.group,

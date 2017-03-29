@@ -9,11 +9,11 @@ import { UserStateType } from '../redux/reducers/user';
 
 interface Props {
     navigator: any,
+    user: UserStateType,
     userActions: any,
 }
 
 interface State {
-    user: UserStateType,
 }
 
 class Login extends React.Component<Props, State> {
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     } as ReactNative.ViewStyle,
 });
 
-function mapStateToProps(state: State): any {
+function mapStateToProps(state: Props): any {
     return {
         user: state.user
     };

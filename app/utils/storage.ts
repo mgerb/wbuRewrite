@@ -1,6 +1,6 @@
 import { AsyncStorage } from 'react-native';
 
-export default class storage {
+class storage {
     storeUserLogin(login: Object): Promise<any> {
         return AsyncStorage.setItem('userLoginKey', JSON.stringify(login));
     }
@@ -11,3 +11,5 @@ export default class storage {
         });
     }
 }
+
+export default new storage();
