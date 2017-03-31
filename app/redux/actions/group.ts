@@ -11,7 +11,11 @@ function test(t: string): test12 {
     };
 }
 
-const actionMap: ActionCreatorsMapObject = {
+interface actionMapType extends ActionCreatorsMapObject {
+    test: any,
+}
+
+const actionMap: actionMapType = {
     test,
 };
 

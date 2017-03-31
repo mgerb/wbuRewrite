@@ -1,11 +1,11 @@
-import * as types from '../constants';
+import types from '../constants';
 
 export interface UserType {
 
 }
 
 export interface UserStateType {
-    userID: string, 
+    id: string, 
     email: string,
     firstName: string,
     lastName: string,
@@ -31,7 +31,7 @@ export interface UserStateType {
 }
 
 const defaultState: UserStateType = {
-    userID: '',
+    id: '',
     email: '',
     firstName: '',
     lastName: '',
@@ -58,9 +58,16 @@ const defaultState: UserStateType = {
 
 function user(state: UserStateType = defaultState, action: any): any {
     switch (action.type) {
+        case types.LOGIN_FETCH_REQUESTED:
+            return {...state,
+                loginFetchRequested: true,
+                loginFetchSucceeded: false,
+                loginFetchFailed: false,
+            };
+
         case types.LOGIN_FETCH_SUCCEEDED:
             return {...state, 
-                userID: action.userID,
+                id: action.id,
                 email: action.email,
                 firstName: action.firstName,
                 lastName: action.lastName,
@@ -71,13 +78,6 @@ function user(state: UserStateType = defaultState, action: any): any {
                 
                 loginFetchRequested: false,
                 loginFetchSucceeded: true,
-                loginFetchFailed: false,
-            };
-
-        case types.LOGIN_FETCH_REQUESTED:
-            return {...state,
-                loginFetchRequested: true,
-                loginFetchSucceeded: false,
                 loginFetchFailed: false,
             };
 
