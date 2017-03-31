@@ -3,7 +3,7 @@ import { AccessToken, LoginManager } from 'react-native-fbsdk';
 const readPermissions = ['user_friends', 'email', 'public_profile'];
 
 class facebook {
-    login(): Promise<any> {
+    public login(): Promise<any> {
         // Attempt a login using the Facebook login dialog asking for default permissions.
         return LoginManager.logInWithReadPermissions(readPermissions).then(
             (result: any) => {

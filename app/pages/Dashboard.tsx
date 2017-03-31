@@ -1,35 +1,49 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableHighlight } from 'react-native';
 
 // redux
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { UserStateType } from '../redux/reducers/user';
 
-import userActions from '../redux/actions/user';
+import userActions, { actionMapType as UserActionMapType } from '../redux/actions/user';
 import groupActions from '../redux/actions/group';
 
 import fcm from '../utils/fcm';
 import navigation from '../navigation';
+import storage from '../utils/storage';
 
 interface Props {
     navigator: any,
-    userActions: any,
+    userActions: UserActionMapType,
     groupActions: any,
-}
-
-interface State {
     user: UserStateType,
     group: any,
 }
 
+interface State {
+}
+
 class Dashboard extends React.Component<Props, State> {
 
-    componentWillMount() {
-        navigation.Login();
+    constructor(props: Props) {
+        super(props);
     }
 
     componentDidMount() {
+        if (!this.props.user.loggedIn) {
+            storage.getUserLogin().then((state) => {
+                if (!state) {
+                    navigation.Login();
+                } else {
+                    // perform application bootstrap here
+                    // log the user in with stored state
+                    this.props.userActions.loginFetchSucceeded(state);
+
+                }
+            });
+        }
+
         fcm.requestPermissions();
         fcm.getFCMToken();
         fcm.startListeners();
@@ -49,13 +63,17 @@ class Dashboard extends React.Component<Props, State> {
                 <Text>This is a test!</Text>
                 <Text>This is a test!</Text>
 
-                {this.state.user.loggedIn ? <Text>Logged in!</Text> : null}
+                {this.props.user.loggedIn ? <Text>Logged in!</Text> : null}
+
+                <TouchableHighlight>
+                    <Text onPress={() => this.props.userActions.logout()}>New User</Text>
+                </TouchableHighlight>
             </View>
         );
     }
 }
 
-function mapStateToProps(state: State): any {
+function mapStateToProps(state: Props): any {
   return {
     user: state.user,
     group: state.group,

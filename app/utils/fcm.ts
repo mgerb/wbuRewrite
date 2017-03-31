@@ -3,21 +3,21 @@ import FCM, { FCMEvent, RemoteNotificationResult, WillPresentNotificationResult,
 
 class fcm {
 
-    notificationListener: any;
-    refreshTokenListener: any;
+    private notificationListener: any;
+    private refreshTokenListener: any;
     
-    requestPermissions(): void {
+    public requestPermissions(): void {
         FCM.requestPermissions(); // for iOS
     }
     
-    getFCMToken(): Promise<any> {
+    public getFCMToken(): Promise<any> {
         return FCM.getFCMToken().then((token: string) => {
             console.log(token);
             // store fcm token in your server
         });
     }
 
-    startListeners(): void {
+    public startListeners(): void {
 
         this.notificationListener = FCM.on(FCMEvent.Notification, (notif: any) => {
             alert(notif);
@@ -54,7 +54,7 @@ class fcm {
         });
     }
 
-    removeListeners() {
+    public removeListeners() {
         // stop listening for events
         this.notificationListener.remove();
         this.refreshTokenListener.remove();

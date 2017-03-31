@@ -1,9 +1,9 @@
 import { Action, ActionCreatorsMapObject } from 'redux';
 
 import { UserType } from '../reducers/user';
-import * as types from '../constants';
+import types from '../constants';
 
-interface loginFetchAction extends Action {
+export interface loginFetchAction extends Action {
     email: string,
     password?: string,
     facebookAccessToken?: string,
@@ -24,16 +24,16 @@ function loginFetchRequested(email: string, password: string, facebookAccessToke
     };
 }
 
-function loginFetchSucceeded(userID: string, email: string, firstName: string, lastName: string, facebookUser: boolean, jwt: string, lastRefreshTime: number): loginFetchAction {
+function loginFetchSucceeded(action: loginFetchAction): loginFetchAction {
     return {
         type: types.LOGIN_FETCH_SUCCEEDED,
-        userID,
-        email,
-        firstName,
-        lastName,
-        facebookUser,
-        jwt,
-        lastRefreshTime,
+        userID: action.userID,
+        email: action.email,
+        firstName: action.firstName,
+        lastName: action.lastName,
+        facebookUser: action.facebookUser,
+        jwt: action.jwt,
+        lastRefreshTime: action.lastRefreshTime,
     };
 }
 
@@ -92,7 +92,26 @@ function refreshJWTFetchFailed(): Action {
     };
 }
 
-const actionMap: ActionCreatorsMapObject = {
+function logout(): Action {
+    return {
+        type: types.LOGOUT,
+    }
+}
+
+export interface actionMapType extends ActionCreatorsMapObject {
+    loginFetchRequested: any,
+    loginFetchSucceeded: any,
+    loginFetchFailed: any,
+    searchUserByNameFetchRequested: any,
+    searchUserByNameFetchSucceeded: any,
+    searchUserByNameFetchFailed: any,
+    refreshJWTFetchRequested: any,
+    refreshJWTFetchSucceeded: any,
+    refreshJWTFetchFailed: any,
+    logout: any,
+}
+
+const actionMap: actionMapType = {
     loginFetchRequested,
     loginFetchSucceeded,
     loginFetchFailed,
@@ -102,6 +121,7 @@ const actionMap: ActionCreatorsMapObject = {
     refreshJWTFetchRequested,
     refreshJWTFetchSucceeded,
     refreshJWTFetchFailed,
+    logout,
 };
 
 export default actionMap;
