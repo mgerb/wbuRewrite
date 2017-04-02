@@ -49,10 +49,6 @@ class Dashboard extends React.Component<Props, State> {
         fcm.startListeners();
     }
 
-    componentWillReceiveProps(nextProps: any) {
-        console.log(nextProps);
-    }
-
     componentWillUnmount() {
         fcm.removeListeners();
     }

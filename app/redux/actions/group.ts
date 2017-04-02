@@ -1,43 +1,41 @@
 import types from '../constants';
 import { Action, ActionCreatorsMapObject } from 'redux';
+import { GroupType } from '../reducers/group';
 
-interface GroupActionType extends Action {
-    id?: number,
-    name?: string,
-    ownerName?: string,
-    ownerEmail?: string,
-    userCount?: number,
+interface GroupActionType extends GroupType, Action {
+    groups?: Array<GroupType>,
 }
 
-function createGroupFetchRequested(name: string): GroupActionType {
+function getUserGroupsFetchRequested(name: string): GroupActionType {
     return {
-        type: types.CREATE_GROUP_FETCH_REQUESTED,
+        type: types.GET_USER_GROUPS_FETCH_REQUESTED,
         name,
     };
 }
 
-function createGroupFetchSucceeded(): Action {
+function getUserGroupsFetchSucceeded(groups: Array<GroupType>): GroupActionType {
     return {
-        type: types.CREATE_GROUP_FETCH_SUCCEEDED,
+        type: types.GET_GROUP_USERS_FETCH_SUCCEEDED,
+        groups,
     };
 }
 
-function createGroupFetchFailed(): Action {
+function getUserGroupsFetchFailed(): Action {
     return {
-        type: types.CREATE_GROUP_FETCH_FAILED,
+        type: types.GET_USER_GROUPS_FETCH_FAILED,
     };
 }
 
 export interface GroupActionMapType extends ActionCreatorsMapObject {
-    createGroupFetchRequested: any,
-    createGroupFetchSucceeded: any,
-    createGroupFetchFailed: any,
+    getUserGroupsFetchRequested: any,
+    getUserGroupsFetchSucceeded: any,
+    getUserGroupsFetchFailed: any,
 }
 
 const actionMap: GroupActionMapType = {
-    createGroupFetchRequested,
-    createGroupFetchSucceeded,
-    createGroupFetchFailed,
+    getUserGroupsFetchRequested,
+    getUserGroupsFetchSucceeded,
+    getUserGroupsFetchFailed,
 };
 
 export default actionMap;

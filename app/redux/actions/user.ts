@@ -3,16 +3,9 @@ import { Action, ActionCreatorsMapObject } from 'redux';
 import { UserType } from '../reducers/user';
 import types from '../constants';
 
-export interface UserActionType extends Action {
-    id?: string,
-    email?: string,
+export interface UserActionType extends UserType, Action {
     password?: string,
     facebookAccessToken?: string,
-    firstName?: string,
-    lastName?: string,
-    facebookUser?: boolean,
-    jwt?: string,
-    lastRefreshTime?: number,
 }
 
 function loginFetchRequested(email: string, password: string): UserActionType {

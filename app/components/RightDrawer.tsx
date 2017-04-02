@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableHighlight } from 'react-native';
+import { View, Text } from 'react-native';
 
 interface Props {
     navigator: any,
@@ -13,6 +13,15 @@ export default class RightDrawer extends React.Component<Props, State> {
 
     constructor(props: Props) {
         super(props);
+    }
+
+    private navigateCreateGroup() {
+        this.props.navigator.showModal({
+            screen: "CreateGroup",
+            navigatorStyle: {
+                navBarHidden: true,
+            },
+        })
     }
 
     render() {
@@ -30,9 +39,7 @@ export default class RightDrawer extends React.Component<Props, State> {
                 <Text>......</Text>
 
 
-                <TouchableHighlight activeOpacity={50} onPress={() => {this.props.navigator.push({screen: 'CreateUser'})}}>
-                    <Text>Create Group</Text>
-                </TouchableHighlight>
+                <Text onPress={this.navigateCreateGroup.bind(this)}>Create Group</Text>
             </View>
         )
     }
