@@ -20,9 +20,9 @@ class userAPI {
         }));
     }
 
-    public loginFacebook(accesstoken: string): AxiosPromise {
+    public loginFacebook(accessToken: string): AxiosPromise {
         return api.post('/user/loginFacebook', querystring.stringify({
-            accesstoken,
+            accessToken,
         }));
     }
 

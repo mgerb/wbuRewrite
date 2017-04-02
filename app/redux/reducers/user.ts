@@ -1,17 +1,18 @@
 import types from '../constants';
 
 export interface UserType {
-
+    id?: number,
+    email?: string,
+    firstName?: string,
+    lastName?: string,
+    fcmToken?: string,
+    facebookID?: string,
+    facebookUser?: boolean,
+    jwt?: string,
+    lastRefreshTime?: number,
 }
 
-export interface UserStateType {
-    id: string, 
-    email: string,
-    firstName: string,
-    lastName: string,
-    facebookUser: boolean,
-    jwt: string,
-    lastRefreshTime: number,
+export interface UserStateType extends UserType {
 
     loggedIn: boolean,
 
@@ -31,7 +32,7 @@ export interface UserStateType {
 }
 
 const defaultState: UserStateType = {
-    id: '',
+    id: undefined,
     email: '',
     firstName: '',
     lastName: '',

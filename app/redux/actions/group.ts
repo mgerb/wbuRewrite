@@ -1,22 +1,41 @@
+import types from '../constants';
 import { Action, ActionCreatorsMapObject } from 'redux';
+import { GroupType } from '../reducers/group';
 
-interface test12 extends Action {
-    t: string,
+interface GroupActionType extends GroupType, Action {
+    groups?: Array<GroupType>,
 }
 
-function test(t: string): test12 {
+function getUserGroupsFetchRequested(name: string): GroupActionType {
     return {
-        type: "test",
-        t,
+        type: types.GET_USER_GROUPS_FETCH_REQUESTED,
+        name,
     };
 }
 
-interface actionMapType extends ActionCreatorsMapObject {
-    test: any,
+function getUserGroupsFetchSucceeded(groups: Array<GroupType>): GroupActionType {
+    return {
+        type: types.GET_GROUP_USERS_FETCH_SUCCEEDED,
+        groups,
+    };
 }
 
-const actionMap: actionMapType = {
-    test,
+function getUserGroupsFetchFailed(): Action {
+    return {
+        type: types.GET_USER_GROUPS_FETCH_FAILED,
+    };
+}
+
+export interface GroupActionMapType extends ActionCreatorsMapObject {
+    getUserGroupsFetchRequested: any,
+    getUserGroupsFetchSucceeded: any,
+    getUserGroupsFetchFailed: any,
+}
+
+const actionMap: GroupActionMapType = {
+    getUserGroupsFetchRequested,
+    getUserGroupsFetchSucceeded,
+    getUserGroupsFetchFailed,
 };
 
 export default actionMap;

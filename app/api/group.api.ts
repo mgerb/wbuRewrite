@@ -4,11 +4,11 @@ import querystring from 'query-string';
 
 class groupAPI {
 
-    public createGroup(groupName: string, password: string, publicGroup: boolean): AxiosPromise {
+    public createGroup(name: string, password: string, publicGroup: string): AxiosPromise {
         return api.post('/group/createGroup', querystring.stringify({
-            groupName,
+            name,
             password,
-            public: publicGroup
+            public: publicGroup,
         }));
     }
 

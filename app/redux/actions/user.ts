@@ -3,31 +3,30 @@ import { Action, ActionCreatorsMapObject } from 'redux';
 import { UserType } from '../reducers/user';
 import types from '../constants';
 
-export interface loginFetchAction extends Action {
-    email: string,
+export interface UserActionType extends UserType, Action {
     password?: string,
     facebookAccessToken?: string,
-    userID?: string,
-    firstName?: string,
-    lastName?: string,
-    facebookUser?: boolean,
-    jwt?: string,
-    lastRefreshTime?: number,
 }
 
-function loginFetchRequested(email: string, password: string, facebookAccessToken?: string): loginFetchAction {
+function loginFetchRequested(email: string, password: string): UserActionType {
     return {
         type: types.LOGIN_FETCH_REQUESTED,
         email,
         password,
+    };
+}
+
+function loginFacebookFetchRequested(facebookAccessToken: string): UserActionType {
+    return {
+        type: types.LOGIN_FACEBOOK_FETCH_REQUESTED,
         facebookAccessToken,
     };
 }
 
-function loginFetchSucceeded(action: loginFetchAction): loginFetchAction {
+function loginFetchSucceeded(action: UserActionType): UserActionType {
     return {
         type: types.LOGIN_FETCH_SUCCEEDED,
-        userID: action.userID,
+        id: action.id,
         email: action.email,
         firstName: action.firstName,
         lastName: action.lastName,
@@ -68,18 +67,14 @@ function searchUserByNameFetchFailed(): searchUserAction {
     };
 }
 
-interface refreshJWTAction extends Action {
-    jwt: string,
-}
-
-function refreshJWTFetchRequested(jwt: string): refreshJWTAction {
+function refreshJWTFetchRequested(jwt: string): UserActionType {
     return {
         type: types.REFRESH_JWT_FETCH_REQUESTED,
         jwt,
     };
 }
 
-function refreshJWTFetchSucceeded(jwt: string): refreshJWTAction {
+function refreshJWTFetchSucceeded(jwt: string): UserActionType {
     return {
         type: types.REFRESH_JWT_FETCH_SUCCEEDED,
         jwt,
@@ -98,8 +93,9 @@ function logout(): Action {
     }
 }
 
-export interface actionMapType extends ActionCreatorsMapObject {
+export interface UserActionMapType extends ActionCreatorsMapObject {
     loginFetchRequested: any,
+    loginFacebookFetchRequested: any,
     loginFetchSucceeded: any,
     loginFetchFailed: any,
     searchUserByNameFetchRequested: any,
@@ -111,8 +107,9 @@ export interface actionMapType extends ActionCreatorsMapObject {
     logout: any,
 }
 
-const actionMap: actionMapType = {
+const actionMap: UserActionMapType = {
     loginFetchRequested,
+    loginFacebookFetchRequested,
     loginFetchSucceeded,
     loginFetchFailed,
     searchUserByNameFetchRequested,
