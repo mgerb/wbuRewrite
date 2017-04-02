@@ -4,19 +4,19 @@ import { UserStateType } from '../redux/reducers/user';
 class storage {
 
     // store user login information
-    storeUserLogin(login: UserStateType): Promise<any> {
-        return AsyncStorage.setItem('userLoginKey', JSON.stringify(login));
+    storeUserState(login: UserStateType): Promise<any> {
+        return AsyncStorage.setItem('userStateKey', JSON.stringify(login));
     }
 
     // get user login information
-    getUserLogin(): Promise<UserStateType> {
-        return AsyncStorage.getItem('userLoginKey').then((item) => {
+    getUserState(): Promise<UserStateType> {
+        return AsyncStorage.getItem('userStateKey').then((item) => {
             return JSON.parse(item);
         });
     }
 
-    removeLogin(): Promise<any> {
-        return AsyncStorage.removeItem('userLoginKey');
+    removeUserState(): Promise<any> {
+        return AsyncStorage.removeItem('userStateKey');
     }
 }
 

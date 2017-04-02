@@ -32,7 +32,7 @@ class Dashboard extends React.Component<Props, State> {
 
     componentDidMount() {
         if (!this.props.user.loggedIn) {
-            storage.getUserLogin().then((state) => {
+            storage.getUserState().then((state) => {
                 if (!state) {
                     navigation.Login();
                 } else {

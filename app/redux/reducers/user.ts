@@ -10,6 +10,8 @@ export interface UserType {
     facebookUser?: boolean,
     jwt?: string,
     lastRefreshTime?: number,
+    password?: string,
+    facebookAccessToken?: string,
 }
 
 export interface UserStateType extends UserType {
@@ -23,8 +25,6 @@ export interface UserStateType extends UserType {
     searchUserByNameFetchRequested: boolean,
     searchUserByNameFetchSucceeded: boolean,
     searchUserByNameFetchFailed: boolean,
-
-    userSearchList: Array<UserType>,
 
     refreshJWTFetchRequested: boolean,
     refreshJWTFetchSucceeded: boolean,
@@ -50,8 +50,6 @@ const defaultState: UserStateType = {
     searchUserByNameFetchSucceeded: false,
     searchUserByNameFetchFailed: false,
 
-    userSearchList: [],
-
     refreshJWTFetchRequested: false,
     refreshJWTFetchSucceeded: false,
     refreshJWTFetchFailed: false,
@@ -59,6 +57,9 @@ const defaultState: UserStateType = {
 
 function user(state: UserStateType = defaultState, action: any): any {
     switch (action.type) {
+        case types.RESET_USER_STATE:
+            return defaultState;
+
         case types.LOGIN_FETCH_REQUESTED:
             return {...state,
                 loginFetchRequested: true,
@@ -87,32 +88,6 @@ function user(state: UserStateType = defaultState, action: any): any {
                 loginFetchRequested: false,
                 loginFetchSucceeded: false,
                 loginFetchFailed: true,
-            };
-
-        case types.LOGOUT:
-            return defaultState;
-
-        case types.SEARCH_USER_BY_NAME_FETCH_REQUESTED:
-            return {...state,
-                searchUserByNameFetchRequested: true,
-                searchUserByNameFetchSucceeded: false,
-                searchUserByNameFetchFailed: false,
-                userSearchList: [],
-            };
-
-        case types.SEARCH_USER_BY_NAME_FETCH_SUCCEEDED:
-            return {...state,
-                searchUserByNameFetchRequested: false,
-                searchUserByNameFetchSucceeded: true,
-                searchUserByNameFetchFailed: false,
-                userSearchList: action.userSearchList,
-            };
-
-        case types.SEARCH_USER_BY_NAME_FETCH_FAILED:
-            return {...state,
-                searchUserByNameFetchRequested: false,
-                searchUserByNameFetchSucceeded: false,
-                searchUserByNameFetchFailed: true,
             };
 
         case types.REFRESH_JWT_FETCH_REQUESTED:

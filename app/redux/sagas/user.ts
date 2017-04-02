@@ -3,63 +3,61 @@ import { call, put, takeEvery, takeLatest } from 'redux-saga/effects';
 import { setAuthorizationHeader, resetAuthorizationHeader } from '../../api/api';
 import userAPI from '../../api/user.api';
 import types from '../constants';
-import userActions, { UserActionType } from '../actions/user';
+import userActions from '../actions/user';
 import storage from '../../utils/storage';
-import navigation from '../../navigation';
+import { UserType } from '../reducers/user';
 
-function* fetchLogin(action: UserActionType) {
+function* fetchLoginRequested(action: UserType) {
     try {
         const response = yield call(userAPI.login, action.email, action.password)
-        yield call(storage.storeUserLogin, response.data);
+        yield call(storage.storeUserState, response.data);
         yield put(userActions.loginFetchSucceeded(response.data));
     } catch (error) {
         yield put(userActions.loginFetchFailed());
     }
 }
 
-function* fetchFacebookLogin(action: UserActionType) {
+function* fetchFacebookLoginRequested(action: UserType) {
     try {
         const response = yield call(userAPI.loginFacebook, action.facebookAccessToken)
-        yield call(storage.storeUserLogin, response.data);
+        yield call(storage.storeUserState, response.data);
         yield put(userActions.loginFetchSucceeded(response.data));
     } catch (error) {
-        console.log(error);
         yield put(userActions.loginFetchFailed());
     }
 }
 
 // set the jwt auth header every time a login succeeds
-function* loginSucceeded(action: any) {
+function* loginFetchSucceeded(action: any) {
     yield setAuthorizationHeader(action.jwt);
 }
 
-function* logout() {
-    yield call(storage.removeLogin);
+function* resetUserState() {
+    yield call(storage.removeUserState);
     yield resetAuthorizationHeader();
-    yield navigation.Login();
 }
 
 
 // WATCHES -------------------
-function* watchFetchLogin() {
-    yield takeLatest(types.LOGIN_FETCH_REQUESTED, fetchLogin);
+function* watchLoginFetchRequested() {
+    yield takeLatest(types.LOGIN_FETCH_REQUESTED, fetchLoginRequested);
 }
 
-function* watchFacebookFetchLogin() {
-    yield takeLatest(types.LOGIN_FACEBOOK_FETCH_REQUESTED, fetchFacebookLogin);
+function* watchLoginFacebookFetchRequested() {
+    yield takeLatest(types.LOGIN_FACEBOOK_FETCH_REQUESTED, fetchFacebookLoginRequested);
 }
 
-function* watchLoginSucceeded() {
-    yield takeEvery(types.LOGIN_FETCH_SUCCEEDED, loginSucceeded);
+function* watchLoginFetchSucceeded() {
+    yield takeEvery(types.LOGIN_FETCH_SUCCEEDED, loginFetchSucceeded);
 }
 
-function* watchLogout() {
-    yield takeEvery(types.LOGOUT, logout);
+function* watchResetUserState() {
+    yield takeEvery(types.RESET_USER_STATE, resetUserState);
 }
 
 export default [
-    watchFetchLogin(),
-    watchFacebookFetchLogin(),
-    watchLoginSucceeded(),
-    watchLogout(),
+    watchLoginFetchRequested(),
+    watchLoginFacebookFetchRequested(),
+    watchLoginFetchSucceeded(),
+    watchResetUserState(),
 ]

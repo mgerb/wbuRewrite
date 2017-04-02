@@ -1,21 +1,30 @@
 import types from '../constants';
 import { Action, ActionCreatorsMapObject } from 'redux';
 import { GroupType } from '../reducers/group';
+import { UserType } from '../reducers/user';
 
-interface GroupActionType extends GroupType, Action {
-    groups?: Array<GroupType>,
+function resetGroupState(): Action {
+    return {
+        type: types.RESET_GROUP_STATE,
+    }
 }
 
-function getUserGroupsFetchRequested(name: string): GroupActionType {
+function setSelectedGroup(selectedGroup: GroupType): any {
     return {
-        type: types.GET_USER_GROUPS_FETCH_REQUESTED,
-        name,
+        type: types.SET_SELECTED_GROUP,
+        selectedGroup,
     };
 }
 
-function getUserGroupsFetchSucceeded(groups: Array<GroupType>): GroupActionType {
+function getUserGroupsFetchRequested(): Action {
     return {
-        type: types.GET_GROUP_USERS_FETCH_SUCCEEDED,
+        type: types.GET_USER_GROUPS_FETCH_REQUESTED,
+    };
+}
+
+function getUserGroupsFetchSucceeded(groups: Array<GroupType>): any {
+    return {
+        type: types.GET_USER_GROUPS_FETCH_SUCCEEDED,
         groups,
     };
 }
@@ -26,16 +35,45 @@ function getUserGroupsFetchFailed(): Action {
     };
 }
 
+function getGroupUsersFetchRequested(): Action {
+    return {
+        type: types.GET_GROUP_USERS_FETCH_REQUESTED,
+    };
+}
+
+function getGroupUsersFetchSucceeded(groupUsers: Array<UserType>): any {
+    return {
+        type: types.GET_GROUP_USERS_FETCH_SUCCEEDED,
+        groupUsers,
+    };
+}
+
+function getGroupUsersFetchFailed(): Action {
+    return {
+        type: types.GET_GROUP_USERS_FETCH_FAILED,
+    };
+}
+
 export interface GroupActionMapType extends ActionCreatorsMapObject {
+    resetGroupState: any,
+    setSelectedGroup: any,
     getUserGroupsFetchRequested: any,
     getUserGroupsFetchSucceeded: any,
     getUserGroupsFetchFailed: any,
+    getGroupUsersFetchRequested: any,
+    getGroupUsersFetchSucceeded: any,
+    getGroupUsersFetchFailed: any,
 }
 
 const actionMap: GroupActionMapType = {
+    resetGroupState,
+    setSelectedGroup,
     getUserGroupsFetchRequested,
     getUserGroupsFetchSucceeded,
     getUserGroupsFetchFailed,
+    getGroupUsersFetchRequested,
+    getGroupUsersFetchSucceeded,
+    getGroupUsersFetchFailed,
 };
 
 export default actionMap;

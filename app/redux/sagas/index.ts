@@ -1,5 +1,6 @@
 import userSagas from './user';
+import groupSagas from './group';
 
 export default function* rootSaga(): any {
-    yield [...userSagas];
+    yield [...userSagas, ...groupSagas];
 }

@@ -3,12 +3,13 @@ import { Action, ActionCreatorsMapObject } from 'redux';
 import { UserType } from '../reducers/user';
 import types from '../constants';
 
-export interface UserActionType extends UserType, Action {
-    password?: string,
-    facebookAccessToken?: string,
+function resetUserState(): Action {
+    return {
+        type: types.RESET_USER_STATE,
+    }
 }
 
-function loginFetchRequested(email: string, password: string): UserActionType {
+function loginFetchRequested(email: string, password: string): any {
     return {
         type: types.LOGIN_FETCH_REQUESTED,
         email,
@@ -16,14 +17,14 @@ function loginFetchRequested(email: string, password: string): UserActionType {
     };
 }
 
-function loginFacebookFetchRequested(facebookAccessToken: string): UserActionType {
+function loginFacebookFetchRequested(facebookAccessToken: string): any {
     return {
         type: types.LOGIN_FACEBOOK_FETCH_REQUESTED,
         facebookAccessToken,
     };
 }
 
-function loginFetchSucceeded(action: UserActionType): UserActionType {
+function loginFetchSucceeded(action: UserType): any {
     return {
         type: types.LOGIN_FETCH_SUCCEEDED,
         id: action.id,
@@ -42,39 +43,14 @@ function loginFetchFailed(): Action {
     };
 }
 
-interface searchUserAction extends Action {
-    name?: string,
-    userSearchList?: Array<UserType>,
-}
-
-function searchUserByNameFetchRequested(name: string): searchUserAction {
-    return {
-        type: types.SEARCH_USER_BY_NAME_FETCH_REQUESTED,
-        name,
-    };
-}
-
-function searchUserByNameFetchSucceeded(userSearchList: Array<UserType>): searchUserAction {
-    return {
-        type: types.SEARCH_USER_BY_NAME_FETCH_SUCCEEDED,
-        userSearchList,
-    };
-}
-
-function searchUserByNameFetchFailed(): searchUserAction {
-    return {
-        type: types.SEARCH_USER_BY_NAME_FETCH_FAILED,
-    };
-}
-
-function refreshJWTFetchRequested(jwt: string): UserActionType {
+function refreshJWTFetchRequested(jwt: string): any {
     return {
         type: types.REFRESH_JWT_FETCH_REQUESTED,
         jwt,
     };
 }
 
-function refreshJWTFetchSucceeded(jwt: string): UserActionType {
+function refreshJWTFetchSucceeded(jwt: string): any {
     return {
         type: types.REFRESH_JWT_FETCH_SUCCEEDED,
         jwt,
@@ -87,38 +63,26 @@ function refreshJWTFetchFailed(): Action {
     };
 }
 
-function logout(): Action {
-    return {
-        type: types.LOGOUT,
-    }
-}
-
 export interface UserActionMapType extends ActionCreatorsMapObject {
+    resetUserState: any,
     loginFetchRequested: any,
     loginFacebookFetchRequested: any,
     loginFetchSucceeded: any,
     loginFetchFailed: any,
-    searchUserByNameFetchRequested: any,
-    searchUserByNameFetchSucceeded: any,
-    searchUserByNameFetchFailed: any,
     refreshJWTFetchRequested: any,
     refreshJWTFetchSucceeded: any,
     refreshJWTFetchFailed: any,
-    logout: any,
 }
 
 const actionMap: UserActionMapType = {
+    resetUserState,
     loginFetchRequested,
     loginFacebookFetchRequested,
     loginFetchSucceeded,
     loginFetchFailed,
-    searchUserByNameFetchRequested,
-    searchUserByNameFetchSucceeded,
-    searchUserByNameFetchFailed,
     refreshJWTFetchRequested,
     refreshJWTFetchSucceeded,
     refreshJWTFetchFailed,
-    logout,
 };
 
 export default actionMap;
