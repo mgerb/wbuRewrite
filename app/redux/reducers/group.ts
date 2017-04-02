@@ -1,6 +1,6 @@
 import types from '../constants';
 
-interface GroupStateType {
+export interface GroupStateType {
 
 }
 

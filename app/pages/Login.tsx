@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 
 import { View, ViewStyle, Text, TextStyle, TextInput, KeyboardAvoidingView, StyleSheet, TouchableHighlight } from 'react-native';
 
-import userActions, { actionMapType as UserActionMapType } from '../redux/actions/user';
+import userActions, { UserActionMapType } from '../redux/actions/user';
 import { UserStateType } from '../redux/reducers/user';
 import navigation from '../navigation';
+import facebook from '../utils/facebook';
 
 interface Props {
     navigator: any,
@@ -44,20 +45,32 @@ class Login extends React.Component<Props, State> {
         this.props.userActions.loginFetchRequested(this.state.email, this.state.password);
     }
 
+    private loginFacebook(): void {
+        facebook.login().then((token) => {
+            this.props.userActions.loginFacebookFetchRequested(token);
+        });
+    }
+
     render() {
         return (
             <KeyboardAvoidingView behavior="padding" style={styles.container}>
                 <View>
-                    <Text style={styles.errorMessage}>{this.state.errorMessage}</Text>
+                    {this.props.user.loginFetchFailed ? <Text style={styles.errorMessage}>Login failed.</Text> : <Text> </Text>}
                     <TextInput placeholder="Email" autoCapitalize="none" style={styles.textInput} value={this.state.email} onChangeText={(email) => this.setState({email})}/>
                     <TextInput placeholder="Password" autoCapitalize="none" style={styles.textInput} value={this.state.password} onChangeText={(password) => this.setState({password})}/>
                 </View>
 
                 <TouchableHighlight style={styles.submitButton} activeOpacity={50} underlayColor={'red'} onPress={this.login.bind(this)}>
-                    <Text>Create Account</Text>
+                    <Text>Login</Text>
                 </TouchableHighlight>
-                <TouchableHighlight>
-                    <Text onPress={() => this.props.navigator.push({screen: 'CreateUser'})}>New User</Text>
+                
+                <TouchableHighlight style={styles.submitButton} activeOpacity={50} underlayColor={'red'} onPress={this.loginFacebook.bind(this)}>
+                    <Text>Login Facebook</Text>
+                </TouchableHighlight>
+
+                <TouchableHighlight style={styles.submitButton} activeOpacity={50} underlayColor={'red'}
+                                        onPress={() => {this.props.navigator.push({screen: 'CreateUser'})}}>
+                    <Text>New User</Text>
                 </TouchableHighlight>
             </KeyboardAvoidingView>
         );

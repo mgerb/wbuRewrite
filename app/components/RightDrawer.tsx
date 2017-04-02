@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, Text, TouchableHighlight } from 'react-native';
 
 interface Props {
-
+    navigator: any,
 }
 
 interface State {
@@ -10,6 +10,10 @@ interface State {
 }
 
 export default class RightDrawer extends React.Component<Props, State> {
+
+    constructor(props: Props) {
+        super(props);
+    }
 
     render() {
         return (
@@ -19,6 +23,16 @@ export default class RightDrawer extends React.Component<Props, State> {
                 <Text>This is a test!</Text>
                 <Text>This is a test!</Text>
                 <Text>This is a test!</Text>
+                <Text>......</Text>
+                <Text>......</Text>
+                <Text>......</Text>
+                <Text>......</Text>
+                <Text>......</Text>
+
+
+                <TouchableHighlight activeOpacity={50} onPress={() => {this.props.navigator.push({screen: 'CreateUser'})}}>
+                    <Text>Create Group</Text>
+                </TouchableHighlight>
             </View>
         )
     }

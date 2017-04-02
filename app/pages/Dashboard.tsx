@@ -1,13 +1,13 @@
 import React from 'react';
-import { View, Text, TouchableHighlight } from 'react-native';
+import { View, Text } from 'react-native';
 
 // redux
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { UserStateType } from '../redux/reducers/user';
-
-import userActions, { actionMapType as UserActionMapType } from '../redux/actions/user';
-import groupActions from '../redux/actions/group';
+import { GroupStateType } from '../redux/reducers/group';
+import userActions, { UserActionMapType } from '../redux/actions/user';
+import groupActions, { GroupActionMapType } from '../redux/actions/group';
 
 import fcm from '../utils/fcm';
 import navigation from '../navigation';
@@ -16,9 +16,9 @@ import storage from '../utils/storage';
 interface Props {
     navigator: any,
     userActions: UserActionMapType,
-    groupActions: any,
+    groupActions: GroupActionMapType,
     user: UserStateType,
-    group: any,
+    group: GroupStateType,
 }
 
 interface State {
@@ -49,6 +49,10 @@ class Dashboard extends React.Component<Props, State> {
         fcm.startListeners();
     }
 
+    componentWillReceiveProps(nextProps: any) {
+        console.log(nextProps);
+    }
+
     componentWillUnmount() {
         fcm.removeListeners();
     }
@@ -57,17 +61,11 @@ class Dashboard extends React.Component<Props, State> {
         return (
             <View style={{flex: 1}}>
                 <Text>This is a test!</Text>
-                <View><Text>test 123</Text></View>
+                <Text>test 123</Text>
                 <Text>This is a test!</Text>
                 <Text>This is a test!</Text>
                 <Text>This is a test!</Text>
                 <Text>This is a test!</Text>
-
-                {this.props.user.loggedIn ? <Text>Logged in!</Text> : null}
-
-                <TouchableHighlight>
-                    <Text onPress={() => this.props.userActions.logout()}>New User</Text>
-                </TouchableHighlight>
             </View>
         );
     }
