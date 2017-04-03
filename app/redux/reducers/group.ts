@@ -1,3 +1,4 @@
+import _ from 'lodash';
 import types from '../constants';
 import { UserType } from './user';
 
@@ -47,9 +48,7 @@ function group(state: GroupStateType = defaultState, action: any): any {
 
         case types.SET_SELECTED_GROUP:
             return {...state,
-                selectedGroup: {...{},
-                    selectedGroup: action.selectedGroup,
-                },
+                selectedGroup: _.clone(action.selectedGroup),
             };
 
         case types.GET_USER_GROUPS_FETCH_REQUESTED:

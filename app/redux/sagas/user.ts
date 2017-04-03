@@ -4,10 +4,12 @@ import { setAuthorizationHeader, resetAuthorizationHeader } from '../../api/api'
 import userAPI from '../../api/user.api';
 import types from '../constants';
 import userActions from '../actions/user';
+import groupActions from '../actions/group';
 import storage from '../../utils/storage';
 import { UserType } from '../reducers/user';
+import navigation from '../../navigation';
 
-function* fetchLoginRequested(action: UserType) {
+function* fetchLoginRequested(action: UserType): any {
     try {
         const response = yield call(userAPI.login, action.email, action.password)
         yield call(storage.storeUserState, response.data);
@@ -17,7 +19,7 @@ function* fetchLoginRequested(action: UserType) {
     }
 }
 
-function* fetchFacebookLoginRequested(action: UserType) {
+function* fetchFacebookLoginRequested(action: UserType): any {
     try {
         const response = yield call(userAPI.loginFacebook, action.facebookAccessToken)
         yield call(storage.storeUserState, response.data);
@@ -28,15 +30,19 @@ function* fetchFacebookLoginRequested(action: UserType) {
 }
 
 // set the jwt auth header every time a login succeeds
-function* loginFetchSucceeded(action: any) {
+function* loginFetchSucceeded(action: any): any {
     yield setAuthorizationHeader(action.jwt);
+    yield put(groupActions.getUserGroupsFetchRequested());
 }
 
-function* resetUserState() {
-    yield call(storage.removeUserState);
+// reset storage and navigate to login screen
+function* logout(): any {
+    yield call(storage.removeAllKeys);
+    yield put(userActions.resetUserState());
+    yield put(groupActions.resetGroupState());
     yield resetAuthorizationHeader();
+    yield navigation.Login();
 }
-
 
 // WATCHES -------------------
 function* watchLoginFetchRequested() {
@@ -51,13 +57,13 @@ function* watchLoginFetchSucceeded() {
     yield takeEvery(types.LOGIN_FETCH_SUCCEEDED, loginFetchSucceeded);
 }
 
-function* watchResetUserState() {
-    yield takeEvery(types.RESET_USER_STATE, resetUserState);
+function* watchLogout() {
+    yield takeEvery(types.LOGOUT, logout);
 }
 
 export default [
     watchLoginFetchRequested(),
     watchLoginFacebookFetchRequested(),
     watchLoginFetchSucceeded(),
-    watchResetUserState(),
+    watchLogout(),
 ]

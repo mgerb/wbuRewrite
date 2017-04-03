@@ -2,6 +2,7 @@
 
 class types {
 
+    public LOGOUT: string = 'LOGOUT';
     public RESET_USER_STATE: string = 'RESET_USER_STATE';
 
     public LOGIN_FETCH_REQUESTED: string = 'LOGIN_FETCH_REQUESTED';

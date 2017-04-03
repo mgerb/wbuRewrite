@@ -3,6 +3,12 @@ import { Action, ActionCreatorsMapObject } from 'redux';
 import { UserType } from '../reducers/user';
 import types from '../constants';
 
+function logout(): Action {
+    return {
+        type: types.LOGOUT,
+    }
+}
+
 function resetUserState(): Action {
     return {
         type: types.RESET_USER_STATE,
@@ -64,6 +70,7 @@ function refreshJWTFetchFailed(): Action {
 }
 
 export interface UserActionMapType extends ActionCreatorsMapObject {
+    logout: any,
     resetUserState: any,
     loginFetchRequested: any,
     loginFacebookFetchRequested: any,
@@ -75,6 +82,7 @@ export interface UserActionMapType extends ActionCreatorsMapObject {
 }
 
 const actionMap: UserActionMapType = {
+    logout,
     resetUserState,
     loginFetchRequested,
     loginFacebookFetchRequested,

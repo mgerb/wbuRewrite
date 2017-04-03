@@ -10,7 +10,6 @@ import { GroupStateType, GroupType } from '../redux/reducers/group';
 
 import groupActions, { GroupActionMapType } from '../redux/actions/group';
 import userActions, { UserActionMapType } from '../redux/actions/user';
-import navigation from '../navigation';
 
 interface Props {
     user:  UserStateType,
@@ -28,22 +27,12 @@ class LeftDrawer extends React.Component<Props, State> {
 
     constructor(props: Props) {
         super(props);
-    }
 
-    private getGroupUsers() {
-        this.props.groupActions.getUserGroupsFetchRequested();
     }
-
-    componentWillReceiveProps(nextProps: Props) {
-        console.log(nextProps);
-    }
-
 
     // reset states upon logout
     private logout() {
-        this.props.userActions.resetUserState();
-        this.props.groupActions.resetGroupState();
-        navigation.Login();
+        this.props.userActions.logout();
     }
 
     render() {
@@ -65,11 +54,12 @@ class LeftDrawer extends React.Component<Props, State> {
                 <Text>.....</Text>
 
                 {this.props.group.groups.map((group: GroupType, index: number) => {
-                    return <Text key={index}>{group.name}</Text>
+                    return <Text key={index}>{group.name}
+                        {group.id === this.props.group.selectedGroup.id ? " Selected Group" : ""}
+                    </Text>
                 })}
 
                 <Text onPress={this.logout.bind(this)}>Logout</Text>
-                <Text onPress={this.getGroupUsers.bind(this)}>Get user groups</Text>
             </View>
         )
     }

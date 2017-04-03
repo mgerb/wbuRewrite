@@ -67,8 +67,6 @@ export default class CreateUser extends React.Component<Props, State> {
                 errorMessage: "Passwords must match!",
             });
         }
-
-        //this.props.navigator.pop({animated: true});
     }
 
     public render() {
