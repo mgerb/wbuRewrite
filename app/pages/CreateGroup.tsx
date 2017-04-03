@@ -2,6 +2,8 @@ import _ from 'lodash';
 import React from 'react';
 import { View, ViewStyle, TextStyle, KeyboardAvoidingView, Text, TextInput, StyleSheet, Switch, TouchableHighlight } from 'react-native';
 import groupAPI from '../api/group.api';
+import store from '../redux/store';
+import groupActions from '../redux/actions/group';
 
 interface Props {
     navigator: any,
@@ -43,6 +45,9 @@ export default class CreateGroup extends React.Component<Props, State> {
             groupAPI.createGroup(groupName, password, publicGroup).then(() => {
                 this.setState(this.defaultState);
                 this.setState({errorMessage: "Group created!"});
+                
+                // refresh user groups after group creation
+                store.dispatch(groupActions.getUserGroupsFetchRequested());
             }).catch(() => {
                 this.setState(this.defaultState);
                 this.setState({errorMessage: "Failed to create group."});
