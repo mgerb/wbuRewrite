@@ -33,7 +33,7 @@ class groupAPI {
         return api.get(`/group/getGroupUsers/${groupID}`);
     }
 
-    public inviteUserToGroup(inviteUserID: number, groupID: number): AxiosPromise {
+    public inviteUserToGroup(inviteUserID?: number, groupID?: number): AxiosPromise {
         return api.post('/group/inviteUserToGroup', querystring.stringify({
             inviteUserID,
             groupID,

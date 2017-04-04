@@ -2,6 +2,7 @@ import _ from 'lodash';
 import React from 'react';
 import { View, ViewStyle, TextStyle, KeyboardAvoidingView, Text, TextInput, StyleSheet, TouchableHighlight } from 'react-native';
 import userAPI from '../api/user.api';
+import toast from '../utils/toast';
 
 interface Props {
     navigator: any,
@@ -56,7 +57,7 @@ export default class CreateUser extends React.Component<Props, State> {
 
         if (password === confirmPassword) {
             userAPI.createUser(email, password, firstName, lastName).then((response: any) => {
-                alert(response.data.message);
+                toast.success(response.data.message);
                 this.setState(this.defaultState);
             }).catch((err: any) => {
                 console.log(err.response.data);
