@@ -24,6 +24,15 @@ export default class RightDrawer extends React.Component<Props, State> {
         })
     }
 
+    private navigateInviteUser() {
+        this.props.navigator.showModal({
+            screen: "InviteUser",
+            navigatorStyle: {
+                navBarHidden: true,
+            },
+        })
+    }
+
     render() {
         return (
             <View style={{flex: 1}}>
@@ -40,8 +49,8 @@ export default class RightDrawer extends React.Component<Props, State> {
 
 
                 <Text onPress={this.navigateCreateGroup.bind(this)}>Create Group</Text>
+                <Text onPress={this.navigateInviteUser.bind(this)}>Invite User</Text>
             </View>
         )
     }
 }
-

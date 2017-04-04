@@ -35,6 +35,10 @@ class LeftDrawer extends React.Component<Props, State> {
         this.props.userActions.logout();
     }
 
+    private setSelectedGroup(group: GroupType) {
+        this.props.groupActions.setSelectedGroup(group);
+    }
+
     render() {
         return (
             <View style={{flex: 1}}>
@@ -54,7 +58,7 @@ class LeftDrawer extends React.Component<Props, State> {
                 <Text>.....</Text>
 
                 {this.props.group.groups.map((group: GroupType, index: number) => {
-                    return <Text key={index}>{group.name}
+                    return <Text key={index} onPress={() => {this.setSelectedGroup(group);}}>{group.name}
                         {group.id === this.props.group.selectedGroup.id ? " Selected Group" : ""}
                     </Text>
                 })}

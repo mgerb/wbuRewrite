@@ -2,3 +2,4 @@
 declare module 'react-native-navigation';
 declare module 'react-native-fcm';
 declare module 'react-native-fbsdk';
+declare module 'react-native-root-toast';
