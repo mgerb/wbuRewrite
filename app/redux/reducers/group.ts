@@ -11,12 +11,11 @@ export interface GroupType  {
     userCount?: number,
     locked?: boolean,
     public?: boolean,
-
-    groupUsers?: Array<UserType>,
 }
 
 export interface GroupStateType {
     selectedGroup: GroupType,
+    selectedGroupUsers: Array<UserType>,
     groups: Array<GroupType>,
 
     getUserGroupsFetchRequested: boolean,
@@ -30,6 +29,7 @@ export interface GroupStateType {
 
 const defaultState: GroupStateType = {
     selectedGroup: {},
+    selectedGroupUsers: [],
     groups: [],
 
     getUserGroupsFetchRequested: false,
@@ -73,6 +73,27 @@ function group(state: GroupStateType = defaultState, action: any): any {
                 getUserGroupsFetchFailed: true,
             };
 
+        case types.GET_GROUP_USERS_FETCH_REQUESTED:
+            return {...state,
+                getGroupUsersFetchRequested: true,
+                getGroupUsersFetchSucceeded: false,
+                getGroupUsersFetchFailed: false,
+            };
+
+        case types.GET_GROUP_USERS_FETCH_SUCCEEDED:
+            return {...state,
+                selectedGroupUsers: _.clone(action.selectedGroupUsers),
+                getGroupUsersFetchRequested: false,
+                getGroupUsersFetchSucceeded: true,
+                getGroupUsersFetchFailed: false,
+            };
+
+        case types.GET_GROUP_USERS_FETCH_FAILED:
+            return {...state,
+                getGroupUsersFetchRequested: false,
+                getGroupUsersFetchSucceeded: false,
+                getGroupUsersFetchFailed: true,
+            };
     }
 
     return state;

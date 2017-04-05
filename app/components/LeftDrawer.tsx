@@ -1,10 +1,10 @@
 import React from 'react';
+import { View, Text } from 'react-native';
 
 // redux
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 
-import { View, Text } from 'react-native';
 import { UserStateType } from '../redux/reducers/user';
 import { GroupStateType, GroupType } from '../redux/reducers/group';
 
@@ -39,6 +39,24 @@ class LeftDrawer extends React.Component<Props, State> {
         this.props.groupActions.setSelectedGroup(group);
     }
 
+    private navigateGroupInvites() {
+        this.props.navigator.showModal({
+            screen: "GroupInvites",
+            navigatorStyle: {
+                navBarHidden: true,
+            },
+        })
+    }
+
+    private navigateGroupSegue() {
+        this.props.navigator.showModal({
+            screen: "GroupSegue",
+            navigatorStyle: {
+                navBarHidden: true,
+            },
+        })
+    }
+
     render() {
         return (
             <View style={{flex: 1}}>
@@ -64,6 +82,11 @@ class LeftDrawer extends React.Component<Props, State> {
                 })}
 
                 <Text onPress={this.logout.bind(this)}>Logout</Text>
+
+                <Text onPress={this.navigateGroupInvites.bind(this)}>Group Invites</Text>
+
+                <Text onPress={this.navigateGroupSegue.bind(this)}>Group Segue</Text>
+
             </View>
         )
     }

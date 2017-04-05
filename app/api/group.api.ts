@@ -44,7 +44,7 @@ class groupAPI {
         return api.get('/group/getGroupInvites');
     }
 
-    public joinGroupFromInvite(groupID: number): AxiosPromise {
+    public joinGroupFromInvite(groupID?: number): AxiosPromise {
         return api.post('/group/joinGroupFromInvite', querystring.stringify({
             groupID,
         }));
