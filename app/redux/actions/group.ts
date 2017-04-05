@@ -41,10 +41,10 @@ function getGroupUsersFetchRequested(): Action {
     };
 }
 
-function getGroupUsersFetchSucceeded(groupUsers: Array<UserType>): any {
+function getGroupUsersFetchSucceeded(selectedGroupUsers: Array<UserType>): any {
     return {
         type: types.GET_GROUP_USERS_FETCH_SUCCEEDED,
-        groupUsers,
+        selectedGroupUsers,
     };
 }
 
