@@ -1,9 +1,11 @@
 import { AsyncStorage } from 'react-native';
 import { UserStateType } from '../redux/reducers/user';
 import { GroupType } from '../redux/reducers/group';
+import { UserType } from '../redux/reducers/user';
 
 const USER_STATE_KEY = "USER_STATE_KEY";
 const GROUPS_KEY = "GROUPS_KEY";
+const GROUP_USERS_KEY = "GROUP_USERS_KEY:";
 
 class storage {
 
@@ -31,9 +33,21 @@ class storage {
         });
     }
 
+    // store group users
+    storeGroupUsers(groupID: number, groupUsers: Array<UserType>): Promise<any> {
+        return AsyncStorage.setItem(GROUP_USERS_KEY + groupID.toString(), JSON.stringify(groupUsers));
+    }
+
+    // get group users
+    getGroupUsers(groupID: number): Promise<Array<UserType>> {
+        return AsyncStorage.getItem(GROUP_USERS_KEY + groupID.toString()).then((item) => {
+            return JSON.parse(item);
+        });
+    }
+
     // remove all of our keys
     public removeAllKeys(): Promise<any> {
-        return AsyncStorage.multiRemove([USER_STATE_KEY, GROUPS_KEY]);
+        return AsyncStorage.clear();
     }
 }
 

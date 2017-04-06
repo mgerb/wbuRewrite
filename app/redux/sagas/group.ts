@@ -7,6 +7,7 @@ import groupActions from '../actions/group';
 import storage from '../../utils/storage';
 
 import { GroupType } from '../reducers/group';
+import { UserType } from '../reducers/user';
 
 // get current state if needed in sagas
 const getGroupState = (state: any): GroupStateType  => {
@@ -28,15 +29,16 @@ function* getUserGroupsFetchRequested(): any {
         // store groups in storage
         yield call(storage.storeGroups, response.data);
 
-        // get the current state
-        const state = yield select(getGroupState);
-
-        // set the selected group if not selected yet
-        if (!state.selectedGroup.id && response.data.length > 0) {
-            yield put(groupActions.setSelectedGroup(response.data[0]));
-        }
     } catch (error) {
         yield put(groupActions.getUserGroupsFetchFailed())
+    }
+
+    // get the current state
+    const state: GroupStateType = yield select(getGroupState);
+
+    // set the selected group if not selected yet
+    if (!state.selectedGroup.id && state.groups.length > 0) {
+        yield put(groupActions.setSelectedGroup(state.groups[0]));
     }
 }
 
@@ -44,10 +46,22 @@ function* getUserGroupsFetchRequested(): any {
 function* getGroupUsersFetchRequested(): any {
     try {
         // get the current state
-        const state = yield select(getGroupState);
+        const state: GroupStateType = yield select(getGroupState);
 
+        // set group users from storage before fetching from server
+        let storedGroupUsers: Array<UserType> = yield call(storage.getGroupUsers, state.selectedGroup.id);
+        if (!storedGroupUsers) {
+            storedGroupUsers = [];
+        }
+
+        yield put(groupActions.getGroupUsersFetchSucceeded(storedGroupUsers));
+
+        // get group users from server
         const response = yield call(groupAPI.getGroupUsers, state.selectedGroup.id);
         yield put(groupActions.getGroupUsersFetchSucceeded(response.data));
+
+        // store group users in local storage
+        yield call(storage.storeGroupUsers, state.selectedGroup.id, response.data);
     } catch (error) {
         yield put(groupActions.getGroupUsersFetchFailed());
     }

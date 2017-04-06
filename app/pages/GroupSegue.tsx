@@ -21,8 +21,10 @@ export default class GroupSegue extends React.Component<Props, State> {
         });
     }
 
-    private navigateJoinGroup() {
-        console.log("join group");
+    private navigateGroupSearch() {
+        this.props.navigator.push({
+            screen: "GroupSearch",
+        });
     }
 
     render() {
@@ -33,7 +35,7 @@ export default class GroupSegue extends React.Component<Props, State> {
                     <Text>Create Group</Text>
                 </TouchableHighlight>
 
-                <TouchableHighlight style={styles.submitButton} activeOpacity={50} underlayColor={'red'} onPress={this.navigateJoinGroup.bind(this)}>
+                <TouchableHighlight style={styles.submitButton} activeOpacity={50} underlayColor={'red'} onPress={this.navigateGroupSearch.bind(this)}>
                     <Text>Join Group</Text>
                 </TouchableHighlight>
 

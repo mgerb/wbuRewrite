@@ -51,9 +51,6 @@ class LeftDrawer extends React.Component<Props, State> {
     private navigateGroupSegue() {
         this.props.navigator.showModal({
             screen: "GroupSegue",
-            navigatorStyle: {
-                navBarHidden: true,
-            },
         })
     }
 

@@ -10,6 +10,8 @@ import CreateGroup from '../pages/CreateGroup';
 import InviteUser from '../pages/InviteUser';
 import GroupInvites from '../pages/GroupInvites';
 import GroupSegue from '../pages/GroupSegue';
+import GroupSearch from '../pages/GroupSearch';
+import GroupInfo from '../pages/GroupInfo';
 
 // register all screens of the app (including internal ones)
 export default function registerScreens(store: Store<any>, Provider: any) {
@@ -22,4 +24,6 @@ export default function registerScreens(store: Store<any>, Provider: any) {
   Navigation.registerComponent('InviteUser', () => InviteUser, store, Provider);
   Navigation.registerComponent('GroupInvites', () => GroupInvites);
   Navigation.registerComponent('GroupSegue', () => GroupSegue);
+  Navigation.registerComponent('GroupSearch', () => GroupSearch);
+  Navigation.registerComponent('GroupInfo', () => GroupInfo);
 }
