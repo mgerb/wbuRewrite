@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import React from 'react';
 import { connect } from 'react-redux';
-import { View, ViewStyle, ScrollView, TextStyle, Text, TextInput, StyleSheet, TouchableHighlight } from 'react-native';
+import { View, ViewStyle, ScrollView, TextStyle, Text, TextInput, StyleSheet, TouchableHighlight, Keyboard } from 'react-native';
 import userAPI from '../api/user.api';
 import groupAPI from '../api/group.api';
 import { UserType } from '../redux/reducers/user';
@@ -31,6 +31,7 @@ class CreateGroup extends React.Component<Props, State> {
     }
 
     private fetchSearchUserByName(): void {
+        Keyboard.dismiss();
         this.setState({
             userList: [],
         });

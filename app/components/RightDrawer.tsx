@@ -31,10 +31,7 @@ class RightDrawer extends React.Component<Props, State> {
     private navigateInviteUser() {
         this.props.navigator.showModal({
             screen: "InviteUser",
-            navigatorStyle: {
-                navBarHidden: true,
-            },
-        })
+        });
     }
 
     render() {

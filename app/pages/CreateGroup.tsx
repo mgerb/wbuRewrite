@@ -35,7 +35,7 @@ export default class CreateGroup extends React.Component<Props, State> {
         this.setState({errorMessage: ""});
         let password = this.state.password;
         let groupName = this.state.groupName;
-        let publicGroup = this.state.publicGroup ? "true" : "false";
+        let publicGroup = this.state.publicGroup;
         
         if (groupName === "") {
             this.setState({

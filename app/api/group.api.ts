@@ -4,7 +4,7 @@ import querystring from 'query-string';
 
 class groupAPI {
 
-    public createGroup(name: string, password: string, publicGroup: string): AxiosPromise {
+    public createGroup(name: string, password: string, publicGroup: boolean): AxiosPromise {
         return api.post('/group/createGroup', querystring.stringify({
             name,
             password,
@@ -12,16 +12,16 @@ class groupAPI {
         }));
     }
 
-    public joinPublicGroup(groupID: number, password: string): AxiosPromise {
+    public joinPublicGroup(groupID?: number, password?: string): AxiosPromise {
         return api.post('/group/joinPublicGroup', querystring.stringify({
             groupID,
             password,
         }));
     }
 
-    public searchPublicGroups(groupName: string): AxiosPromise {
+    public searchPublicGroups(name: string): AxiosPromise {
         return api.post('/group/searchPublicGroups', querystring.stringify({
-            groupName,
+            name,
         }));
     }
 
