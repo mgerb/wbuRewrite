@@ -30,7 +30,7 @@ function* getUserGroupsFetchRequested(): any {
         yield call(storage.storeGroups, response.data);
 
     } catch (error) {
-        yield put(groupActions.getUserGroupsFetchFailed())
+        yield put(groupActions.getUserGroupsFetchFailed());
     }
 
     // get the current state
@@ -40,6 +40,11 @@ function* getUserGroupsFetchRequested(): any {
     if (!state.selectedGroup.id && state.groups.length > 0) {
         yield put(groupActions.setSelectedGroup(state.groups[0]));
     }
+}
+
+function* setSelectedGroup(): any {
+    yield put(groupActions.getGroupUsersFetchRequested());
+    yield put(groupActions.getGroupMessagesFetchRequested());
 }
 
 // get group users every time we set a new selected group
@@ -67,12 +72,26 @@ function* getGroupUsersFetchRequested(): any {
     }
 }
 
-// WATCHES -------------------
-function* watchGetUserGroupsFetchRequested() {
-    yield takeLatest(types.GET_USER_GROUPS_FETCH_REQUESTED, getUserGroupsFetchRequested);
-    yield takeEvery(types.SET_SELECTED_GROUP, getGroupUsersFetchRequested);
+function* getGroupMessagesFetchRequested(action: any): any {
+    try {
+        // get groupID from selected group if not passed in
+        if (!action.groupID) {
+            const state: GroupStateType = yield select(getGroupState);
+            action.groupID = state.selectedGroup.id;
+        }
+
+        const response = yield call(groupAPI.getMessages, action.groupID, 0);
+
+        yield put(groupActions.getGroupMessagesFetchSucceeded(response.data));
+
+    } catch(error) {
+        yield put(groupActions.getGroupMessagesFetchFailed());
+    }
 }
 
-export default [
-    watchGetUserGroupsFetchRequested(),
-]
+export default function* watches() {
+    yield takeLatest(types.GET_USER_GROUPS_FETCH_REQUESTED, getUserGroupsFetchRequested);
+    yield takeLatest(types.GET_GROUP_MESSAGES_FETCH_REQUESTED, getGroupMessagesFetchRequested);
+    yield takeLatest(types.GET_GROUP_USERS_FETCH_REQUESTED, getGroupUsersFetchRequested);
+    yield takeEvery(types.SET_SELECTED_GROUP, setSelectedGroup);
+}

@@ -36,7 +36,9 @@ class LeftDrawer extends React.Component<Props, State> {
     }
 
     private setSelectedGroup(group: GroupType) {
-        this.props.groupActions.setSelectedGroup(group);
+        if (this.props.group.selectedGroup.id !== group.id) {
+            this.props.groupActions.setSelectedGroup(group);
+        }
     }
 
     private navigateGroupInvites() {
@@ -73,7 +75,7 @@ class LeftDrawer extends React.Component<Props, State> {
                 <Text>.....</Text>
 
                 {this.props.group.groups.map((group: GroupType, index: number) => {
-                    return <Text key={index} onPress={() => {this.setSelectedGroup(group);}}>{group.name}
+                    return <Text key={index} onPress={() => this.setSelectedGroup(group)}>{group.name}
                         {group.id === this.props.group.selectedGroup.id ? " Selected Group" : ""}
                     </Text>
                 })}

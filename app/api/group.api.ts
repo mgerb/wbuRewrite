@@ -69,7 +69,7 @@ class groupAPI {
         }));
     }
 
-    public storeMessage(groupID: number, message: string): AxiosPromise {
+    public storeMessage(groupID?: number, message?: string): AxiosPromise {
         return api.post('/group/storeMessage', querystring.stringify({
             groupID,
             message,
