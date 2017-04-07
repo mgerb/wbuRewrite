@@ -44,26 +44,9 @@ function* logout(): any {
     yield navigation.Login();
 }
 
-// WATCHES -------------------
-function* watchLoginFetchRequested() {
+export default function* watches() {
     yield takeLatest(types.LOGIN_FETCH_REQUESTED, fetchLoginRequested);
-}
-
-function* watchLoginFacebookFetchRequested() {
     yield takeLatest(types.LOGIN_FACEBOOK_FETCH_REQUESTED, fetchFacebookLoginRequested);
-}
-
-function* watchLoginFetchSucceeded() {
     yield takeEvery(types.LOGIN_FETCH_SUCCEEDED, loginFetchSucceeded);
-}
-
-function* watchLogout() {
     yield takeEvery(types.LOGOUT, logout);
 }
-
-export default [
-    watchLoginFetchRequested(),
-    watchLoginFacebookFetchRequested(),
-    watchLoginFetchSucceeded(),
-    watchLogout(),
-]

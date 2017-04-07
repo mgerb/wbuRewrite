@@ -1,6 +1,6 @@
 import types from '../constants';
 import { Action, ActionCreatorsMapObject } from 'redux';
-import { GroupType } from '../reducers/group';
+import { GroupType, MessageType } from '../reducers/group';
 import { UserType } from '../reducers/user';
 
 function resetGroupState(): Action {
@@ -54,6 +54,26 @@ function getGroupUsersFetchFailed(): Action {
     };
 }
 
+function getGroupMessagesFetchRequested(groupID: number): any {
+    return {
+        type: types.GET_GROUP_MESSAGES_FETCH_REQUESTED,
+        groupID,
+    };
+}
+
+function getGroupMessagesFetchSucceeded(messages: Array<MessageType>): any {
+    return {
+        type: types.GET_GROUP_MESSAGES_FETCH_SUCCEEDED,
+        messages,
+    };
+}
+
+function getGroupMessagesFetchFailed(): Action {
+    return {
+        type: types.GET_GROUP_MESSAGES_FETCH_FAILED,
+    };
+}
+
 export interface GroupActionMapType extends ActionCreatorsMapObject {
     resetGroupState: any,
     setSelectedGroup: any,
@@ -63,6 +83,9 @@ export interface GroupActionMapType extends ActionCreatorsMapObject {
     getGroupUsersFetchRequested: any,
     getGroupUsersFetchSucceeded: any,
     getGroupUsersFetchFailed: any,
+    getGroupMessagesFetchRequested: any,
+    getGroupMessagesFetchSucceeded: any,
+    getGroupMessagesFetchFailed: any,
 }
 
 const actionMap: GroupActionMapType = {
@@ -74,6 +97,9 @@ const actionMap: GroupActionMapType = {
     getGroupUsersFetchRequested,
     getGroupUsersFetchSucceeded,
     getGroupUsersFetchFailed,
+    getGroupMessagesFetchRequested,
+    getGroupMessagesFetchSucceeded,
+    getGroupMessagesFetchFailed,
 };
 
 export default actionMap;

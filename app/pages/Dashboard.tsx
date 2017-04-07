@@ -1,13 +1,14 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { StyleSheet, View, ViewStyle, Text, TextInput, TextStyle, TouchableHighlight, KeyboardAvoidingView, ScrollView } from 'react-native';
 
 // redux
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { UserStateType } from '../redux/reducers/user';
-import { GroupStateType } from '../redux/reducers/group';
+import { GroupStateType, MessageType } from '../redux/reducers/group';
 import userActions, { UserActionMapType } from '../redux/actions/user';
 import groupActions, { GroupActionMapType } from '../redux/actions/group';
+import groupAPI from '../api/group.api';
 
 import fcm from '../utils/fcm';
 import navigation from '../navigation';
@@ -22,12 +23,16 @@ interface Props {
 }
 
 interface State {
+    message: string,
 }
 
 class Dashboard extends React.Component<Props, State> {
 
     constructor(props: Props) {
         super(props);
+        this.state = {
+            message: "",
+        };
     }
 
     componentDidMount() {
@@ -53,15 +58,53 @@ class Dashboard extends React.Component<Props, State> {
         fcm.removeListeners();
     }
 
+    private fetchStoreMessage() {
+        if (this.state.message === "") {
+            return;
+        }
+
+        groupAPI.storeMessage(this.props.group.selectedGroup.id, this.state.message).then(() => {
+            // get messages from server after sending
+            this.props.groupActions.getGroupMessagesFetchRequested();
+        }).catch(() => {
+
+        });
+
+        this.setState({
+            message: "",
+        });
+
+    }
+
     render() {
         return (
             <View style={{flex: 1}}>
-                <Text>This is a test!</Text>
-                <Text>test 123</Text>
-                <Text>This is a test!</Text>
-                <Text>This is a test!</Text>
-                <Text>This is a test!</Text>
-                <Text>This is a test!</Text>
+                    <ScrollView style={{flex:1, backgroundColor: 'white'}}>
+                    <Text>Test 123</Text>
+                    <Text>Test 123</Text>
+                    <Text>Test 123</Text>
+                    <Text>Test 123</Text>
+                    <Text>Test 123</Text>
+
+                    {this.props.group.selectedGroupMessages.map((message: MessageType, index: number) => {
+                        return (
+                            <View key={index}>
+                                <Text>{message.firstName + " " + message.lastName}</Text>
+                                <Text>{message.content}</Text>
+                            </View>
+                        );
+                    })}
+                    </ScrollView>
+                <KeyboardAvoidingView style={{flexDirection: 'row'}} behavior="padding">
+
+                        <TextInput placeholder="Message"
+                                    style={styles.textInput}
+                                    value={this.state.message}
+                                    onChangeText={(message) => this.setState({message})}/>
+                        <TouchableHighlight style={styles.submitButton} onPress={this.fetchStoreMessage.bind(this)}>
+                            <Text>Send</Text>
+                        </TouchableHighlight>
+                </KeyboardAvoidingView>
             </View>
         );
     }
@@ -82,3 +125,25 @@ function mapDispatchToProps(dispatch: Dispatch<any>): any {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: 'red',
+    } as ViewStyle,
+    textInput: {
+        flex: 1,
+        padding: 10,
+        height: 50,
+    } as TextStyle,
+    submitButton: {
+        backgroundColor: "blue",
+        height: 50,
+        width: 80,
+        alignItems: "center",
+        justifyContent: "center",
+    } as ViewStyle,
+});

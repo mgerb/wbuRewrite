@@ -13,9 +13,21 @@ export interface GroupType  {
     public?: boolean,
 }
 
+
+export interface MessageType {
+    id: number,
+    userID: number,
+    groupID: number,
+    firstName: string,
+    lastName: string,
+    content: string,
+    timestamp: Date,
+}
+
 export interface GroupStateType {
     selectedGroup: GroupType,
     selectedGroupUsers: Array<UserType>,
+    selectedGroupMessages: Array<MessageType>,
     groups: Array<GroupType>,
 
     getUserGroupsFetchRequested: boolean,
@@ -25,11 +37,16 @@ export interface GroupStateType {
     getGroupUsersFetchRequested: boolean,
     getGroupUsersFetchSucceeded: boolean,
     getGroupUsersFetchFailed: boolean,
+
+    getGroupMessagesFetchRequested: boolean,
+    getGroupMessagesFetchSucceeded: boolean,
+    getGroupMessagesFetchFailed: boolean,
 }
 
 const defaultState: GroupStateType = {
     selectedGroup: {},
     selectedGroupUsers: [],
+    selectedGroupMessages: [],
     groups: [],
 
     getUserGroupsFetchRequested: false,
@@ -39,6 +56,10 @@ const defaultState: GroupStateType = {
     getGroupUsersFetchRequested: false,
     getGroupUsersFetchSucceeded: false,
     getGroupUsersFetchFailed: false,
+
+    getGroupMessagesFetchRequested: false,
+    getGroupMessagesFetchSucceeded: false,
+    getGroupMessagesFetchFailed: false,
 };
 
 function group(state: GroupStateType = defaultState, action: any): any {
@@ -49,6 +70,8 @@ function group(state: GroupStateType = defaultState, action: any): any {
         case types.SET_SELECTED_GROUP:
             return {...state,
                 selectedGroup: _.clone(action.selectedGroup),
+                // reset messages upon new selected group
+                selectedGroupMessages: [],
             };
 
         case types.GET_USER_GROUPS_FETCH_REQUESTED:
@@ -93,6 +116,28 @@ function group(state: GroupStateType = defaultState, action: any): any {
                 getGroupUsersFetchRequested: false,
                 getGroupUsersFetchSucceeded: false,
                 getGroupUsersFetchFailed: true,
+            };
+
+        case types.GET_GROUP_MESSAGES_FETCH_REQUESTED:
+            return {...state,
+                getGroupMessagesFetchRequested: true,
+                getGroupMessagesFetchSucceeded: false,
+                getGroupMessagesFetchFailed: false,
+            };
+
+        case types.GET_GROUP_MESSAGES_FETCH_SUCCEEDED:
+            return {...state,
+                selectedGroupMessages: action.messages,
+                getGroupMessagesFetchRequested: false,
+                getGroupMessagesFetchSucceeded: true,
+                getGroupMessagesFetchFailed: false,
+            };
+
+        case types.GET_GROUP_MESSAGES_FETCH_FAILED:
+            return {...state,
+                getGroupMessagesFetchRequested: false,
+                getGroupMessagesFetchSucceeded: false,
+                getGroupMessagesFetchFailed: true,
             };
     }
 
