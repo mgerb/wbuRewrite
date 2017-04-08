@@ -1,11 +1,12 @@
 import React from 'react';
-import { StyleSheet, View, ViewStyle, Text, TextInput, TextStyle, TouchableHighlight, KeyboardAvoidingView, ScrollView } from 'react-native';
+import { StyleSheet, View, ViewStyle, Text, TextInput, TextStyle, TouchableHighlight, KeyboardAvoidingView } from 'react-native';
+import MessageScrollView from '../components/MessageScrollView';
 
 // redux
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { UserStateType } from '../redux/reducers/user';
-import { GroupStateType, MessageType } from '../redux/reducers/group';
+import { GroupStateType } from '../redux/reducers/group';
 import userActions, { UserActionMapType } from '../redux/actions/user';
 import groupActions, { GroupActionMapType } from '../redux/actions/group';
 import groupAPI from '../api/group.api';
@@ -27,6 +28,7 @@ interface State {
 }
 
 class Dashboard extends React.Component<Props, State> {
+
 
     constructor(props: Props) {
         super(props);
@@ -52,6 +54,7 @@ class Dashboard extends React.Component<Props, State> {
         fcm.requestPermissions();
         fcm.getFCMToken();
         fcm.startListeners();
+
     }
 
     componentWillUnmount() {
@@ -79,31 +82,15 @@ class Dashboard extends React.Component<Props, State> {
     render() {
         return (
             <View style={{flex: 1}}>
-                    <ScrollView style={{flex:1, backgroundColor: 'white'}}>
-                    <Text>Test 123</Text>
-                    <Text>Test 123</Text>
-                    <Text>Test 123</Text>
-                    <Text>Test 123</Text>
-                    <Text>Test 123</Text>
-
-                    {this.props.group.selectedGroupMessages.map((message: MessageType, index: number) => {
-                        return (
-                            <View key={index}>
-                                <Text>{message.firstName + " " + message.lastName}</Text>
-                                <Text>{message.content}</Text>
-                            </View>
-                        );
-                    })}
-                    </ScrollView>
+                <MessageScrollView/>
                 <KeyboardAvoidingView style={{flexDirection: 'row'}} behavior="padding">
-
-                        <TextInput placeholder="Message"
-                                    style={styles.textInput}
-                                    value={this.state.message}
-                                    onChangeText={(message) => this.setState({message})}/>
-                        <TouchableHighlight style={styles.submitButton} onPress={this.fetchStoreMessage.bind(this)}>
-                            <Text>Send</Text>
-                        </TouchableHighlight>
+                    <TextInput placeholder="Message"
+                                style={styles.textInput}
+                                value={this.state.message}
+                                onChangeText={(message) => this.setState({message})}/>
+                    <TouchableHighlight style={styles.submitButton} onPress={this.fetchStoreMessage.bind(this)}>
+                        <Text>Send</Text>
+                    </TouchableHighlight>
                 </KeyboardAvoidingView>
             </View>
         );
