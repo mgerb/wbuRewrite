@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, View, ViewStyle, Text, TextInput, TextStyle, TouchableHighlight, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, View, ViewStyle, Text, TextInput, TextStyle, TouchableHighlight, KeyboardAvoidingView, Keyboard } from 'react-native';
 import MessageScrollView from '../components/MessageScrollView';
 
 // redux
@@ -69,6 +69,7 @@ class Dashboard extends React.Component<Props, State> {
         groupAPI.storeMessage(this.props.group.selectedGroup.id, this.state.message).then(() => {
             // get messages from server after sending
             this.props.groupActions.getGroupMessagesFetchRequested();
+            Keyboard.dismiss();
         }).catch(() => {
 
         });
