@@ -11,6 +11,8 @@ import { GroupStateType, GroupType } from '../redux/reducers/group';
 import groupActions, { GroupActionMapType } from '../redux/actions/group';
 import userActions, { UserActionMapType } from '../redux/actions/user';
 
+import navigation from '../navigation';
+
 interface Props {
     user:  UserStateType,
     group: GroupStateType,
@@ -41,21 +43,6 @@ class LeftDrawer extends React.Component<Props, State> {
         }
     }
 
-    private navigateGroupInvites() {
-        this.props.navigator.showModal({
-            screen: "GroupInvites",
-            navigatorStyle: {
-                navBarHidden: true,
-            },
-        })
-    }
-
-    private navigateGroupSegue() {
-        this.props.navigator.showModal({
-            screen: "GroupSegue",
-        })
-    }
-
     render() {
         return (
             <View style={{flex: 1}}>
@@ -82,9 +69,9 @@ class LeftDrawer extends React.Component<Props, State> {
 
                 <Text onPress={this.logout.bind(this)}>Logout</Text>
 
-                <Text onPress={this.navigateGroupInvites.bind(this)}>Group Invites</Text>
+                <Text onPress={() => navigation.GroupInvites()}>Group Invites</Text>
 
-                <Text onPress={this.navigateGroupSegue.bind(this)}>Group Segue</Text>
+                <Text onPress={() => navigation.GroupSegue()}>Group Segue</Text>
 
             </View>
         )

@@ -23,6 +23,8 @@ interface State {
 
 class Login extends React.Component<Props, State> {
 
+    static navigatorStyle = {...navigation.NavStyle};
+
     private defaultState: State = {
         email: "",
         password: "",
@@ -51,6 +53,13 @@ class Login extends React.Component<Props, State> {
         });
     }
 
+    private navigateCreateUser(): void {
+        this.props.navigator.push({
+            screen: "CreateUser",
+            title: "New User",
+        });
+    }
+
     render() {
         return (
             <KeyboardAvoidingView behavior="padding" style={styles.container}>
@@ -69,7 +78,7 @@ class Login extends React.Component<Props, State> {
                 </TouchableHighlight>
 
                 <TouchableHighlight style={styles.submitButton} activeOpacity={50} underlayColor={'red'}
-                                        onPress={() => {this.props.navigator.push({screen: 'CreateUser'})}}>
+                                        onPress={this.navigateCreateUser.bind(this)}>
                     <Text>New User</Text>
                 </TouchableHighlight>
             </KeyboardAvoidingView>

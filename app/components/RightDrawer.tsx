@@ -9,6 +9,8 @@ import { GroupStateType } from '../redux/reducers/group';
 import groupActions, { GroupActionMapType } from '../redux/actions/group';
 import userActions, { UserActionMapType } from '../redux/actions/user';
 
+import navigation from '../navigation';
+
 interface Props {
     navigator: any,
     user: UserStateType,
@@ -25,13 +27,6 @@ class RightDrawer extends React.Component<Props, State> {
 
     constructor(props: Props) {
         super(props);
-    }
-
-
-    private navigateInviteUser() {
-        this.props.navigator.showModal({
-            screen: "InviteUser",
-        });
     }
 
     render() {
@@ -54,7 +49,7 @@ class RightDrawer extends React.Component<Props, State> {
                 })}
 
                 {this.props.user.id === this.props.group.selectedGroup.ownerID ? 
-                    <Text onPress={this.navigateInviteUser.bind(this)}>Invite User</Text>
+                    <Text onPress={() => navigation.InviteUser()}>Invite User</Text>
                 : null}
 
             </View>

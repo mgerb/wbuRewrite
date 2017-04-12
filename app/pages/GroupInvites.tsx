@@ -5,6 +5,7 @@ import store from '../redux/store';
 import groupActions from '../redux/actions/group';
 import { GroupType } from '../redux/reducers/group';
 import toast from '../utils/toast';
+import navigation, { ClosableModal } from '../navigation';
 
 interface Props {
     navigator: any,
@@ -14,13 +15,24 @@ interface State {
     groupList: Array<GroupType>;
 }
 
-export default class CreateGroup extends React.Component<Props, State> {
+export default class CreateGroup extends React.Component<Props, State> implements ClosableModal {
 
-    constructor() {
-        super();
+    static navigatorStyle = {...navigation.NavStyle};
+
+    constructor(props: Props) {
+        super(props);
         this.state = {
             groupList: [],
         };
+        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+    }
+
+    onNavigatorEvent(event: any): void {
+        if (event.type == "NavBarButtonPress") {
+            if (event.id == "close") {
+                this.props.navigator.dismissModal();
+            }
+        }
     }
 
     componentDidMount() {
@@ -59,10 +71,6 @@ export default class CreateGroup extends React.Component<Props, State> {
                 })}
                 
                 {this.state.groupList.length < 1 ? <Text>No invites!</Text> : null}
-
-                <TouchableHighlight activeOpacity={50} onPress={this.props.navigator.dismissModal}>
-                    <Text>Close</Text>
-                </TouchableHighlight>
             </View>
         );
     }

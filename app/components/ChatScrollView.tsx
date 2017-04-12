@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, ViewStyle, ScrollView, Text, TextStyle, Keyboard, StyleSheet } from 'react-native';
+import { View, ViewStyle, ScrollView, Text, TextStyle, StyleSheet } from 'react-native';
+import time from '../utils/time';
 
 // redux
 import { bindActionCreators, Dispatch } from 'redux';
@@ -10,6 +11,7 @@ import groupActions, { GroupActionMapType } from '../redux/actions/group';
 import userActions, { UserActionMapType } from '../redux/actions/user';
 
 import colors from '../style/colors';
+import sizes from '../style/sizes';
 
 interface Props {
     navigator: any,
@@ -23,7 +25,7 @@ interface State {
 
 }
 
-class MessageScrollView extends React.Component<Props, State> {
+class ChatScrollView extends React.Component<Props, State> {
 
     private scrollView: any;
     
@@ -31,27 +33,30 @@ class MessageScrollView extends React.Component<Props, State> {
         super(props);
     }
 
-    onScroll() {
-        Keyboard.dismiss();
-    }
-
     render() {
         return (
             <View style={styles.verticallyInverted}>
                 <ScrollView contentContainerStyle={styles.scrollView}
                             ref={(scrollView: any) => {this.scrollView = scrollView}}
-                            onScroll={this.onScroll.bind(this)}
+                            keyboardDismissMode={"on-drag"}
                             onContentSizeChange={() => this.scrollView.scrollTo({y: 0})}>
 
                 {this.props.group.selectedGroupMessages.map((message: MessageType, index: number) => {
-                    let messageStyle = this.props.user.id === message.userID ? {justifyContent: 'flex-end'} : {};
+
+                    let messageStyle = {}, userNameColor = colors.cyan;
+                    if (this.props.user.id === message.userID) {
+                        messageStyle = {justifyContent: 'flex-end'};
+                        userNameColor = colors.purple;
+                    }
+
                     let borderStyle = this.props.group.selectedGroupMessages.length === index + 1 ? {} : {borderBottomWidth: 1};
+
                     return (
                         <View key={index} style={[styles.messageContainer, messageStyle, borderStyle]}>
                             <View>
                                 <View style={[styles.messageHeader, messageStyle]}>
-                                    <Text style={styles.usersName}>{message.firstName + " " + message.lastName}</Text>
-                                    <Text style={styles.timestamp}> - timestamp</Text>
+                                    <Text style={[styles.userName, {color: userNameColor}]}>{message.firstName + " " + message.lastName}</Text>
+                                    <Text style={styles.timestamp}> - {time.timestamp(message.timestamp)}</Text>
                                 </View>
                                 <View style={styles.messageContent}>
                                     <Text style={styles.messageText}>{message.content}</Text>
@@ -60,7 +65,9 @@ class MessageScrollView extends React.Component<Props, State> {
                         </View>
                     );
                 })}
+
                 {this.props.group.getGroupMessagesFetchRequested ? <Text>Fetching...</Text> : null}
+
                 </ScrollView>
             </View>
         )
@@ -80,12 +87,12 @@ function mapDispatchToProps(dispatch: Dispatch<any>): any {
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(MessageScrollView);
+export default connect(mapStateToProps, mapDispatchToProps)(ChatScrollView);
 
 const styles = StyleSheet.create({
     verticallyInverted: {
         flex: 1,
-        backgroundColor: colors.gray1,
+        backgroundColor: colors.dark3,
         transform: [
             { scaleY: -1 },
         ],
@@ -94,13 +101,14 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'flex-end',
         paddingHorizontal: 5,
+        paddingBottom: 10,
         transform: [
             { scaleY: -1 },
         ],
     } as ViewStyle,
     messageContainer: {
         flexDirection: 'row',
-        borderBottomColor: colors.gray2,
+        borderBottomColor: colors.dark2,
         padding: 10,
     } as ViewStyle,
     messageHeader: {
@@ -109,22 +117,22 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     } as ViewStyle,
     messageContent: {
-        backgroundColor: colors.gray2,
+        backgroundColor: colors.dark2,
         borderWidth: 1,
-        borderColor: colors.gray3,
+        borderColor: colors.dark1,
         padding: 10,
         borderRadius: 5,
         marginTop: 5,
     } as ViewStyle,
     messageText: {
-        fontSize: 20,
+        fontSize: sizes.default,
         color: colors.white,
     } as TextStyle,
-    usersName: {
-        color: colors.primary,
-        fontSize: 18,
+    userName: {
+        fontSize: sizes.small,
     } as TextStyle,
     timestamp: {
-        color: colors.white,
+        fontSize: sizes.tiny,
+        color: colors.dark1,
     } as TextStyle,
 });

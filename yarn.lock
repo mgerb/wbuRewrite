@@ -3114,7 +3114,7 @@ mkdirp@^0.5.0, mkdirp@^0.5.1:
   dependencies:
     minimist "0.0.8"
 
-moment@2.x.x:
+moment@2.x.x, moment@^2.18.1:
   version "2.18.1"
   resolved "https://registry.yarnpkg.com/moment/-/moment-2.18.1.tgz#c36193dd3ce1c2eed2adb7c802dbbc77a81b1c0f"
 
@@ -3557,6 +3557,10 @@ react-native-fbsdk@^0.5.0:
 react-native-fcm@^6.1.0:
   version "6.2.0"
   resolved "https://registry.yarnpkg.com/react-native-fcm/-/react-native-fcm-6.2.0.tgz#fce2f797afe6e9e8d6e452ad6ab4a645d3b00ece"
+
+react-native-keyboard-spacer@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/react-native-keyboard-spacer/-/react-native-keyboard-spacer-0.3.1.tgz#9580297ebfd078202dc4c65303d29cda35de67f1"
 
 react-native-navigation@next:
   version "2.0.0-experimental.275"

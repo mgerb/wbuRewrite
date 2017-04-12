@@ -1,6 +1,8 @@
 import React from 'react';
-import { StyleSheet, View, ViewStyle, Text, TextInput, TextStyle, TouchableHighlight, KeyboardAvoidingView, Keyboard } from 'react-native';
-import MessageScrollView from '../components/MessageScrollView';
+import { StyleSheet, View, ViewStyle } from 'react-native';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
+import ChatScrollView from '../components/ChatScrollView';
+import ChatInput from '../components/ChatInput';
 
 // redux
 import { bindActionCreators, Dispatch } from 'redux';
@@ -9,7 +11,6 @@ import { UserStateType } from '../redux/reducers/user';
 import { GroupStateType } from '../redux/reducers/group';
 import userActions, { UserActionMapType } from '../redux/actions/user';
 import groupActions, { GroupActionMapType } from '../redux/actions/group';
-import groupAPI from '../api/group.api';
 
 import fcm from '../utils/fcm';
 import navigation from '../navigation';
@@ -24,17 +25,15 @@ interface Props {
 }
 
 interface State {
-    message: string,
+
 }
 
 class Dashboard extends React.Component<Props, State> {
 
-
+    static navigatorStyle = {...navigation.NavStyle};
+    
     constructor(props: Props) {
         super(props);
-        this.state = {
-            message: "",
-        };
     }
 
     componentDidMount() {
@@ -61,38 +60,13 @@ class Dashboard extends React.Component<Props, State> {
         fcm.removeListeners();
     }
 
-    private fetchStoreMessage() {
-        if (this.state.message === "") {
-            return;
-        }
-
-        groupAPI.storeMessage(this.props.group.selectedGroup.id, this.state.message).then(() => {
-            // get messages from server after sending
-            this.props.groupActions.getGroupMessagesFetchRequested();
-            Keyboard.dismiss();
-        }).catch(() => {
-
-        });
-
-        this.setState({
-            message: "",
-        });
-
-    }
 
     render() {
         return (
-            <View style={{flex: 1}}>
-                <MessageScrollView/>
-                <KeyboardAvoidingView style={{flexDirection: 'row'}} behavior="padding">
-                    <TextInput placeholder="Message"
-                                style={styles.textInput}
-                                value={this.state.message}
-                                onChangeText={(message) => this.setState({message})}/>
-                    <TouchableHighlight style={styles.submitButton} onPress={this.fetchStoreMessage.bind(this)}>
-                        <Text>Send</Text>
-                    </TouchableHighlight>
-                </KeyboardAvoidingView>
+            <View style={styles.container}>
+                <ChatScrollView/>
+                <ChatInput selectedGroup={{...this.props.group.selectedGroup}}/>
+                <KeyboardSpacer/>
             </View>
         );
     }
@@ -117,21 +91,5 @@ export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: 'column',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'red',
-    } as ViewStyle,
-    textInput: {
-        flex: 1,
-        padding: 10,
-        height: 50,
-    } as TextStyle,
-    submitButton: {
-        backgroundColor: "blue",
-        height: 50,
-        width: 80,
-        alignItems: "center",
-        justifyContent: "center",
     } as ViewStyle,
 });

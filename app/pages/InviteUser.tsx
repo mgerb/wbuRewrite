@@ -7,6 +7,7 @@ import groupAPI from '../api/group.api';
 import { UserType } from '../redux/reducers/user';
 import { GroupStateType } from '../redux/reducers/group';
 import toast from '../utils/toast';
+import navigation, { ClosableModal } from '../navigation';
 
 interface Props {
     navigator: any,
@@ -18,16 +19,27 @@ interface State {
     userList: Array<UserType>,
 }
 
-class CreateGroup extends React.Component<Props, State> {
+class CreateGroup extends React.Component<Props, State> implements ClosableModal {
+
+    static navigatorStyle = {...navigation.NavStyle};
 
     private defaultState: State = {
         searchUser: "",
         userList: [],
     };
 
-    constructor() {
-        super();
+    constructor(props: Props) {
+        super(props);
         this.state = _.clone(this.defaultState);
+        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+    }
+
+    onNavigatorEvent(event: any): void {
+        if (event.type == "NavBarButtonPress") {
+            if (event.id == "close") {
+                this.props.navigator.dismissModal();
+            }
+        }
     }
 
     private fetchSearchUserByName(): void {

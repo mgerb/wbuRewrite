@@ -88,9 +88,6 @@ export default class CreateGroup extends React.Component<Props, State> {
                 <TouchableHighlight style={styles.submitButton} activeOpacity={50} underlayColor={'red'} onPress={ this.fetchCreateGroup.bind(this) }>
                     <Text>Create Group</Text>
                 </TouchableHighlight>
-                <TouchableHighlight activeOpacity={50} onPress={this.props.navigator.dismissModal}>
-                    <Text>Close</Text>
-                </TouchableHighlight>
             </KeyboardAvoidingView>
         );
     }

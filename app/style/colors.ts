@@ -10,7 +10,19 @@ class colors {
     public gray5: string =  '#282b30';
     public gray6: string =  '#1e2124';
 
-    public white: string =  'white';
+
+    public dark1: string =  '#6272a4';
+    public dark2: string =  '#44475a';
+    public dark3: string =  '#282a36';
+
+    public white: string =  '#f8f8f2';
+    public cyan: string = '#8be9fd';
+    public green: string = '#50fa7b';
+    public orange: string = '#ffb86c';
+    public pink: string = '#ff79c6';
+    public purple: string = '#bd93f9';
+    public red: string = '#ff5555';
+    public yellow: string = '#f1fa8c';
 }
 
 export default new colors();

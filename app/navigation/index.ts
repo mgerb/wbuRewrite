@@ -1,14 +1,23 @@
 import { Navigation } from 'react-native-navigation';
+import colors from '../style/colors';
+
+export interface ClosableModal {
+    onNavigatorEvent(event: any): void,
+}
 
 class nav {
+
+    public NavStyle: any = {
+        navBarBackgroundColor: colors.dark2,
+        navBarTextColor: colors.white,
+        navBarButtonColor: colors.white,
+    }
 
     Dashboard(): void {
         Navigation.startSingleScreenApp({
             screen: {
                 screen: 'Dashboard',
-                navigatorStyle: {
-                    navBarHidden: true
-                }
+                title: 'Dashboard',
             },
             drawer: {
                 left: {
@@ -22,27 +31,52 @@ class nav {
         });
     }
 
-    CreateUser(): void {
+    Login(): void {
         Navigation.startSingleScreenApp({
             screen: {
-                screen: 'CreateUser',
-                navigatorStyle: {
-                    navBarHidden: true
-                }
+                screen: 'Login',
+                title: 'Login'
             },
             animationType: 'slide-down',
         });
     }
 
-    Login(): void {
-        Navigation.startSingleScreenApp({
-            screen: {
-                screen: 'Login',
-                navigatorStyle: {
-                    navBarHidden: true
-                }
+    GroupSegue(): void {
+        Navigation.showModal({
+            screen: "GroupSegue",
+            title: "Groups",
+            navigatorButtons: {
+                leftButtons: [{
+                    title: "Close",
+                    id: "close",
+                }],
             },
-            animationType: 'slide-down',
+        });
+    }
+
+    GroupInvites(): void {
+        Navigation.showModal({
+            screen: "GroupInvites",
+            title: "Group Invites",
+            navigatorButtons: {
+                leftButtons: [{
+                    title: "Close",
+                    id: "close",
+                }],
+            },
+        });
+    }
+
+    InviteUser(): void {
+        Navigation.showModal({
+            screen: "InviteUser",
+            title: "Invite User",
+            navigatorButtons: {
+                leftButtons: [{
+                    title: "Close",
+                    id: "close",
+                }],
+            },
         });
     }
 }
