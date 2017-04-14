@@ -3,6 +3,7 @@ package com.wburewrite;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.oblador.vectoricons.VectorIconsPackage;
 import com.reactnativenavigation.NavigationReactPackage;
 import com.evollu.react.fcm.FIRMessagingPackage;
 import com.facebook.reactnative.androidsdk.FBSDKPackage;
@@ -26,6 +27,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new VectorIconsPackage(),
             new NavigationReactPackage(),
             new FIRMessagingPackage(),
             new FBSDKPackage()

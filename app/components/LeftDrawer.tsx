@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { View, ViewStyle, Text, StyleSheet, ScrollView } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 // redux
 import { bindActionCreators, Dispatch } from 'redux';
@@ -12,6 +13,8 @@ import groupActions, { GroupActionMapType } from '../redux/actions/group';
 import userActions, { UserActionMapType } from '../redux/actions/user';
 
 import navigation from '../navigation';
+import colors from '../style/colors';
+import sizes from '../style/sizes';
 
 interface Props {
     user:  UserStateType,
@@ -45,22 +48,10 @@ class LeftDrawer extends React.Component<Props, State> {
 
     render() {
         return (
-            <View style={{flex: 1}}>
-                <Text>This is a test!</Text>
-                <Text>This is a test!</Text>
-                <Text>This is a test!</Text>
-                <Text>This is a test!</Text>
-                <Text>This is a test!</Text>
-                <Text>.....</Text>
-                <Text>.....</Text>
-                <Text>.....</Text>
-                <Text>.....</Text>
-                <Text>.....</Text>
-                <Text>.....</Text>
-                <Text>.....</Text>
-                <Text>.....</Text>
-                <Text>.....</Text>
-
+            <View style={styles.container}>
+            <View style={styles.header}/>
+                
+            <ScrollView style={{flex:1}}>
                 {this.props.group.groups.map((group: GroupType, index: number) => {
                     return <Text key={index} onPress={() => this.setSelectedGroup(group)}>{group.name}
                         {group.id === this.props.group.selectedGroup.id ? " Selected Group" : ""}
@@ -72,7 +63,11 @@ class LeftDrawer extends React.Component<Props, State> {
                 <Text onPress={() => navigation.GroupInvites()}>Group Invites</Text>
 
                 <Text onPress={() => navigation.GroupSegue()}>Group Segue</Text>
+            </ScrollView>
 
+            <View style={styles.footer}>
+                <Icon name="gear"/>
+                </View>
             </View>
         )
     }
@@ -95,3 +90,20 @@ function mapDispatchToProps(dispatch: Dispatch<any>): any {
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(LeftDrawer);
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        flexDirection: 'column',
+        backgroundColor: colors.dark3,
+    } as ViewStyle,
+    header: {
+        height: 50,
+    } as ViewStyle,
+    footer: {
+        height: 50,
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    } as ViewStyle,
+});

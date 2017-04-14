@@ -5,12 +5,35 @@ target 'wbuRewrite' do
   # Uncomment the next line if you're using Swift or would like to use dynamic frameworks
   use_frameworks!
 
+=begin
+  pod 'Yoga', :path => '../node_modules/react-native/ReactCommon/yoga/Yoga.podspec'
+  pod 'React', path: '../node_modules/react-native', :subspecs => [
+    'Core',
+    'RCTActionSheet',
+    'RCTAnimation',
+    'RCTGeolocation',
+    'RCTImage',
+    'RCTLinkingIOS',
+    'RCTNetwork',
+    'RCTSettings',
+    'RCTText',
+    'RCTVibration',
+    'RCTWebSocket'
+#    'DevSupport'
+  ]
+
+  pod 'react-native-sqlite-storage', :path => '../node_modules/react-native-sqlite-storage'  
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+=end
+
   # Pods for wbuRewrite
   pod 'Bolts'
   pod 'FBSDKCoreKit'
   pod 'FBSDKShareKit'
   pod 'FBSDKLoginKit'
   pod 'Firebase/Messaging'
+
+  #pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
 
   #target 'wbuRewrite-tvOSTests' do
     #inherit! :search_paths
