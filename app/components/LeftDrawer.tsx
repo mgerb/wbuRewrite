@@ -14,7 +14,6 @@ import userActions, { UserActionMapType } from '../redux/actions/user';
 
 import navigation from '../navigation';
 import colors from '../style/colors';
-import sizes from '../style/sizes';
 
 interface Props {
     user:  UserStateType,

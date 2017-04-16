@@ -21,7 +21,7 @@ export interface MessageType {
     firstName: string,
     lastName: string,
     content: string,
-    timestamp: string,
+    timestamp: number,
 }
 
 export interface GroupStateType {

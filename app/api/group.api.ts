@@ -76,7 +76,7 @@ class groupAPI {
         }));
     }
 
-    public getMessages(groupID: number, timestamp: number): AxiosPromise {
+    public getMessages(groupID: number, timestamp: number = 0): AxiosPromise {
         return api.get(`/group/getMessages/${groupID}/${timestamp}`);
     }
 }

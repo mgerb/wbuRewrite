@@ -5,13 +5,14 @@ import groupAPI from '../../api/group.api';
 import types from '../constants';
 import groupActions from '../actions/group';
 import storage from '../../utils/storage';
+import { MessageRealm } from '../../utils/realm';
 
 import { GroupType } from '../reducers/group';
 import { UserType } from '../reducers/user';
 
 // get current state if needed in sagas
 const getGroupState = (state: any): GroupStateType  => {
-    return state.group
+    return state.group;
 };
 
 function* getUserGroupsFetchRequested(): any {
@@ -80,9 +81,18 @@ function* getGroupMessagesFetchRequested(action: any): any {
             action.groupID = state.selectedGroup.id;
         }
 
-        const response = yield call(groupAPI.getMessages, action.groupID, 0);
+        const storedMessages = yield MessageRealm.getMessages(action.groupID);
+        yield put(groupActions.getGroupMessagesFetchSucceeded(storedMessages));
 
-        yield put(groupActions.getGroupMessagesFetchSucceeded(response.data));
+        // fetch new messages from server based on last message timestamp
+        const response = yield call(groupAPI.getMessages, action.groupID, MessageRealm.getLastMessageDate(action.groupID));
+
+        // store new message
+        if (response.data.length > 0) {
+            yield MessageRealm.storeMessages(response.data);
+            const storedMessages = yield MessageRealm.getMessages(action.groupID);
+            yield put(groupActions.getGroupMessagesFetchSucceeded(storedMessages));
+        }
 
     } catch(error) {
         yield put(groupActions.getGroupMessagesFetchFailed());

@@ -11,3 +11,12 @@
 2. Environment Variables -> Add -> Name: "OS_ACTIVITY_MODE", Value:"disable"
 3. Run your app again, done! 😄
 ```
+
+### Debug menu problems
+
+Adding react as a dependency to the pod file causes the debuge menu to not work ona device (shake gesture).
+I can install the pods and then comment out these lines - install again and it works for now
+
+### 0.43.2
+
+Not upgrading yet because it breaks the inverted scrollview

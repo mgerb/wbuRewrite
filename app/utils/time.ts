@@ -2,8 +2,8 @@ import moment from 'moment';
 
 class time {
 
-    timestamp(unixString: string) {
-        return moment.unix(parseInt(unixString)).fromNow();
+    timestamp(unixString: number) {
+        return moment.unix(unixString).fromNow();
     }
 }
 
