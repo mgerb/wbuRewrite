@@ -40,9 +40,16 @@ class LeftDrawer extends React.Component<Props, State> {
     }
 
     private setSelectedGroup(group: GroupType) {
+        
         if (this.props.group.selectedGroup.id !== group.id) {
             this.props.groupActions.setSelectedGroup(group);
         }
+
+        this.props.navigator.toggleDrawer({
+            side: "left",
+            animated: true,
+            to: "closed",
+        });
     }
 
     render() {

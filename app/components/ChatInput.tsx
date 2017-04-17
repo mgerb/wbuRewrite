@@ -32,7 +32,7 @@ export default class ChatInput  extends React.Component<Props, State> {
 
         groupAPI.storeMessage(this.props.selectedGroup.id, this.state.message).then(() => {
             // get messages from server after sending
-            store.dispatch(GroupActions.getGroupMessagesFetchRequested());
+            store.dispatch(GroupActions.getGroupMessagesFetchRequested(this.props.selectedGroup.id));
         }).catch(() => {
 
         });

@@ -39,23 +39,22 @@ class _MessageRealm {
         });
     }
 
-    getMessages(groupID: Number): Array<MessageType> {
+    getMessages(groupID: number): Array<MessageType> {
 
-        let messages: Array<MessageType> = []
+        let messages: Array<MessageType> = [];
         myRealm.objects('Message').filtered(`groupID = "${groupID}"`).sorted('timestamp').forEach((message: MessageType) => {
             // we need to convert the timestamp to a unix string
             let newMessage = {...message, timestamp: moment(message.timestamp).unix()};
             messages.push(newMessage);
         });
 
-        let length = messages.length;
-        return messages.slice(length - 11, length);
+        return messages;
     }
 
-    getLastMessageDate(groupID: Number): Number {
+    getLastMessageDate(groupID: number): number {
         let messages = this.getMessages(groupID);
-        console.log(messages[0]);
-        return messages.length > 0 ? messages[0].timestamp : 0;
+        // return the timestamp of the newest message in the list
+        return messages.length > 0 ? messages[messages.length - 1].timestamp : 0;
     }
 
 }

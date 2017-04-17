@@ -127,7 +127,6 @@ function group(state: GroupStateType = defaultState, action: any): any {
 
         case types.GET_GROUP_MESSAGES_FETCH_SUCCEEDED:
             return {...state,
-                selectedGroupMessages: action.messages,
                 getGroupMessagesFetchRequested: false,
                 getGroupMessagesFetchSucceeded: true,
                 getGroupMessagesFetchFailed: false,
@@ -138,6 +137,11 @@ function group(state: GroupStateType = defaultState, action: any): any {
                 getGroupMessagesFetchRequested: false,
                 getGroupMessagesFetchSucceeded: false,
                 getGroupMessagesFetchFailed: true,
+            };
+
+        case types.SET_GROUP_MESSAGES:
+            return {...state,
+                selectedGroupMessages: action.messages,
             };
     }
 

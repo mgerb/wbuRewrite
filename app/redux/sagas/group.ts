@@ -1,3 +1,4 @@
+import { delay } from 'redux-saga';
 import { call, put, takeEvery, takeLatest, select } from 'redux-saga/effects';
 
 import { GroupStateType } from '../reducers/group';
@@ -75,6 +76,8 @@ function* getGroupUsersFetchRequested(): any {
 
 function* getGroupMessagesFetchRequested(action: any): any {
     try {
+        // need to delay so we don't block the first action (realm currently blocks and loading icon won't show)
+        yield delay(0);
         // get groupID from selected group if not passed in
         if (!action.groupID) {
             const state: GroupStateType = yield select(getGroupState);
@@ -82,16 +85,17 @@ function* getGroupMessagesFetchRequested(action: any): any {
         }
 
         const storedMessages = yield MessageRealm.getMessages(action.groupID);
-        yield put(groupActions.getGroupMessagesFetchSucceeded(storedMessages));
+        yield put(groupActions.setGroupMessages(storedMessages));
 
         // fetch new messages from server based on last message timestamp
         const response = yield call(groupAPI.getMessages, action.groupID, MessageRealm.getLastMessageDate(action.groupID));
+        yield put(groupActions.getGroupMessagesFetchSucceeded());
 
         // store new message
         if (response.data.length > 0) {
             yield MessageRealm.storeMessages(response.data);
             const storedMessages = yield MessageRealm.getMessages(action.groupID);
-            yield put(groupActions.getGroupMessagesFetchSucceeded(storedMessages));
+            yield put(groupActions.setGroupMessages(storedMessages));
         }
 
     } catch(error) {

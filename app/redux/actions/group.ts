@@ -61,10 +61,9 @@ function getGroupMessagesFetchRequested(groupID: number): any {
     };
 }
 
-function getGroupMessagesFetchSucceeded(messages: Array<MessageType>): any {
+function getGroupMessagesFetchSucceeded(): Action {
     return {
         type: types.GET_GROUP_MESSAGES_FETCH_SUCCEEDED,
-        messages,
     };
 }
 
@@ -74,6 +73,12 @@ function getGroupMessagesFetchFailed(): Action {
     };
 }
 
+function setGroupMessages(messages: Array<MessageType>): any {
+    return {
+        type: types.SET_GROUP_MESSAGES,
+        messages,
+    };
+}
 export interface GroupActionMapType extends ActionCreatorsMapObject {
     resetGroupState: any,
     setSelectedGroup: any,
@@ -86,6 +91,7 @@ export interface GroupActionMapType extends ActionCreatorsMapObject {
     getGroupMessagesFetchRequested: any,
     getGroupMessagesFetchSucceeded: any,
     getGroupMessagesFetchFailed: any,
+    setGroupMessages: any,
 }
 
 const actionMap: GroupActionMapType = {
@@ -100,6 +106,7 @@ const actionMap: GroupActionMapType = {
     getGroupMessagesFetchRequested,
     getGroupMessagesFetchSucceeded,
     getGroupMessagesFetchFailed,
+    setGroupMessages,
 };
 
 export default actionMap;
