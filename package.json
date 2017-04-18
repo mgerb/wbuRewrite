@@ -18,6 +18,7 @@
     "react-native": "0.42.3",
     "react-native-fbsdk": "^0.5.0",
     "react-native-fcm": "^6.1.0",
+    "react-native-invertible-scroll-view": "^1.0.0",
     "react-native-keyboard-spacer": "^0.3.1",
     "react-native-navigation": "next",
     "react-native-root-toast": "^1.0.5",

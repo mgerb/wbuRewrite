@@ -9,11 +9,12 @@ import colors from '../style/colors';
 import sizes from '../style/sizes';
 
 interface Props {
-    selectedGroup: GroupType,
+    selectedGroup: GroupType;
 }
 
 interface State {
-    message: string,
+    message: string;
+    textInputContainerHeight: number;
 }
 
 export default class ChatInput  extends React.Component<Props, State> {
@@ -22,6 +23,7 @@ export default class ChatInput  extends React.Component<Props, State> {
         super(props);
         this.state = {
             message: "",
+            textInputContainerHeight: 40,
         };
     }
 
@@ -43,21 +45,37 @@ export default class ChatInput  extends React.Component<Props, State> {
 
     }
 
+    onTextInputSizeChange(e: any) {
+        const height = e.nativeEvent.contentSize.height;
+
+        if (height > 40 && height < 200) {
+            this.setState({
+                textInputContainerHeight: height,
+            });
+        } else if (height < 40) {
+            this.setState({
+                textInputContainerHeight: 40,
+            });
+        }
+    }
+
     render() {
         return (
-            <View style={styles.container}>
+            <View style={[styles.container, {height: this.state.textInputContainerHeight}]}>
                 <TextInput placeholder="Message"
+                            multiline={true}
                             placeholderTextColor={colors.dark1}
                             style={styles.textInput}
                             value={this.state.message}
+                            keyboardAppearance={'dark'}
+                            maxLength={150}
+                            onContentSizeChange={(e) => {this.onTextInputSizeChange(e);}}
                             onChangeText={(message) => this.setState({message})}/>
 
-                <View style={styles.submitButton}>
-                    <Text style={styles.sendText}
-                          onPress={this.fetchStoreMessage.bind(this)}>Send</Text>
-                </View>
+                <Text style={styles.sendText}
+                        onPress={this.fetchStoreMessage.bind(this)}>Send</Text>
             </View>
-        )
+        );
     }
 }
 
@@ -67,21 +85,15 @@ const styles = StyleSheet.create({
         backgroundColor: colors.dark2,
         borderTopWidth: 1,
         borderColor: colors.dark1,
+        paddingHorizontal: 10,
     } as ViewStyle,
     textInput: {
         flex: 1,
-        padding: 10,
-        height: 50,
         fontSize: sizes.default,
         color: colors.white,
     } as TextStyle,
-    submitButton: {
-        height: 50,
-        width: 80,
-        alignItems: "center",
-        justifyContent: "center",
-    } as ViewStyle,
     sendText: {
+        paddingTop: 6,
         fontSize: sizes.default,
         color: colors.white,
     } as TextStyle,

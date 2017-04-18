@@ -17,11 +17,11 @@ import navigation from '../navigation';
 import storage from '../utils/storage';
 
 interface Props {
-    navigator: any,
-    userActions: UserActionMapType,
-    groupActions: GroupActionMapType,
-    user: UserStateType,
-    group: GroupStateType,
+    navigator: any;
+    userActions: UserActionMapType;
+    groupActions: GroupActionMapType;
+    user: UserStateType;
+    group: GroupStateType;
 }
 
 interface State {
