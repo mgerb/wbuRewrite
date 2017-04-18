@@ -5,3 +5,4 @@ declare module 'react-native-fbsdk';
 declare module 'react-native-root-toast';
 declare module 'react-native-keyboard-spacer';
 declare module 'react-native-vector-icons/FontAwesome';
+declare module 'react-native-invertible-scroll-view';
