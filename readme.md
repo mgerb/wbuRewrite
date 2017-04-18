@@ -20,3 +20,7 @@ I can install the pods and then comment out these lines - install again and it w
 ### 0.43.2
 
 Not upgrading yet because it breaks the inverted scrollview
+
+
+### Linker error
+Select React scheme and rebuild project
