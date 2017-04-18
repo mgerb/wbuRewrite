@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ViewStyle, Text, StyleSheet, ScrollView } from 'react-native';
+import { View, ViewStyle, Text, TextStyle, StyleSheet, ScrollView, TouchableHighlight } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 // redux
@@ -14,13 +14,14 @@ import userActions, { UserActionMapType } from '../redux/actions/user';
 
 import navigation from '../navigation';
 import colors from '../style/colors';
+import sizes from '../style/sizes';
 
 interface Props {
-    user:  UserStateType,
-    group: GroupStateType,
-    groupActions: GroupActionMapType,
-    userActions: UserActionMapType,
-    navigator: any,
+    user:  UserStateType;
+    group: GroupStateType;
+    groupActions: GroupActionMapType;
+    userActions: UserActionMapType;
+    navigator: any;
 }
 
 interface State {
@@ -55,24 +56,37 @@ class LeftDrawer extends React.Component<Props, State> {
     render() {
         return (
             <View style={styles.container}>
-            <View style={styles.header}/>
+            <View style={styles.header}>
+                <Text style={styles.headerText}>{this.props.user.firstName + " " + this.props.user.lastName}</Text>
+            </View>
                 
-            <ScrollView style={{flex:1}}>
+            <ScrollView>
                 {this.props.group.groups.map((group: GroupType, index: number) => {
-                    return <Text key={index} onPress={() => this.setSelectedGroup(group)}>{group.name}
-                        {group.id === this.props.group.selectedGroup.id ? " Selected Group" : ""}
-                    </Text>
+                    const selectedStyle = group.id === this.props.group.selectedGroup.id ? {backgroundColor : colors.dark2} : {};
+                    return (
+                        <TouchableHighlight key={index}
+                                            underlayColor={colors.gray2}
+                                            style={[styles.itemContainer, selectedStyle]}
+                                            onPress={() => this.setSelectedGroup(group)}>
+                            <Text style={styles.itemContainerContent}>
+                                {group.name}
+                            </Text>
+                        </TouchableHighlight>
+                    );
                 })}
-
-                <Text onPress={this.logout.bind(this)}>Logout</Text>
-
-                <Text onPress={() => navigation.GroupInvites()}>Group Invites</Text>
-
-                <Text onPress={() => navigation.GroupSegue()}>Group Segue</Text>
             </ScrollView>
 
             <View style={styles.footer}>
-                <Icon name="gear"/>
+                <Icon name="gear"
+                        style={{fontSize: sizes.default, color: colors.white}}
+                        onPress={this.logout.bind(this)}/>
+                <Icon name="envelope"
+                        style={{fontSize: sizes.default, color: colors.white}}
+                        onPress={() => navigation.GroupInvites()}
+                        />
+                <Icon name="plus"
+                        style={{fontSize: sizes.default, color: colors.white}}
+                        onPress={() => navigation.GroupSegue()}/>
                 </View>
             </View>
         )
@@ -105,11 +119,31 @@ const styles = StyleSheet.create({
     } as ViewStyle,
     header: {
         height: 50,
+        flexDirection: 'column',
+        justifyContent: 'flex-end',
+        alignItems: 'center',
+        paddingBottom: 10,
+        backgroundColor: colors.dark1,
     } as ViewStyle,
+    headerText: {
+        color: colors.white,
+    } as TextStyle,
     footer: {
         height: 50,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
+        paddingHorizontal: 20,
+        borderTopWidth: 1,
+        borderTopColor: colors.gray1,
     } as ViewStyle,
+    itemContainer: {
+        height: 50,
+        alignItems: 'center',
+        justifyContent: 'center',
+    } as ViewStyle,
+    itemContainerContent: {
+        color: colors.white,
+        fontSize: sizes.default,
+    } as TextStyle,
 });

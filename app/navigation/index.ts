@@ -8,7 +8,7 @@ export interface ClosableModal {
 class nav {
 
     public NavStyle: any = {
-        navBarBackgroundColor: colors.dark2,
+        navBarBackgroundColor: colors.dark1,
         navBarTextColor: colors.white,
         navBarButtonColor: colors.white,
     }
@@ -21,10 +21,10 @@ class nav {
             },
             drawer: {
                 left: {
-                    screen: 'LeftDrawer'
+                    screen: 'LeftDrawer',
                 },
                 right: {
-                    screen: 'RightDrawer'
+                    screen: 'RightDrawer',
                 }
             },
             animationType: 'slide-down',

@@ -16,6 +16,8 @@ import fcm from '../utils/fcm';
 import navigation from '../navigation';
 import storage from '../utils/storage';
 
+import colors from '../style/colors';
+
 interface Props {
     navigator: any;
     userActions: UserActionMapType;
@@ -91,5 +93,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: colors.gray3,
     } as ViewStyle,
 });
