@@ -66,6 +66,7 @@ export default class CreateGroup extends React.Component<Props, State> {
                                autoCapitalize="none"
                                style={styles.textInput}
                                value={this.state.groupName}
+                                maxLength={20}
                                onChangeText={(groupName) => this.setState({groupName})}/>
                     <View style={styles.switch}>
                         <Text>Public Group</Text>

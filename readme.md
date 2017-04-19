@@ -23,4 +23,7 @@ Not upgrading yet because it breaks the inverted scrollview
 
 
 ### Linker error
-Select React scheme and rebuild project
+- Select React scheme and rebuild project
+- watchman watch-del-all
+- yarn start --reset-cache
+- remove libReact.a from build phases and readd it

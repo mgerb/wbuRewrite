@@ -22,7 +22,6 @@
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
-		146834051AC3E58100842450 /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		20E25D2D9C804BABAEF67C61 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 91C7125BBE80421C876033F4 /* Ionicons.ttf */; };
 		2D02E4BC1E0B4A80006451C7 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
 		2D02E4BD1E0B4A84006451C7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
@@ -44,12 +43,12 @@
 		4CFCFD87D37F4C878E340241 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7C05315C0ADE4723B82C596C /* Zocial.ttf */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
 		64F85B4E68719B934D2FCA49 /* Pods_wbuRewrite.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF8C67E86C89FB7FFF935342 /* Pods_wbuRewrite.framework */; };
-		6815D7C1A1EE4F66AEFEDCDC /* libSQLite.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E51B761F0D794BB8BBA99C29 /* libSQLite.a */; };
 		7DD872ECBEB242E1AE5255E6 /* libReactNativeNavigation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = A99F39B6FB314A94A9951178 /* libReactNativeNavigation.a */; };
 		81C22A40AC2642FC996BD581 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = CFD55E8BBD4D4DB886328297 /* Entypo.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		8346CF03AAC44559B5F2BD78 /* Pods_wbuRewriteTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEB7AC97D0FAF43729248F6C /* Pods_wbuRewriteTests.framework */; };
 		91819727014A4852A3C08FAA /* libRNFIRMessaging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F37B9E020554020BB293DE2 /* libRNFIRMessaging.a */; };
+		A2228BB61EA6E39300EC1C6F /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		A2CA43431E822DAD0060E67B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A2CA43421E822DAD0060E67B /* GoogleService-Info.plist */; };
 		A2D859D6005F4C59BC995286 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0809538D4A2A4FEF9958AA2C /* libRNVectorIcons.a */; };
 		BCA6F78DE8664486849F52FD /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D36B3991BF364AC395316975 /* MaterialIcons.ttf */; };
@@ -348,7 +347,6 @@
 		D36B3991BF364AC395316975 /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		DA2573B756E64CE2AC68B97D /* SimpleLineIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = SimpleLineIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/SimpleLineIcons.ttf"; sourceTree = "<group>"; };
 		E249A7EA7B9FBF95510B566B /* Pods-wbuRewriteTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wbuRewriteTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-wbuRewriteTests/Pods-wbuRewriteTests.release.xcconfig"; sourceTree = "<group>"; };
-		E51B761F0D794BB8BBA99C29 /* libSQLite.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libSQLite.a; sourceTree = "<group>"; };
 		EEB7AC97D0FAF43729248F6C /* Pods_wbuRewriteTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_wbuRewriteTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -366,7 +364,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				146834051AC3E58100842450 /* libReact.a in Frameworks */,
+				A2228BB61EA6E39300EC1C6F /* libReact.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
@@ -382,7 +380,6 @@
 				7DD872ECBEB242E1AE5255E6 /* libReactNativeNavigation.a in Frameworks */,
 				64F85B4E68719B934D2FCA49 /* Pods_wbuRewrite.framework in Frameworks */,
 				A2D859D6005F4C59BC995286 /* libRNVectorIcons.a in Frameworks */,
-				6815D7C1A1EE4F66AEFEDCDC /* libSQLite.a in Frameworks */,
 				4873A9EF9C3A43C9880D5306 /* libRealmReact.a in Frameworks */,
 				31E88B04193148C1B6548C75 /* libc++.tbd in Frameworks */,
 				3424835A34D44EC3910CC7F5 /* libz.tbd in Frameworks */,

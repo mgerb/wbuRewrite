@@ -1,8 +1,9 @@
 import React from 'react';
-import { StyleSheet, View, ViewStyle } from 'react-native';
+import { StyleSheet, Text, TextStyle, View, ViewStyle } from 'react-native';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import ChatScrollView from '../components/ChatScrollView';
 import ChatInput from '../components/ChatInput';
+import DashboardNavigator from '../components/DashboardNavigator';
 
 // redux
 import { bindActionCreators, Dispatch } from 'redux';
@@ -17,6 +18,7 @@ import navigation from '../navigation';
 import storage from '../utils/storage';
 
 import colors from '../style/colors';
+import sizes from '../style/sizes';
 
 interface Props {
     navigator: any;
@@ -31,8 +33,6 @@ interface State {
 }
 
 class Dashboard extends React.Component<Props, State> {
-
-    static navigatorStyle = {...navigation.NavStyle};
     
     constructor(props: Props) {
         super(props);
@@ -62,12 +62,22 @@ class Dashboard extends React.Component<Props, State> {
         fcm.removeListeners();
     }
 
+    private userHasGroups(): boolean {
+        return this.props.group.groups.length > 0 && this.props.group.getUserGroupsFetchSucceeded;
+    }
 
     render() {
         return (
             <View style={styles.container}>
-                <ChatScrollView/>
-                <ChatInput selectedGroup={{...this.props.group.selectedGroup}}/>
+                <DashboardNavigator navigator={this.props.navigator} selectedGroup={this.props.group.selectedGroup}/>
+
+                {!this.userHasGroups() ?
+                <View style={styles.introMessageContainer}>
+                    <Text style={styles.introMessage}>Join or create a group to start!</Text>
+                </View> :
+                <ChatScrollView/>}
+
+                {this.userHasGroups() ? <ChatInput selectedGroup={{...this.props.group.selectedGroup}}/> : null}
                 <KeyboardSpacer/>
             </View>
         );
@@ -93,6 +103,15 @@ export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: colors.gray3,
+        backgroundColor: colors.dark3,
     } as ViewStyle,
+    introMessageContainer: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+    } as ViewStyle,
+    introMessage: {
+        fontSize: sizes.large,
+        color: colors.white,
+    } as TextStyle,
 });

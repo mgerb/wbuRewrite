@@ -17,7 +17,9 @@ class nav {
         Navigation.startSingleScreenApp({
             screen: {
                 screen: 'Dashboard',
-                title: 'Dashboard',
+                navigatorStyle: {
+                    navBarHidden: true,
+                },
             },
             drawer: {
                 left: {

@@ -3,44 +3,44 @@ import types from '../constants';
 import { UserType } from './user';
 
 export interface GroupType  {
-    id?: number,
-    name?: string,
-    ownerID?: number,
-    ownerEmail?: string,
-    ownerName?: string,
-    userCount?: number,
-    locked?: boolean,
-    public?: boolean,
+    id?: number;
+    name?: string;
+    ownerID?: number;
+    ownerEmail?: string;
+    ownerName?: string;
+    userCount?: number;
+    locked?: boolean;
+    public?: boolean;
 }
 
 
 export interface MessageType {
-    id: number,
-    userID: number,
-    groupID: number,
-    firstName: string,
-    lastName: string,
-    content: string,
-    timestamp: number,
+    id: number;
+    userID: number;
+    groupID: number;
+    firstName: string;
+    lastName: string;
+    content: string;
+    timestamp: number;
 }
 
 export interface GroupStateType {
-    selectedGroup: GroupType,
-    selectedGroupUsers: Array<UserType>,
-    selectedGroupMessages: Array<MessageType>,
-    groups: Array<GroupType>,
+    selectedGroup: GroupType;
+    selectedGroupUsers: Array<UserType>;
+    selectedGroupMessages: Array<MessageType>;
+    groups: Array<GroupType>;
 
-    getUserGroupsFetchRequested: boolean,
-    getUserGroupsFetchSucceeded: boolean,
-    getUserGroupsFetchFailed: boolean,
+    getUserGroupsFetchRequested: boolean;
+    getUserGroupsFetchSucceeded: boolean;
+    getUserGroupsFetchFailed: boolean;
 
-    getGroupUsersFetchRequested: boolean,
-    getGroupUsersFetchSucceeded: boolean,
-    getGroupUsersFetchFailed: boolean,
+    getGroupUsersFetchRequested: boolean;
+    getGroupUsersFetchSucceeded: boolean;
+    getGroupUsersFetchFailed: boolean;
 
-    getGroupMessagesFetchRequested: boolean,
-    getGroupMessagesFetchSucceeded: boolean,
-    getGroupMessagesFetchFailed: boolean,
+    getGroupMessagesFetchRequested: boolean;
+    getGroupMessagesFetchSucceeded: boolean;
+    getGroupMessagesFetchFailed: boolean;
 }
 
 const defaultState: GroupStateType = {

@@ -56,8 +56,8 @@ class groupAPI {
         }));
     }
 
-    public kickUserFromGroup(userID: number, groupID: number): AxiosPromise {
-        return api.post('/group/kickUserFromGroup', querystring.stringify({
+    public removeUserFromGroup(userID: number, groupID: number): AxiosPromise {
+        return api.post('/group/removeUserFromGroup', querystring.stringify({
             userID,
             groupID,
         }));

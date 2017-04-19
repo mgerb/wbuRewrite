@@ -62,13 +62,13 @@ class LeftDrawer extends React.Component<Props, State> {
                 
             <ScrollView>
                 {this.props.group.groups.map((group: GroupType, index: number) => {
-                    const selectedStyle = group.id === this.props.group.selectedGroup.id ? {backgroundColor : colors.dark2} : {};
+                    const selectedStyle = group.id === this.props.group.selectedGroup.id ? styles.itemContainerSelected : {};
                     return (
                         <TouchableHighlight key={index}
-                                            underlayColor={colors.gray2}
+                                            underlayColor={colors.dark2}
                                             style={[styles.itemContainer, selectedStyle]}
                                             onPress={() => this.setSelectedGroup(group)}>
-                            <Text style={styles.itemContainerContent}>
+                            <Text style={styles.itemText}>
                                 {group.name}
                             </Text>
                         </TouchableHighlight>
@@ -78,14 +78,14 @@ class LeftDrawer extends React.Component<Props, State> {
 
             <View style={styles.footer}>
                 <Icon name="gear"
-                        style={{fontSize: sizes.default, color: colors.white}}
+                        style={styles.icon}
                         onPress={this.logout.bind(this)}/>
                 <Icon name="envelope"
-                        style={{fontSize: sizes.default, color: colors.white}}
+                        style={styles.icon}
                         onPress={() => navigation.GroupInvites()}
                         />
                 <Icon name="plus"
-                        style={{fontSize: sizes.default, color: colors.white}}
+                        style={styles.icon}
                         onPress={() => navigation.GroupSegue()}/>
                 </View>
             </View>
@@ -122,11 +122,12 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'flex-end',
         alignItems: 'center',
-        paddingBottom: 10,
+        paddingBottom: 5,
         backgroundColor: colors.dark1,
     } as ViewStyle,
     headerText: {
         color: colors.white,
+        fontSize: sizes.default,
     } as TextStyle,
     footer: {
         height: 50,
@@ -135,15 +136,24 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingHorizontal: 20,
         borderTopWidth: 1,
-        borderTopColor: colors.gray1,
+        borderTopColor: colors.dark2,
     } as ViewStyle,
     itemContainer: {
         height: 50,
-        alignItems: 'center',
         justifyContent: 'center',
+        paddingHorizontal: 15,
     } as ViewStyle,
-    itemContainerContent: {
+    itemContainerSelected: {
+        backgroundColor: colors.dark2,
+        borderLeftWidth: 5,
+        borderLeftColor: colors.dark1,
+    } as ViewStyle,
+    itemText: {
         color: colors.white,
         fontSize: sizes.default,
+    } as TextStyle,
+    icon: {
+        fontSize: sizes.default,
+        color: colors.white,
     } as TextStyle,
 });
