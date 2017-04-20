@@ -75,7 +75,7 @@ class RightDrawer extends React.Component<Props, State> {
                 {text: 'Yes', onPress: () => this.fetchLeaveGroup()},
             ],
             {
-                cancelable: false
+                cancelable: false,
             },
         );
     }
@@ -147,7 +147,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-end',
         alignItems: 'center',
         paddingBottom: 5,
-        backgroundColor: colors.dark1,
+        backgroundColor: colors.primary,
     } as ViewStyle,
     headerText: {
         color: colors.white,
@@ -170,7 +170,7 @@ const styles = StyleSheet.create({
     itemContainerSelected: {
         backgroundColor: colors.dark2,
         borderLeftWidth: 5,
-        borderLeftColor: colors.dark1,
+        borderLeftColor: colors.primary,
     } as ViewStyle,
     itemText: {
         color: colors.white,

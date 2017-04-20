@@ -63,7 +63,7 @@ class Dashboard extends React.Component<Props, State> {
     }
 
     private userHasGroups(): boolean {
-        return this.props.group.groups.length > 0 && this.props.group.getUserGroupsFetchSucceeded;
+        return this.props.group.groups.length > 0 && (this.props.group.getUserGroupsFetchSucceeded || this.props.group.getUserGroupsFetchFailed);
     }
 
     render() {

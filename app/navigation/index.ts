@@ -8,7 +8,7 @@ export interface ClosableModal {
 class nav {
 
     public NavStyle: any = {
-        navBarBackgroundColor: colors.dark1,
+        navBarBackgroundColor: colors.primary,
         navBarTextColor: colors.white,
         navBarButtonColor: colors.white,
     }

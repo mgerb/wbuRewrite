@@ -23,8 +23,9 @@ interface Props {
 }
 
 interface State {
-    messages: Array<MessageType>,
+    messages: Array<MessageType>;
 }
+
 class ChatScrollView extends React.Component<Props, State> {
 
     private ds: any;
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
     messageContent: {
         backgroundColor: colors.dark2,
         borderWidth: 1,
-        borderColor: colors.dark1,
+        borderColor: colors.primary,
         padding: 10,
         borderRadius: 5,
         marginTop: 5,

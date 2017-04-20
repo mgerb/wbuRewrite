@@ -2,8 +2,11 @@ import React from 'react';
 import { View, ViewStyle, StyleSheet, Text, TouchableHighlight } from 'react-native';
 import navigation, { ClosableModal } from '../navigation';
 
+import colors from '../style/colors';
+import wStyles from '../style/wStyles';
+
 interface Props {
-    navigator: any,
+    navigator: any;
 }
 
 interface State {
@@ -46,16 +49,16 @@ export default class GroupSegue extends React.Component<Props, State> implements
         return (
             <View style={styles.container}>
 
-                <TouchableHighlight style={styles.submitButton} activeOpacity={50} underlayColor={'red'} onPress={this.navigateCreateGroup.bind(this)}>
-                    <Text>Create Group</Text>
+                <TouchableHighlight style={wStyles.button} underlayColor={colors.light1} onPress={this.navigateCreateGroup.bind(this)}>
+                    <Text style={wStyles.buttonText}>Create Group</Text>
                 </TouchableHighlight>
 
-                <TouchableHighlight style={styles.submitButton} activeOpacity={50} underlayColor={'red'} onPress={this.navigateGroupSearch.bind(this)}>
-                    <Text>Join Group</Text>
+                <TouchableHighlight style={wStyles.button} underlayColor={colors.light1} onPress={this.navigateGroupSearch.bind(this)}>
+                    <Text style={wStyles.buttonText}>Join Group</Text>
                 </TouchableHighlight>
 
             </View>
-        )
+        );
     }
 }
 
@@ -63,17 +66,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        alignItems: 'center',
         justifyContent: 'center',
-    } as ViewStyle,
-    submitButton: {
-        marginBottom: 10,
-        marginTop: 5,
-        backgroundColor: "blue",
-        height: 50,
-        width: 200,
-        borderRadius: 5,
-        alignItems: "center",
-        justifyContent: "center",
     } as ViewStyle,
 });

@@ -47,7 +47,7 @@ export default class DashboardNavigator extends React.Component<Props, State> {
 const styles = StyleSheet.create({
     container: {
         height: 70,
-        backgroundColor: colors.dark1,
+        backgroundColor: colors.primary,
         flexDirection: "column",
         justifyContent: "flex-end",
         borderBottomWidth: 1,
