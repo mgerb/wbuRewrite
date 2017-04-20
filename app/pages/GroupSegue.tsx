@@ -41,7 +41,7 @@ export default class GroupSegue extends React.Component<Props, State> implements
     private navigateGroupSearch() {
         this.props.navigator.push({
             screen: "GroupSearch",
-            title: "Group Search",
+            title: "Join Group",
         });
     }
 

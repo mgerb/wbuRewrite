@@ -5,13 +5,16 @@ import groupAPI from '../api/group.api';
 import { GroupType } from '../redux/reducers/group';
 import toast from '../utils/toast';
 
+import colors from '../style/colors';
+import sizes from '../style/sizes';
+
 interface Props {
-    navigator: any,
+    navigator: any;
 }
 
 interface State {
-    searchGroup: string,
-    groupList: Array<GroupType>,
+    searchGroup: string;
+    groupList: Array<GroupType>;
 }
 
 export default class GroupSearch extends React.Component<Props, State> {
@@ -57,18 +60,18 @@ export default class GroupSearch extends React.Component<Props, State> {
                                style={styles.textInput}
                                value={this.state.searchGroup}
                                onChangeText={(searchGroup) => this.setState({searchGroup})}/>
-                    <TouchableHighlight style={styles.submitButton} activeOpacity={50} underlayColor={'red'} onPress={ this.fetchSearchPublicGroup.bind(this) }>
-                        <Text>Search</Text>
+                    <TouchableHighlight style={styles.submitButton} underlayColor={colors.light1} onPress={ this.fetchSearchPublicGroup.bind(this) }>
+                        <Text style={styles.buttonText}>Search</Text>
                     </TouchableHighlight>
                 </View>
 
-                <ScrollView>
+                <ScrollView keyboardDismissMode={"on-drag"}>
                     {this.state.groupList.map((group: GroupType, index: number) => {
                         return (
-                            <TouchableHighlight key={index} onPress={() => this.navigateGroupInfo(group)}>
-                                <View>
-                                    <Text>{group.name}</Text>
-                                    <Text>{group.ownerEmail}</Text>
+                            <TouchableHighlight underlayColor={colors.light1} key={index} onPress={() => this.navigateGroupInfo(group)}>
+                                <View style={styles.listItem}>
+                                    <Text style={[styles.listItemText, {fontSize: sizes.default}]}>{group.name}</Text>
+                                    <Text style={styles.listItemText}>{group.ownerEmail}</Text>
                                 </View>
                             </TouchableHighlight>
                         );
@@ -82,17 +85,34 @@ export default class GroupSearch extends React.Component<Props, State> {
 const styles = StyleSheet.create({
     searchContainer: {
         flexDirection: 'row',
+        borderTopWidth: 2,
+        borderBottomWidth: 1,
+        borderColor: colors.light1,
+        height: 50,
+        paddingLeft: 20,
     } as ViewStyle,
     textInput: {
         flex: 1,
-        padding: 10,
         height: 50,
     } as TextStyle,
     submitButton: {
-        backgroundColor: "blue",
-        height: 50,
+        backgroundColor: colors.primary,
         width: 80,
         alignItems: "center",
         justifyContent: "center",
     } as ViewStyle,
+    buttonText: {
+        fontSize: sizes.default,
+        color: colors.white,
+    } as TextStyle,
+    listItem: {
+        height: 50,
+        borderBottomWidth: 1,
+        borderColor: colors.light1,
+        justifyContent: 'center',
+        paddingHorizontal: 20,
+    } as ViewStyle,
+    listItemText: {
+        color: colors.primary,
+    } as TextStyle,
 });
