@@ -66,7 +66,7 @@ class RightDrawer extends React.Component<Props, State> {
         });
     }
 
-    private logoutOnPress() {
+    private leaveGroupOnPress() {
         Alert.alert(
             'Leave Group',
             `Are you sure you want to leave this group?`,
@@ -82,6 +82,27 @@ class RightDrawer extends React.Component<Props, State> {
 
     private fetchLeaveGroup() {
         groupAPI.leaveGroup(this.props.group.selectedGroup.id as number).then(() => {
+            this.props.groupActions.resetGroupState();
+            this.props.groupActions.getUserGroupsFetchRequested();
+        });
+    }
+
+    private deleteGroupOnPress() {
+        Alert.alert(
+            'Delete Group',
+            `Are you sure you want to delete this group?`,
+            [
+                {text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                {text: 'Yes', onPress: () => this.fetchDeleteGroup()},
+            ],
+            {
+                cancelable: false,
+            },
+        );
+    }
+
+    private fetchDeleteGroup() {
+        groupAPI.deleteGroup(this.props.group.selectedGroup.id as number).then(() => {
             this.props.groupActions.resetGroupState();
             this.props.groupActions.getUserGroupsFetchRequested();
         });
@@ -110,8 +131,11 @@ class RightDrawer extends React.Component<Props, State> {
                 {this.props.group.selectedGroup.id ?
                     <View style={styles.footer}>
                         {this.props.user.id === this.props.group.selectedGroup.ownerID ? 
+                        <Icon name="delete-forever" style={styles.iconDelete} onPress={this.deleteGroupOnPress.bind(this)}/> : <View/>}
+
+                        {this.props.user.id === this.props.group.selectedGroup.ownerID ? 
                         <Icon name="account-plus" style={styles.icon} onPress={() => navigation.InviteUser()}/> :
-                        <Icon name="logout" style={styles.icon} onPress={this.logoutOnPress.bind(this)}/>}
+                        <Icon name="logout" style={styles.icon} onPress={this.leaveGroupOnPress.bind(this)}/>}
                     </View>
                 : null}
             </View>
@@ -155,8 +179,9 @@ const styles = StyleSheet.create({
     } as TextStyle,
     footer: {
         height: 50,
-        justifyContent: 'center',
-        alignItems: 'flex-end',
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
         paddingHorizontal: 20,
         borderTopWidth: 1,
         borderTopColor: colors.dark2,
@@ -182,5 +207,9 @@ const styles = StyleSheet.create({
     icon: {
         fontSize: sizes.large,
         color: colors.white,
+    } as TextStyle,
+    iconDelete: {
+        fontSize: sizes.large,
+        color: colors.red,
     } as TextStyle,
 });

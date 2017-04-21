@@ -19,6 +19,7 @@ interface State {
 
 export default class ChatInput  extends React.Component<Props, State> {
 
+
     constructor(props: Props) {
         super(props);
         this.state = {
@@ -31,7 +32,6 @@ export default class ChatInput  extends React.Component<Props, State> {
         if (this.state.message === "") {
             return;
         }
-
         groupAPI.storeMessage(this.props.selectedGroup.id, this.state.message).then(() => {
             // get messages from server after sending
             store.dispatch(GroupActions.getGroupMessagesFetchRequested(this.props.selectedGroup.id));
@@ -42,7 +42,6 @@ export default class ChatInput  extends React.Component<Props, State> {
         this.setState({
             message: "",
         });
-
     }
 
     onTextInputSizeChange(e: any) {

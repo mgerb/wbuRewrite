@@ -13,7 +13,7 @@ api.interceptors.response.use((config: AxiosResponse) => {
     return config;
 }, (error: any) => {
     // if code is unauthorized (401) then logout if already logged in
-    if (error.response.status && store.getState().user.loggedIn) {
+    if (error.response.status === 401 && store.getState().user.loggedIn) {
       store.dispatch(userActions.logout());
     }
 

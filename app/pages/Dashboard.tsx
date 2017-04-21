@@ -29,13 +29,16 @@ interface Props {
 }
 
 interface State {
-
+    showWelcomeMessage: boolean;
 }
 
 class Dashboard extends React.Component<Props, State> {
     
     constructor(props: Props) {
         super(props);
+        this.state = {
+            showWelcomeMessage :false,
+        };
     }
 
     componentDidMount() {
@@ -62,8 +65,24 @@ class Dashboard extends React.Component<Props, State> {
         fcm.removeListeners();
     }
 
-    private userHasGroups(): boolean {
-        return this.props.group.groups.length > 0 && (this.props.group.getUserGroupsFetchSucceeded || this.props.group.getUserGroupsFetchFailed);
+    componentWillReceiveProps(nextProps: Props) {
+        if ((!this.props.group.getUserGroupsFetchSucceeded && nextProps.group.getUserGroupsFetchSucceeded) ||
+            (!this.props.group.getUserGroupsFetchFailed && nextProps.group.getUserGroupsFetchFailed)) {
+            if (nextProps.group.groups.length < 1) {
+                this.setState({
+                    showWelcomeMessage: true,
+                });
+            }
+        }
+
+        // keep checking if use joins a group to remove welcome message
+        if (this.state.showWelcomeMessage) {
+            if (nextProps.group.groups.length > 0) {
+                this.setState({
+                    showWelcomeMessage: false,
+                });
+            }
+        }
     }
 
     render() {
@@ -71,13 +90,13 @@ class Dashboard extends React.Component<Props, State> {
             <View style={styles.container}>
                 <DashboardNavigator navigator={this.props.navigator} selectedGroup={this.props.group.selectedGroup}/>
 
-                {!this.userHasGroups() ?
+                {this.state.showWelcomeMessage ?
                 <View style={styles.introMessageContainer}>
                     <Text style={styles.introMessage}>Join or create a group to start!</Text>
                 </View> :
                 <ChatScrollView/>}
 
-                {this.userHasGroups() ? <ChatInput selectedGroup={{...this.props.group.selectedGroup}}/> : null}
+                {!this.state.showWelcomeMessage ? <ChatInput selectedGroup={{...this.props.group.selectedGroup}}/> : null}
                 <KeyboardSpacer/>
             </View>
         );
