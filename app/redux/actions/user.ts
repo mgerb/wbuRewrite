@@ -6,13 +6,13 @@ import types from '../constants';
 function logout(): Action {
     return {
         type: types.LOGOUT,
-    }
+    };
 }
 
 function resetUserState(): Action {
     return {
         type: types.RESET_USER_STATE,
-    }
+    };
 }
 
 function loginFetchRequested(email: string, password: string): any {
@@ -70,15 +70,15 @@ function refreshJWTFetchFailed(): Action {
 }
 
 export interface UserActionMapType extends ActionCreatorsMapObject {
-    logout: any,
-    resetUserState: any,
-    loginFetchRequested: any,
-    loginFacebookFetchRequested: any,
-    loginFetchSucceeded: any,
-    loginFetchFailed: any,
-    refreshJWTFetchRequested: any,
-    refreshJWTFetchSucceeded: any,
-    refreshJWTFetchFailed: any,
+    logout: any;
+    resetUserState: any;
+    loginFetchRequested: any;
+    loginFacebookFetchRequested: any;
+    loginFetchSucceeded: any;
+    loginFetchFailed: any;
+    refreshJWTFetchRequested: any;
+    refreshJWTFetchSucceeded: any;
+    refreshJWTFetchFailed: any;
 }
 
 const actionMap: UserActionMapType = {

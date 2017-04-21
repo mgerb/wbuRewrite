@@ -11,7 +11,7 @@ import navigation from '../../navigation';
 
 function* fetchLoginRequested(action: UserType): any {
     try {
-        const response = yield call(userAPI.login, action.email, action.password)
+        const response = yield call(userAPI.login, action.email, action.password);
         yield call(storage.storeUserState, response.data);
         yield put(userActions.loginFetchSucceeded(response.data));
     } catch (error) {
@@ -21,7 +21,7 @@ function* fetchLoginRequested(action: UserType): any {
 
 function* fetchFacebookLoginRequested(action: UserType): any {
     try {
-        const response = yield call(userAPI.loginFacebook, action.facebookAccessToken)
+        const response = yield call(userAPI.loginFacebook, action.facebookAccessToken);
         yield call(storage.storeUserState, response.data);
         yield put(userActions.loginFetchSucceeded(response.data));
     } catch (error) {
@@ -37,11 +37,16 @@ function* loginFetchSucceeded(action: any): any {
 
 // reset storage and navigate to login screen
 function* logout(): any {
-    yield call(storage.removeAllKeys);
-    yield put(userActions.resetUserState());
-    yield put(groupActions.resetGroupState());
-    yield resetAuthorizationHeader();
-    yield navigation.Login();
+    try {
+        // need to reset user state ASAP because we check if user is logged in when calling this
+        yield put(userActions.resetUserState());
+        yield put(groupActions.resetGroupState());
+        yield resetAuthorizationHeader();
+        yield navigation.Login();
+        yield call(storage.removeAllKeys);
+    } catch(error) {
+        console.log(error);
+    }
 }
 
 export default function* watches() {

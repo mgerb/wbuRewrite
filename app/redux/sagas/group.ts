@@ -1,5 +1,5 @@
 import { delay } from 'redux-saga';
-import { call, put, takeEvery, takeLatest, select } from 'redux-saga/effects';
+import { call, put, takeEvery, throttle, select } from 'redux-saga/effects';
 
 import { GroupStateType } from '../reducers/group';
 import groupAPI from '../../api/group.api';
@@ -104,8 +104,8 @@ function* getGroupMessagesFetchRequested(action: any): any {
 }
 
 export default function* watches() {
-    yield takeLatest(types.GET_USER_GROUPS_FETCH_REQUESTED, getUserGroupsFetchRequested);
-    yield takeLatest(types.GET_GROUP_MESSAGES_FETCH_REQUESTED, getGroupMessagesFetchRequested);
-    yield takeLatest(types.GET_GROUP_USERS_FETCH_REQUESTED, getGroupUsersFetchRequested);
+    yield throttle(2000, types.GET_USER_GROUPS_FETCH_REQUESTED, getUserGroupsFetchRequested);
+    yield throttle(2000, types.GET_GROUP_MESSAGES_FETCH_REQUESTED, getGroupMessagesFetchRequested);
+    yield throttle(2000, types.GET_GROUP_USERS_FETCH_REQUESTED, getGroupUsersFetchRequested);
     yield takeEvery(types.SET_SELECTED_GROUP, setSelectedGroup);
 }
