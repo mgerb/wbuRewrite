@@ -19,6 +19,13 @@ class wStyles {
         color: colors.white,
         fontSize: sizes.default,
     };
+
+    public textInput: TextStyle = {
+        paddingVertical: 5,
+        paddingHorizontal: 20,
+        height: 50,
+        color: colors.primary,
+    };
 }
 
 export default new wStyles();

@@ -67,7 +67,7 @@ export default class CreateGroup extends React.Component<Props, State> {
             <View style={styles.container}>
                 <View>
 
-                    <TextInput style={styles.textInput}
+                    <TextInput style={wStyles.textInput}
                                placeholder="Group Name"
                                value={this.state.groupName}
                                multiline={false}
@@ -87,7 +87,7 @@ export default class CreateGroup extends React.Component<Props, State> {
                             <TextInput placeholder="Password (Optional)"
                                     multiline={false}
                                     autoCapitalize="none"
-                                    style={styles.textInput}
+                                    style={wStyles.textInput}
                                     value={this.state.password}
                                     onChangeText={(password) => this.setState({password})}/>
                         </View>
@@ -116,12 +116,6 @@ const styles = StyleSheet.create({
         alignItems: 'stretch',
         justifyContent: 'center',
     } as ViewStyle,
-    textInput: {
-        paddingVertical: 5,
-        paddingHorizontal: 20,
-        height: 50,
-        color: colors.primary,
-    } as TextStyle,
     errorMessage: {
         color: colors.primary,
         fontSize: sizes.default,
