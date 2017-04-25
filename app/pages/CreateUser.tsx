@@ -1,11 +1,17 @@
 import _ from 'lodash';
 import React from 'react';
-import { View, ViewStyle, TextStyle, KeyboardAvoidingView, Text, TextInput, StyleSheet, TouchableHighlight } from 'react-native';
+import { View, ViewStyle, TextStyle, Text, TextInput, StyleSheet, TouchableHighlight } from 'react-native';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
+
 import userAPI from '../api/user.api';
 import toast from '../utils/toast';
 
+import colors from '../style/colors';
+//import sizes from '../style/sizes';
+import wStyles from '../style/wStyles';
+
 interface Props {
-    navigator: any,
+    navigator: any;
 }
 
 interface State {
@@ -14,7 +20,7 @@ interface State {
     email: string;
     password: string;
     confirmPassword: string;
-    errorMessage: string,
+    errorMessage: string;
 }
 
 export default class CreateUser extends React.Component<Props, State> {
@@ -28,8 +34,8 @@ export default class CreateUser extends React.Component<Props, State> {
         errorMessage: " ",
     };
 
-    constructor() {
-        super();
+    constructor(props: Props) {
+        super(props);
 
         this.state = _.clone(this.defaultState);
     }
@@ -72,20 +78,35 @@ export default class CreateUser extends React.Component<Props, State> {
 
     public render() {
         return (
-            <KeyboardAvoidingView behavior="padding" style={styles.container}>
+            <View style={styles.container}>
+
                 <View>
                     <Text style={styles.errorMessage}>{this.state.errorMessage}</Text>
-                    <TextInput placeholder="First Name" autoCapitalize="none" style={styles.textInput} value={this.state.firstName} onChangeText={(firstName) => this.setState({firstName})}/>
-                    <TextInput placeholder="Last Name" autoCapitalize="none" style={styles.textInput} value={this.state.lastName} onChangeText={(lastName) => this.setState({lastName})}/>
-                    <TextInput placeholder="Email" autoCapitalize="none" style={styles.textInput} value={this.state.email} onChangeText={(email) => this.setState({email})}/>
-                    <TextInput placeholder="Password" autoCapitalize="none" style={styles.textInput} value={this.state.password} onChangeText={(password) => this.setState({password})}/>
-                    <TextInput placeholder="Confirm Password" autoCapitalize="none" style={styles.textInput} value={this.state.confirmPassword} onChangeText={(confirmPassword) => this.setState({confirmPassword})}/>
                 </View>
 
-                <TouchableHighlight style={styles.submitButton} activeOpacity={50} underlayColor={'red'} onPress={ this.fetchCreateUser.bind(this) }>
-                    <Text>Create Account</Text>
+                <View>
+                    <TextInput placeholder="First Name" multiline={false} autoCapitalize="none" style={wStyles.textInput} value={this.state.firstName} onChangeText={(firstName) => this.setState({firstName})}/>
+                    <View style={wStyles.divider}/>
+
+                    <TextInput placeholder="Last Name" multiline={false} autoCapitalize="none" style={wStyles.textInput} value={this.state.lastName} onChangeText={(lastName) => this.setState({lastName})}/>
+                    <View style={wStyles.divider}/>
+
+                    <TextInput placeholder="Email" multiline={false} autoCapitalize="none" style={wStyles.textInput} value={this.state.email} onChangeText={(email) => this.setState({email})}/>
+                    <View style={wStyles.divider}/>
+
+                    <TextInput placeholder="Password" multiline={false} autoCapitalize="none" style={wStyles.textInput} value={this.state.password} onChangeText={(password) => this.setState({password})}/>
+                    <View style={wStyles.divider}/>
+
+                    <TextInput placeholder="Confirm Password" multiline={false} autoCapitalize="none" style={wStyles.textInput} value={this.state.confirmPassword} onChangeText={(confirmPassword) => this.setState({confirmPassword})}/>
+                    <View style={wStyles.divider}/>
+                </View>
+
+                <TouchableHighlight style={wStyles.button} underlayColor={colors.light1} onPress={ this.fetchCreateUser.bind(this) }>
+                    <Text style={wStyles.buttonText}>Create Account</Text>
                 </TouchableHighlight>
-            </KeyboardAvoidingView>
+
+                <KeyboardSpacer/>
+            </View>
         );
     }
 }
@@ -94,27 +115,7 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        alignItems: 'center',
         justifyContent: 'center',
-    } as ViewStyle,
-    textInput: {
-        marginBottom: 5,
-        padding: 10,
-        height: 40,
-        width: 200,
-        borderColor: 'gray',
-        borderWidth: 1,
-        borderRadius: 2,
-    } as TextStyle,
-    submitButton: {
-        marginBottom: 10,
-        marginTop: 5,
-        backgroundColor: "blue",
-        height: 50,
-        width: 200,
-        borderRadius: 5,
-        alignItems: "center",
-        justifyContent: "center",
     } as ViewStyle,
     errorMessage: {
         color: "red",

@@ -26,6 +26,11 @@ class wStyles {
         height: 50,
         color: colors.primary,
     };
+
+    public divider: ViewStyle = {
+        height: 2,
+        backgroundColor: colors.light1,
+    };
 }
 
 export default new wStyles();

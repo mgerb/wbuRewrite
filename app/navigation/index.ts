@@ -37,7 +37,7 @@ class nav {
         Navigation.startSingleScreenApp({
             screen: {
                 screen: 'Login',
-                title: 'Login'
+                title: 'Login',
             },
             animationType: 'slide-down',
         });

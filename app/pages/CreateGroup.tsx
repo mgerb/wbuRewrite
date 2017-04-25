@@ -1,10 +1,11 @@
 import _ from 'lodash';
 import React from 'react';
 import { Keyboard, View, ViewStyle, TextStyle, Text, TextInput, StyleSheet, Switch, TouchableHighlight } from 'react-native';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
+
 import groupAPI from '../api/group.api';
 import store from '../redux/store';
 import groupActions from '../redux/actions/group';
-import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 import colors from '../style/colors';
 import sizes from '../style/sizes';
@@ -30,8 +31,8 @@ export default class CreateGroup extends React.Component<Props, State> {
         publicGroup: false,
     };
 
-    constructor() {
-        super();
+    constructor(props: Props) {
+        super(props);
         this.state = _.clone(this.defaultState);
     }
 
@@ -74,7 +75,7 @@ export default class CreateGroup extends React.Component<Props, State> {
                                maxLength={20}
                                onChangeText={(groupName) => this.setState({groupName})}/>
                     
-                    <View style={styles.divider}/>
+                    <View style={wStyles.divider}/>
 
                     <View style={styles.switch}>
                         <Text style={{color: colors.primary, fontSize: sizes.default}}>Public Group</Text>
@@ -83,7 +84,7 @@ export default class CreateGroup extends React.Component<Props, State> {
                     </View>
                     {this.state.publicGroup ?
                         <View>
-                            <View style={styles.divider}/>
+                            <View style={wStyles.divider}/>
                             <TextInput placeholder="Password (Optional)"
                                     multiline={false}
                                     autoCapitalize="none"
@@ -113,7 +114,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        alignItems: 'stretch',
         justifyContent: 'center',
     } as ViewStyle,
     errorMessage: {
@@ -126,9 +126,5 @@ const styles = StyleSheet.create({
         justifyContent: "space-between",
         paddingVertical: 10,
         paddingHorizontal: 20,
-    } as ViewStyle,
-    divider: {
-        height: 2,
-        backgroundColor: colors.light1,
     } as ViewStyle,
 });

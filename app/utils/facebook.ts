@@ -8,18 +8,18 @@ class facebook {
         return LoginManager.logInWithReadPermissions(readPermissions).then(
             (result: any) => {
                 if (result.isCancelled) {
-                    alert('Login cancelled');
+                    // handle login cancelled - probably just do nothing
                 } else {
                     return AccessToken.getCurrentAccessToken().then(
                         (data: any) => {
                             return data.accessToken.toString();
-                        }
+                        },
                     );
                 }
             },
-            (error: any) => {
-                alert('Login fail with error: ' + error);
-            }
+            (/*error: any*/) => {
+                //alert('Login fail with error: ' + error);
+            },
         );
     }
 }

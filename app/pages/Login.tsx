@@ -1,24 +1,29 @@
 import React from 'react';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
-
-import { View, ViewStyle, Text, TextStyle, TextInput, KeyboardAvoidingView, StyleSheet, TouchableHighlight } from 'react-native';
+import { View, ViewStyle, Text, TextStyle, TextInput, StyleSheet, TouchableHighlight, Keyboard } from 'react-native';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import userActions, { UserActionMapType } from '../redux/actions/user';
 import { UserStateType } from '../redux/reducers/user';
 import navigation from '../navigation';
 import facebook from '../utils/facebook';
 
+import colors from '../style/colors';
+import sizes from '../style/sizes';
+import wStyles from '../style/wStyles';
+
 interface Props {
-    navigator: any,
-    userActions: UserActionMapType,
-    user: UserStateType,
+    navigator: any;
+    userActions: UserActionMapType;
+    user: UserStateType;
 }
 
 interface State {
-    errorMessage: string,
-    email: string,
-    password: string,
+    errorMessage: string;
+    email: string;
+    password: string;
 }
 
 class Login extends React.Component<Props, State> {
@@ -44,12 +49,20 @@ class Login extends React.Component<Props, State> {
     }
 
     private login(): void {
+        Keyboard.dismiss();
+        // prevent login request if email/password are blank
+        if (this.state.email === "" || this.state.password === "") {
+            return;
+        }
+
         this.props.userActions.loginFetchRequested(this.state.email, this.state.password);
     }
 
     private loginFacebook(): void {
         facebook.login().then((token) => {
-            this.props.userActions.loginFacebookFetchRequested(token);
+            if (token) {
+                this.props.userActions.loginFacebookFetchRequested(token);
+            }
         });
     }
 
@@ -62,26 +75,35 @@ class Login extends React.Component<Props, State> {
 
     render() {
         return (
-            <KeyboardAvoidingView behavior="padding" style={styles.container}>
+            <View style={styles.container}>
+
                 <View>
-                    {this.props.user.loginFetchFailed ? <Text style={styles.errorMessage}>Login failed.</Text> : <Text> </Text>}
-                    <TextInput placeholder="Email" autoCapitalize="none" style={styles.textInput} value={this.state.email} onChangeText={(email) => this.setState({email})}/>
-                    <TextInput placeholder="Password" autoCapitalize="none" style={styles.textInput} value={this.state.password} onChangeText={(password) => this.setState({password})}/>
+                    {this.props.user.loginFetchFailed ? <Text style={styles.errorMessage}>Error logging in.</Text> : <Text> </Text>}
                 </View>
 
-                <TouchableHighlight style={styles.submitButton} activeOpacity={50} underlayColor={'red'} onPress={this.login.bind(this)}>
-                    <Text>Login</Text>
+                <TextInput placeholder="Email" autoCapitalize="none" style={wStyles.textInput} value={this.state.email} onChangeText={(email) => this.setState({email})}/>
+                <View style={wStyles.divider}/>
+
+                <TextInput placeholder="Password" autoCapitalize="none" style={wStyles.textInput} value={this.state.password} onChangeText={(password) => this.setState({password})}/>
+                <View style={wStyles.divider}/>
+
+                <TouchableHighlight style={wStyles.button} underlayColor={colors.light1} onPress={this.login.bind(this)}>
+                    <Text style={wStyles.buttonText}>Login</Text>
                 </TouchableHighlight>
                 
-                <TouchableHighlight style={styles.submitButton} activeOpacity={50} underlayColor={'red'} onPress={this.loginFacebook.bind(this)}>
-                    <Text>Login Facebook</Text>
+                <TouchableHighlight style={[wStyles.button, styles.facebookButton]} underlayColor={colors.light1} onPress={this.loginFacebook.bind(this)}>
+                    <View style={{flexDirection:'row',alignItems:'center'}}>
+                        <Text style={wStyles.buttonText}>Facebook</Text>
+                        <Icon name="facebook-box" style={styles.icon}/>
+                    </View>
                 </TouchableHighlight>
 
-                <TouchableHighlight style={styles.submitButton} activeOpacity={50} underlayColor={'red'}
-                                        onPress={this.navigateCreateUser.bind(this)}>
-                    <Text>New User</Text>
-                </TouchableHighlight>
-            </KeyboardAvoidingView>
+                <View>
+                    <Text style={styles.newUserText} onPress={this.navigateCreateUser.bind(this)}>Create User Account</Text>
+                </View>
+
+                <KeyboardSpacer/>
+            </View>
         );
     }
 }
@@ -89,43 +111,37 @@ class Login extends React.Component<Props, State> {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        flexDirection: 'column',
-        alignItems: 'center',
         justifyContent: 'center',
     } as ViewStyle,
-    textInput: {
-        marginBottom: 5,
-        padding: 10,
-        height: 40,
-        width: 200,
-        borderColor: 'gray',
-        borderWidth: 1,
-        borderRadius: 2,
-    } as TextStyle,
-    submitButton: {
-        marginBottom: 10,
-        marginTop: 5,
-        backgroundColor: "blue",
-        height: 50,
-        width: 200,
-        borderRadius: 5,
-        alignItems: "center",
-        justifyContent: "center",
+    facebookButton: {
+        backgroundColor: '#3b5998',
     } as ViewStyle,
+    icon: {
+        color: colors.white,
+        fontSize: sizes.large,
+        paddingHorizontal: 10,
+    } as TextStyle,
+    newUserText: {
+        fontSize: sizes.default,
+        color: colors.primary,
+        alignSelf: 'center',
+    } as TextStyle,
     errorMessage: {
+        fontSize: sizes.default,
         color: "red",
+        alignSelf: 'center',
     } as TextStyle,
 });
 
 function mapStateToProps(state: Props): any {
     return {
-        user: state.user
+        user: state.user,
     };
 }
 
 function mapDispatchToProps(dispatch: Dispatch<any>): any {
     return {
-        userActions: bindActionCreators(userActions, dispatch)
+        userActions: bindActionCreators(userActions, dispatch),
     };
 }
 
