@@ -2,7 +2,7 @@ import { Navigation } from 'react-native-navigation';
 import colors from '../style/colors';
 
 export interface ClosableModal {
-    onNavigatorEvent(event: any): void,
+    onNavigatorEvent(event: any): void;
 }
 
 class nav {
@@ -73,6 +73,19 @@ class nav {
         Navigation.showModal({
             screen: "InviteUser",
             title: "Invite User",
+            navigatorButtons: {
+                leftButtons: [{
+                    title: "Close",
+                    id: "close",
+                }],
+            },
+        });
+    }
+
+    Settings(): void {
+        Navigation.showModal({
+            screen: "Settings",
+            title: "Settings",
             navigatorButtons: {
                 leftButtons: [{
                     title: "Close",

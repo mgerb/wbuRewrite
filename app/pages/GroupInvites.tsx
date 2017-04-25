@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ViewStyle, ScrollView, Text, TextStyle, StyleSheet, TouchableHighlight} from 'react-native';
+import { View, ViewStyle, ScrollView, Text, TextStyle, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import groupAPI from '../api/group.api';
@@ -33,10 +33,8 @@ export default class CreateGroup extends React.Component<Props, State> implement
     }
 
     onNavigatorEvent(event: any): void {
-        if (event.type == "NavBarButtonPress") {
-            if (event.id == "close") {
-                this.props.navigator.dismissModal();
-            }
+        if (event.type === "NavBarButtonPress" && event.id === "close") {
+            this.props.navigator.dismissModal();
         }
     }
 
@@ -88,7 +86,6 @@ export default class CreateGroup extends React.Component<Props, State> implement
                         );
                     })}
                 </ScrollView>
-                
                 :
                     <View style={styles.noInvitesContainer}>
                         <Text style={styles.noInvitesText}>No invites.</Text>

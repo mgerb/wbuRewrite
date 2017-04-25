@@ -35,11 +35,6 @@ class LeftDrawer extends React.Component<Props, State> {
 
     }
 
-    // reset states upon logout
-    private logout() {
-        this.props.userActions.logout();
-    }
-
     private setSelectedGroup(group: GroupType) {
         
         if (this.props.group.selectedGroup.id !== group.id) {
@@ -79,7 +74,7 @@ class LeftDrawer extends React.Component<Props, State> {
             <View style={styles.footer}>
                 <Icon name="gear"
                         style={styles.icon}
-                        onPress={this.logout.bind(this)}/>
+                        onPress={navigation.Settings.bind(this)}/>
                 <Icon name="envelope"
                         style={styles.icon}
                         onPress={() => navigation.GroupInvites()}
