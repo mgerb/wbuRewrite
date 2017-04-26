@@ -94,6 +94,19 @@ class nav {
             },
         });
     }
+
+    MapView(): void {
+        Navigation.showModal({
+            screen: "MapView",
+            //title: "MapView",
+            navigatorButtons: {
+                leftButtons: [{
+                    title: "Close",
+                    id: "close",
+                }],
+            },
+        });
+    }
 }
 
 export default new nav();

@@ -3,9 +3,11 @@ import { View, ViewStyle, StyleSheet, Text, TextStyle } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons';
 
+import navigation from '../navigation';
 import { GroupType } from '../redux/reducers/group';
 import colors from '../style/colors';
 import sizes from '../style/sizes';
+
 
 interface Props {
     navigator: any;
@@ -36,7 +38,7 @@ export default class DashboardNavigator extends React.Component<Props, State> {
                 <View style={styles.buttonContainer}>
                     <Icon name="navicon" style={styles.icon} onPress={() => this.toggleDrawer('left')}/>
                     <Text style={styles.name} numberOfLines={1}>{this.props.selectedGroup.name}</Text>
-                    <Icon2 name="google-maps" style={styles.icon}/>
+                    <Icon2 name="google-maps" style={styles.icon} onPress={navigation.MapView}/>
                     <Icon name="group" style={styles.icon} onPress={() => this.toggleDrawer('right')}/>
                 </View>
             </View>
