@@ -61,6 +61,14 @@ export default class CreateGroup extends React.Component<Props, State> implement
         }).catch(() => {});
     }
 
+    private fetchDeleteGroupInvite(groupID?: number) {
+        groupAPI.deleteGroupInvite(groupID).then(() => {
+            toast.success("Invite deleted!");
+
+            this.fetchGetGroupInvites();
+        }).catch(() => {});
+    }
+
     public render() {
         return (
             <View style={styles.container}>
@@ -77,7 +85,8 @@ export default class CreateGroup extends React.Component<Props, State> implement
                                 </View>
 
                                 <View style={{flexDirection:'row'}}>
-                                    <Icon name="delete" style={{fontSize: sizes.large, color: colors.red, marginRight: 20}}/>
+                                    <Icon name="delete" style={{fontSize: sizes.large, color: colors.red, marginRight: 20}}
+                                        onPress={() => this.fetchDeleteGroupInvite(group.id)}/>
                                     <Icon name="check"
                                         style={{fontSize: sizes.large, color: colors.green}}
                                         onPress={() => this.fetchJoinGroupFromInvite(group.id)}/>

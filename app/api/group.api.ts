@@ -50,6 +50,12 @@ class groupAPI {
         }));
     }
 
+    public deleteGroupInvite(groupID?: number): AxiosPromise {
+        return api.post('/group/deleteGroupInvite', querystring.stringify({
+            groupID,
+        }));
+    }
+
     public leaveGroup(groupID: number): AxiosPromise {
         return api.post('/group/leaveGroup', querystring.stringify({
             groupID,

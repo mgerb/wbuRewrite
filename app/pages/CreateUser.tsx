@@ -1,13 +1,12 @@
 import _ from 'lodash';
 import React from 'react';
-import { View, ViewStyle, TextStyle, Text, TextInput, StyleSheet, TouchableHighlight } from 'react-native';
-import KeyboardSpacer from 'react-native-keyboard-spacer';
+import { KeyboardAvoidingView, View, ViewStyle, TextStyle, Text, TextInput, StyleSheet, TouchableHighlight } from 'react-native';
 
 import userAPI from '../api/user.api';
 import toast from '../utils/toast';
 
 import colors from '../style/colors';
-//import sizes from '../style/sizes';
+import sizes from '../style/sizes';
 import wStyles from '../style/wStyles';
 
 interface Props {
@@ -65,9 +64,8 @@ export default class CreateUser extends React.Component<Props, State> {
             userAPI.createUser(email, password, firstName, lastName).then((response: any) => {
                 toast.success(response.data.message);
                 this.setState(this.defaultState);
-            }).catch((err: any) => {
-                console.log(err.response.data);
-                alert(err.response.data.message);
+            }).catch(() => {
+                this.setState({...this.defaultState, errorMessage: "Error creating account."});
             });
         } else {
             this.setState({
@@ -78,26 +76,26 @@ export default class CreateUser extends React.Component<Props, State> {
 
     public render() {
         return (
-            <View style={styles.container}>
+            <KeyboardAvoidingView behavior="padding" style={styles.container}>
 
                 <View>
                     <Text style={styles.errorMessage}>{this.state.errorMessage}</Text>
                 </View>
 
                 <View>
-                    <TextInput placeholder="First Name" multiline={false} autoCapitalize="none" style={wStyles.textInput} value={this.state.firstName} onChangeText={(firstName) => this.setState({firstName})}/>
+                    <TextInput placeholder="First Name" multiline={false} style={wStyles.textInput} value={this.state.firstName} onChangeText={(firstName) => this.setState({firstName})}/>
                     <View style={wStyles.divider}/>
 
-                    <TextInput placeholder="Last Name" multiline={false} autoCapitalize="none" style={wStyles.textInput} value={this.state.lastName} onChangeText={(lastName) => this.setState({lastName})}/>
+                    <TextInput placeholder="Last Name" multiline={false} style={wStyles.textInput} value={this.state.lastName} onChangeText={(lastName) => this.setState({lastName})}/>
                     <View style={wStyles.divider}/>
 
                     <TextInput placeholder="Email" multiline={false} autoCapitalize="none" style={wStyles.textInput} value={this.state.email} onChangeText={(email) => this.setState({email})}/>
                     <View style={wStyles.divider}/>
 
-                    <TextInput placeholder="Password" multiline={false} autoCapitalize="none" style={wStyles.textInput} value={this.state.password} onChangeText={(password) => this.setState({password})}/>
+                    <TextInput placeholder="Password" multiline={false} secureTextEntry={true} autoCapitalize="none" style={wStyles.textInput} value={this.state.password} onChangeText={(password) => this.setState({password})}/>
                     <View style={wStyles.divider}/>
 
-                    <TextInput placeholder="Confirm Password" multiline={false} autoCapitalize="none" style={wStyles.textInput} value={this.state.confirmPassword} onChangeText={(confirmPassword) => this.setState({confirmPassword})}/>
+                    <TextInput placeholder="Confirm Password" multiline={false} secureTextEntry={true} autoCapitalize="none" style={wStyles.textInput} value={this.state.confirmPassword} onChangeText={(confirmPassword) => this.setState({confirmPassword})}/>
                     <View style={wStyles.divider}/>
                 </View>
 
@@ -105,8 +103,7 @@ export default class CreateUser extends React.Component<Props, State> {
                     <Text style={wStyles.buttonText}>Create Account</Text>
                 </TouchableHighlight>
 
-                <KeyboardSpacer/>
-            </View>
+            </KeyboardAvoidingView>
         );
     }
 }
@@ -119,5 +116,7 @@ const styles = StyleSheet.create({
     } as ViewStyle,
     errorMessage: {
         color: "red",
+        alignSelf: "center",
+        fontSize: sizes.default,
     } as TextStyle,
 });

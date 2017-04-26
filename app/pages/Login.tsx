@@ -84,7 +84,7 @@ class Login extends React.Component<Props, State> {
                 <TextInput placeholder="Email" autoCapitalize="none" style={wStyles.textInput} value={this.state.email} onChangeText={(email) => this.setState({email})}/>
                 <View style={wStyles.divider}/>
 
-                <TextInput placeholder="Password" autoCapitalize="none" style={wStyles.textInput} value={this.state.password} onChangeText={(password) => this.setState({password})}/>
+                <TextInput placeholder="Password" secureTextEntry={true} autoCapitalize="none" style={wStyles.textInput} value={this.state.password} onChangeText={(password) => this.setState({password})}/>
                 <View style={wStyles.divider}/>
 
                 <TouchableHighlight style={wStyles.button} underlayColor={colors.light1} onPress={this.login.bind(this)}>

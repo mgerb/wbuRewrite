@@ -88,6 +88,7 @@ export default class CreateGroup extends React.Component<Props, State> {
                             <TextInput placeholder="Password (Optional)"
                                     multiline={false}
                                     autoCapitalize="none"
+                                    secureTextEntry={true}
                                     style={wStyles.textInput}
                                     value={this.state.password}
                                     onChangeText={(password) => this.setState({password})}/>

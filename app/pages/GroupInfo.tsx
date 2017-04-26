@@ -62,7 +62,7 @@ export default class GroupInfo extends React.Component<Props, State> {
                 </View>
 
                 {this.props.group.locked ? 
-                    <TextInput placeholder="Password" autoCapitalize="none" style={wStyles.textInput} value={this.state.password} onChangeText={(password) => this.setState({password})}/>
+                    <TextInput placeholder="Password" secureTextEntry={true} autoCapitalize="none" style={wStyles.textInput} value={this.state.password} onChangeText={(password) => this.setState({password})}/>
                 : null}
                 <TouchableHighlight style={wStyles.button} underlayColor={colors.primary} onPress={this.fetchJoinGroup.bind(this)}>
                     <Text style={wStyles.buttonText}>Join Group</Text>

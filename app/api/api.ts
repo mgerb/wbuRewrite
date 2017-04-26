@@ -2,7 +2,7 @@ import axios, { AxiosResponse } from 'axios';
 import store from '../redux/store';
 import userActions from '../redux/actions/user';
 
-const serverURL = __DEV__ ? 'http://192.168.1.6:8080' : "prod.wherebaryou.com";
+const serverURL = __DEV__ ? 'http://192.168.1.6:8080' : "https://redis.mitchellgerber.com:443";
 
 let api = axios.create();
 api.defaults.baseURL = serverURL;

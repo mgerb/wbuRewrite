@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, ViewStyle, Text, TextStyle, StyleSheet, ScrollView, TouchableHighlight } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 // redux
 import { bindActionCreators, Dispatch } from 'redux';
@@ -72,16 +72,15 @@ class LeftDrawer extends React.Component<Props, State> {
             </ScrollView>
 
             <View style={styles.footer}>
-                <Icon name="gear"
-                        style={styles.icon}
-                        onPress={navigation.Settings.bind(this)}/>
-                <Icon name="envelope"
-                        style={styles.icon}
-                        onPress={() => navigation.GroupInvites()}
-                        />
                 <Icon name="plus"
                         style={styles.icon}
                         onPress={() => navigation.GroupSegue()}/>
+                <Icon name="email-variant"
+                        style={styles.icon}
+                        onPress={() => navigation.GroupInvites()}/>
+                <Icon name="settings"
+                        style={styles.icon}
+                        onPress={navigation.Settings.bind(this)}/>
                 </View>
             </View>
         );
@@ -148,7 +147,7 @@ const styles = StyleSheet.create({
         fontSize: sizes.default,
     } as TextStyle,
     icon: {
-        fontSize: sizes.default,
+        fontSize: sizes.large,
         color: colors.white,
     } as TextStyle,
 });

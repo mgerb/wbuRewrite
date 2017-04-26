@@ -60,8 +60,7 @@ class Settings extends React.Component<Props, State> implements ClosableModal {
                     <View style={styles.setting}>
                         <Text style={styles.settingText}>Notifications</Text>
                         <Switch onValueChange={(notifications) => this.setState({notifications})}
-                                value={this.state.notifications}
-                                onTintColor={colors.primary}/>
+                                value={this.state.notifications}/>
                     </View>
                 </ScrollView>
                 <TouchableHighlight style={[wStyles.button, styles.button]} underlayColor={colors.light1} onPress={this.logout.bind(this)}>
