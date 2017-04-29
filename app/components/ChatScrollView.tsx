@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ViewStyle, Text, TextStyle, StyleSheet, ListView } from 'react-native';
+import { AppState, View, ViewStyle, Text, TextStyle, StyleSheet, ListView } from 'react-native';
 import InvertibleScrollView from 'react-native-invertible-scroll-view';
 import time from '../utils/time';
 
@@ -24,6 +24,7 @@ interface Props {
 
 interface State {
     messages: Array<MessageType>;
+    appState: string;
 }
 
 class ChatScrollView extends React.Component<Props, State> {
@@ -34,8 +35,8 @@ class ChatScrollView extends React.Component<Props, State> {
         super(props);
         this.state = {
             messages: [],
+            appState: AppState.currentState,
         };
-
         this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => {return r1 !== r2;}});
     }
 
@@ -44,6 +45,12 @@ class ChatScrollView extends React.Component<Props, State> {
         this.setState({
             messages: reversedMessages,
         });
+        
+        AppState.addEventListener('change', this.handleAppStateChange.bind(this));
+    }
+
+    componentWillUnmount() {
+        AppState.removeEventListener('change', this.handleAppStateChange.bind(this));
     }
 
     componentWillReceiveProps(nextProps: Props) {
@@ -53,6 +60,17 @@ class ChatScrollView extends React.Component<Props, State> {
                 messages: reversedMessages,
             });
         }
+    }
+
+    private handleAppStateChange(nextAppState: any): void {
+        // where the app comes into the foreground
+        if (this.state.appState === "background" && nextAppState === "active") {
+            this.props.groupActions.getGroupMessagesFetchRequested(this.props.group.selectedGroup.id);
+        }
+
+        this.setState({
+            appState: nextAppState,
+        });
     }
 
     private insertMessage(message: MessageType): any {
