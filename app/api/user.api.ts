@@ -39,6 +39,16 @@ class userAPI {
             token,
         }));
     }
+
+    public toggleNotifications(toggle: string): AxiosPromise {
+        return api.post('/user/toggleNotifications', querystring.stringify({
+            toggle,
+        }));
+    }
+
+    public getUserSettings(): AxiosPromise {
+        return api.get('/user/getUserSettings');
+    }
 }
 
 export default new userAPI();

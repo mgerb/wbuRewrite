@@ -10,6 +10,9 @@ import groupActions, { GroupActionMapType } from '../redux/actions/group';
 import userActions, { UserActionMapType } from '../redux/actions/user';
 
 import navigation, { ClosableModal } from '../navigation';
+import toast from '../utils/toast';
+
+import userAPI from '../api/user.api';
 
 import colors from '../style/colors';
 import sizes from '../style/sizes';
@@ -46,7 +49,31 @@ class Settings extends React.Component<Props, State> implements ClosableModal {
         }
     }
 
-    // TODO turn notifications on or off
+
+    componentDidMount() {
+        userAPI.getUserSettings().then((response: any) => {
+            if (!response || !response.data || !response.data.notifications) {
+                return;
+            }
+
+            this.setState({
+                notifications: response.data.notifications,
+            });
+        }).catch(() => {
+            
+        });
+    }
+
+    private onNotificationsToggle(notifications: boolean): void {
+        this.setState({
+            notifications,
+        });
+        userAPI.toggleNotifications(notifications ? "1" : "0").then(() => {
+
+        }).catch(() => {
+            toast.error("Server error. Please try again later.");
+        });
+    }
 
     // reset states upon logout
     private logout() {
@@ -59,7 +86,7 @@ class Settings extends React.Component<Props, State> implements ClosableModal {
                 <ScrollView style={{flex:1}}>
                     <View style={styles.setting}>
                         <Text style={styles.settingText}>Notifications</Text>
-                        <Switch onValueChange={(notifications) => this.setState({notifications})}
+                        <Switch onValueChange={this.onNotificationsToggle.bind(this)}
                                 value={this.state.notifications}/>
                     </View>
                 </ScrollView>
