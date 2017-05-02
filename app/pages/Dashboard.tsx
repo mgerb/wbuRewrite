@@ -132,5 +132,6 @@ const styles = StyleSheet.create({
     introMessage: {
         fontSize: sizes.large,
         color: colors.white,
+        textAlign: 'center',
     } as TextStyle,
 });

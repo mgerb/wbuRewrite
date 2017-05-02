@@ -1,6 +1,8 @@
 import { Platform } from 'react-native';
 import FCM, { FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType } from 'react-native-fcm';
 
+import userAPI from '../api/user.api';
+
 class fcm {
 
     private notificationListener: any;
@@ -12,8 +14,8 @@ class fcm {
     
     public getFCMToken(): Promise<any> {
         return FCM.getFCMToken().then((token: string) => {
-            console.log(token);
-            // store fcm token in your server
+            // execute this asynchronously
+            userAPI.updateFCMToken(token);
         });
     }
 
@@ -49,8 +51,8 @@ class fcm {
         });
 
         this.refreshTokenListener = FCM.on(FCMEvent.RefreshToken, (token: string) => {
-            console.log(token);
-            // fcm token may not be available on first load, catch it here
+            // update fcm token if it ever changes
+            userAPI.updateFCMToken(token);
         });
     }
 

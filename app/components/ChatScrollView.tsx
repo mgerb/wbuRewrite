@@ -38,6 +38,7 @@ class ChatScrollView extends React.Component<Props, State> {
             appState: AppState.currentState,
         };
         this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => {return r1 !== r2;}});
+        this.handleAppStateChange = this.handleAppStateChange.bind(this);
     }
 
     componentDidMount() {
@@ -46,11 +47,11 @@ class ChatScrollView extends React.Component<Props, State> {
             messages: reversedMessages,
         });
         
-        AppState.addEventListener('change', this.handleAppStateChange.bind(this));
+        AppState.addEventListener('change', this.handleAppStateChange);
     }
 
     componentWillUnmount() {
-        AppState.removeEventListener('change', this.handleAppStateChange.bind(this));
+        AppState.removeEventListener('change', this.handleAppStateChange);
     }
 
     componentWillReceiveProps(nextProps: Props) {
