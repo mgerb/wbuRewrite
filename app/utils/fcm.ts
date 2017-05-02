@@ -1,5 +1,7 @@
 import { Platform } from 'react-native';
 import FCM, { FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType } from 'react-native-fcm';
+import store from '../redux/store';
+import groupActions from '../redux/actions/group';
 
 import userAPI from '../api/user.api';
 
@@ -15,20 +17,31 @@ class fcm {
     public getFCMToken(): Promise<any> {
         return FCM.getFCMToken().then((token: string) => {
             // execute this asynchronously
-            userAPI.updateFCMToken(token);
+            // don't need to handle errors here - added then/catch to satisfy dev errors
+            userAPI.updateFCMToken(token).then(() => {
+
+            }).catch(() => {
+
+            });
         });
     }
 
     public startListeners(): void {
 
         this.notificationListener = FCM.on(FCMEvent.Notification, (notif: any) => {
-            alert(notif);
+            
+            // if message notification update current group messages if the group is selected
+            if (notif.type === 'message' && store.getState().group.selectedGroup.id === parseInt(notif.groupID)) {
+                store.dispatch(groupActions.getGroupMessagesFetchRequested());
+            }
+
             // there are two parts of notif. notif.notification contains the notification payload, notif.data contains data payload
             if (notif.local_notification) {
                 //this is a local notification
-            }
-            if (notif.opened_from_tray) {
-                //app is open/resumed because user clicked banner
+            } else if (notif.opened_from_tray) {
+
+            } else {
+
             }
 
             if (Platform.OS === 'ios') {
@@ -52,7 +65,11 @@ class fcm {
 
         this.refreshTokenListener = FCM.on(FCMEvent.RefreshToken, (token: string) => {
             // update fcm token if it ever changes
-            userAPI.updateFCMToken(token);
+            userAPI.updateFCMToken(token).then(() => {
+
+            }).catch(() => {
+
+            });
         });
     }
 

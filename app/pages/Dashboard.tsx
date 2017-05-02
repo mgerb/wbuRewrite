@@ -51,14 +51,14 @@ class Dashboard extends React.Component<Props, State> {
                     // log the user in with stored state
                     this.props.userActions.loginFetchSucceeded(state);
 
+                    // only fetch token once logged in
+                    fcm.getFCMToken();
                 }
             });
         }
 
         fcm.requestPermissions();
-        fcm.getFCMToken();
         fcm.startListeners();
-
     }
 
     componentWillUnmount() {
