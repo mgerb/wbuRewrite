@@ -8,6 +8,7 @@ import groupActions from '../actions/group';
 import storage from '../../utils/storage';
 import { UserType } from '../reducers/user';
 import navigation from '../../navigation';
+import fcm from '../../utils/fcm';
 
 function* fetchLoginRequested(action: UserType): any {
     try {
@@ -31,6 +32,8 @@ function* fetchFacebookLoginRequested(action: UserType): any {
 
 // set the jwt auth header every time a login succeeds
 function* loginFetchSucceeded(action: any): any {
+    // get fcm token and send to server
+    yield fcm.getFCMToken();
     yield setAuthorizationHeader(action.jwt);
     yield put(groupActions.getUserGroupsFetchRequested());
 }

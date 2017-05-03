@@ -1,15 +1,24 @@
 import React from 'react';
 import { StyleSheet, View, ViewStyle, Text, TextStyle, TextInput } from 'react-native';
 import groupAPI from '../api/group.api';
-import { GroupType } from '../redux/reducers/group';
-import GroupActions from '../redux/actions/group';
-import store from '../redux/store';
+
+// redux
+import { bindActionCreators, Dispatch } from 'redux';
+import { connect } from 'react-redux';
+import { UserStateType } from '../redux/reducers/user';
+import { GroupStateType } from '../redux/reducers/group';
+import groupActions, { GroupActionMapType } from '../redux/actions/group';
+import userActions, { UserActionMapType } from '../redux/actions/user';
 
 import colors from '../style/colors';
 import sizes from '../style/sizes';
 
 interface Props {
-    selectedGroup: GroupType;
+    navigator: any;
+    user: UserStateType;
+    group: GroupStateType;
+    groupActions: GroupActionMapType;
+    userActions: UserActionMapType;
 }
 
 interface State {
@@ -17,7 +26,7 @@ interface State {
     textInputContainerHeight: number;
 }
 
-export default class ChatInput  extends React.Component<Props, State> {
+class ChatInput  extends React.Component<Props, State> {
 
 
     constructor(props: Props) {
@@ -32,9 +41,22 @@ export default class ChatInput  extends React.Component<Props, State> {
         if (this.state.message === "") {
             return;
         }
-        groupAPI.storeMessage(this.props.selectedGroup.id, this.state.message).then(() => {
+
+/*
+        let message: MessageType = {
+            id: 0,
+            groupID: 0,
+            userID: this.props.user.id as number,
+            firstName: this.props.user.firstName as string,
+            lastName: this.props.user.lastName as string,
+            content: this.state.message,
+            timestamp: moment().unix(),
+        };
+*/
+
+        groupAPI.storeMessage(this.props.group.selectedGroup.id, this.state.message).then(() => {
             // get messages from server after sending
-            store.dispatch(GroupActions.getGroupMessagesFetchRequested(this.props.selectedGroup.id));
+            this.props.groupActions.getGroupMessagesFetchRequested(this.props.group.selectedGroup.id);
         }).catch(() => {
 
         });
@@ -77,6 +99,23 @@ export default class ChatInput  extends React.Component<Props, State> {
         );
     }
 }
+
+
+function mapStateToProps(state: Props): any {
+  return {
+    user: state.user,
+    group: state.group,
+  };
+}
+
+function mapDispatchToProps(dispatch: Dispatch<any>): any {
+  return {
+    groupActions: bindActionCreators(groupActions, dispatch),
+    userActions: bindActionCreators(userActions, dispatch),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(ChatInput);
 
 const styles = StyleSheet.create({
     container: {

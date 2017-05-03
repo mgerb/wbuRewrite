@@ -13,7 +13,6 @@ export interface GroupType  {
     public?: boolean;
 }
 
-
 export interface MessageType {
     id: number;
     userID: number;

@@ -50,13 +50,10 @@ class Dashboard extends React.Component<Props, State> {
                     // perform application bootstrap here
                     // log the user in with stored state
                     this.props.userActions.loginFetchSucceeded(state);
-
-                    // only fetch token once logged in
-                    fcm.getFCMToken();
                 }
             });
         }
-
+        
         fcm.requestPermissions();
         fcm.startListeners();
     }
@@ -96,7 +93,7 @@ class Dashboard extends React.Component<Props, State> {
                 </View> :
                 <ChatScrollView/>}
 
-                {!this.state.showWelcomeMessage ? <ChatInput selectedGroup={{...this.props.group.selectedGroup}}/> : null}
+                {!this.state.showWelcomeMessage ? <ChatInput/> : null}
                 <KeyboardSpacer/>
             </View>
         );

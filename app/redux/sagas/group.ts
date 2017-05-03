@@ -46,7 +46,7 @@ function* getUserGroupsFetchRequested(): any {
 
 function* setSelectedGroup(): any {
     yield put(groupActions.getGroupUsersFetchRequested());
-    yield put(groupActions.getGroupMessagesFetchRequested());
+    yield put(groupActions.getGroupMessagesFromStorage());
 }
 
 // get group users every time we set a new selected group
@@ -74,19 +74,22 @@ function* getGroupUsersFetchRequested(): any {
     }
 }
 
+function* getGroupMessagesFromStorage(): any {
+    // need to delay so we don't block the first action (realm currently blocks and loading icon won't show)
+    yield delay(0);
+    // get groupID from selected group if not passed in
+    const state: GroupStateType = yield select(getGroupState);
+    let groupID = state.selectedGroup.id;
+
+    const storedMessages = yield MessageRealm.getMessages(groupID as number);
+    yield put(groupActions.setGroupMessages(storedMessages));
+    
+    // fetch messages from server
+    yield put(groupActions.getGroupMessagesFetchRequested(groupID));
+}
+
 function* getGroupMessagesFetchRequested(action: any): any {
     try {
-        // need to delay so we don't block the first action (realm currently blocks and loading icon won't show)
-        yield delay(0);
-        // get groupID from selected group if not passed in
-        if (!action.groupID) {
-            const state: GroupStateType = yield select(getGroupState);
-            action.groupID = state.selectedGroup.id;
-        }
-
-        const storedMessages = yield MessageRealm.getMessages(action.groupID);
-        yield put(groupActions.setGroupMessages(storedMessages));
-
         // fetch new messages from server based on last message timestamp
         const response = yield call(groupAPI.getMessages, action.groupID, MessageRealm.getLastMessageDate(action.groupID));
         yield put(groupActions.getGroupMessagesFetchSucceeded());
@@ -105,6 +108,7 @@ function* getGroupMessagesFetchRequested(action: any): any {
 
 export default function* watches() {
     yield throttle(2000, types.GET_USER_GROUPS_FETCH_REQUESTED, getUserGroupsFetchRequested);
+    yield throttle(2000, types.GET_GROUP_MESSAGES_FROM_STORAGE, getGroupMessagesFromStorage);
     yield throttle(2000, types.GET_GROUP_MESSAGES_FETCH_REQUESTED, getGroupMessagesFetchRequested);
     yield throttle(2000, types.GET_GROUP_USERS_FETCH_REQUESTED, getGroupUsersFetchRequested);
     yield takeEvery(types.SET_SELECTED_GROUP, setSelectedGroup);

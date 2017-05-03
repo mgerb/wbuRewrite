@@ -14,8 +14,8 @@ class fcm {
         FCM.requestPermissions(); // for iOS
     }
     
-    public getFCMToken(): Promise<any> {
-        return FCM.getFCMToken().then((token: string) => {
+    public getFCMToken(): void {
+        FCM.getFCMToken().then((token: string) => {
             // execute this asynchronously
             // don't need to handle errors here - added then/catch to satisfy dev errors
             userAPI.updateFCMToken(token).then(() => {
@@ -32,7 +32,7 @@ class fcm {
             
             // if message notification update current group messages if the group is selected
             if (notif.type === 'message' && store.getState().group.selectedGroup.id === parseInt(notif.groupID)) {
-                store.dispatch(groupActions.getGroupMessagesFetchRequested());
+                store.dispatch(groupActions.getGroupMessagesFetchRequested(store.getState().group.selectedGroup.id));
             }
 
             // there are two parts of notif. notif.notification contains the notification payload, notif.data contains data payload
