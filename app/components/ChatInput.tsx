@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View, ViewStyle, Text, TextStyle, TextInput } from 'react-native';
 import moment from 'moment';
 
+import toast from '../utils/toast';
 import groupAPI from '../api/group.api';
 
 // redux
@@ -61,7 +62,7 @@ class ChatInput  extends React.Component<Props, State> {
             // get messages from server after sending
             this.props.groupActions.getGroupMessagesFetchRequested(this.props.group.selectedGroup.id);
         }).catch(() => {
-
+            toast.error("Error sending message. Our servers may be overwhelmed.");
         });
 
         this.setState({

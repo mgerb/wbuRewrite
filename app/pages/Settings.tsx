@@ -45,6 +45,7 @@ class Settings extends React.Component<Props, State> implements ClosableModal {
 
     onNavigatorEvent(event: any): void {
         if (event.type === "NavBarButtonPress" && event.id === "close") {
+            toast.hide();
             this.props.navigator.dismissModal();
         }
     }

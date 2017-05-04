@@ -7,12 +7,16 @@ class toast {
 
     public success(message: string): void {
         this.hide();
-        this.toast = t.show(message);
+        this.toast = t.show(message, {
+            position: 150,
+        });
     }
 
     public error(message: string): void {
         this.hide();
-        this.toast = t.show(message);
+        this.toast = t.show(message, {
+            position: 150,
+        });
     }
 
     public hide(): void {

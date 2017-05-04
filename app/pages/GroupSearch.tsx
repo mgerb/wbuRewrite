@@ -30,6 +30,10 @@ export default class GroupSearch extends React.Component<Props, State> {
         };
     }
 
+    componentWillUnmount() {
+        toast.hide();
+    }
+
     private fetchSearchPublicGroup() {
         if (this.state.searchGroup === "") {
             return;

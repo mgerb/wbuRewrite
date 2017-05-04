@@ -38,6 +38,10 @@ export default class CreateGroup extends React.Component<Props, State> implement
         }
     }
 
+    componentWillUnmount() {
+        toast.hide();
+    }
+
     componentDidMount() {
         this.fetchGetGroupInvites();
     }
@@ -58,7 +62,9 @@ export default class CreateGroup extends React.Component<Props, State> implement
             store.dispatch(groupActions.getUserGroupsFetchRequested());
 
             this.fetchGetGroupInvites();
-        }).catch(() => {});
+        }).catch(() => {
+            toast.error("Failed to join group. Please try again later.");
+        });
     }
 
     private fetchDeleteGroupInvite(groupID?: number) {
@@ -66,7 +72,9 @@ export default class CreateGroup extends React.Component<Props, State> implement
             toast.success("Invite deleted!");
 
             this.fetchGetGroupInvites();
-        }).catch(() => {});
+        }).catch(() => {
+            toast.error("Failed to delete group invite. Please try again later.");
+        });
     }
 
     public render() {

@@ -41,6 +41,8 @@ class CreateGroup extends React.Component<Props, State> implements ClosableModal
 
     onNavigatorEvent(event: any): void {
         if (event.type === "NavBarButtonPress" && event.id === "close") {
+            // get rid of toast when closing
+            toast.hide();
             this.props.navigator.dismissModal();
         }
     }

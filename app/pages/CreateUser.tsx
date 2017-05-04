@@ -39,6 +39,9 @@ export default class CreateUser extends React.Component<Props, State> {
         this.state = _.clone(this.defaultState);
     }
 
+    componentWillUnmount() {
+        toast.hide();
+    }
 
     fetchCreateUser(): void {
         let email = this.state.email;

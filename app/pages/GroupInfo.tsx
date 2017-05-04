@@ -30,6 +30,10 @@ export default class GroupInfo extends React.Component<Props, State> {
         };
     }
 
+    componentWillUnmount() {
+        toast.hide();
+    }
+
     fetchJoinGroup() {
         Keyboard.dismiss();
 
