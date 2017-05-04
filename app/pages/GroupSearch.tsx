@@ -90,7 +90,7 @@ export default class GroupSearch extends React.Component<Props, State> {
                                     <View style={[styles.listItem, bottomBorder]}>
                                         <View>
                                             <Text style={[styles.listItemText, {fontSize: sizes.default}]}>{group.name}</Text>
-                                            <Text style={styles.listItemText}>{group.ownerEmail}</Text>
+                                            <Text style={[styles.listItemText, {fontSize: sizes.tiny}]}>{group.ownerEmail}</Text>
                                         </View>
                                         {group.locked ? <Icon name="lock" style={{fontSize: sizes.large, color: colors.primary}}/> : null}
                                     </View>

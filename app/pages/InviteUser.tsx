@@ -103,9 +103,14 @@ class CreateGroup extends React.Component<Props, State> implements ClosableModal
                             let bottomBorder = index === this.state.userList.length - 1 ? {borderBottomWidth: 0} : {};
                             return (
                                 <View key={index} style={[styles.listItem, bottomBorder]}>
-                                    <Text style={[styles.listItemText, {fontSize: sizes.default}]}>
-                                        {user.firstName + " " + user.lastName}
-                                    </Text>
+                                    <View>
+                                        <Text style={[styles.listItemText, {fontSize: sizes.default}]}>
+                                            {user.firstName + " " + user.lastName}
+                                        </Text>
+                                        <Text style={[styles.listItemText, {fontSize: sizes.tiny}]}>
+                                            {user.email}
+                                        </Text>
+                                    </View>
                                     <Icon name="plus"
                                             style={{fontSize: sizes.large, color: colors.primary}}
                                             onPress={() => {this.fetchInviteUserToGroup(user.id);}}/>
