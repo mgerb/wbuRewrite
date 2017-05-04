@@ -1,12 +1,14 @@
 import React from 'react';
 import { StyleSheet, View, ViewStyle, Text, TextStyle, TextInput } from 'react-native';
+import moment from 'moment';
+
 import groupAPI from '../api/group.api';
 
 // redux
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { UserStateType } from '../redux/reducers/user';
-import { GroupStateType } from '../redux/reducers/group';
+import { GroupStateType, MessageType } from '../redux/reducers/group';
 import groupActions, { GroupActionMapType } from '../redux/actions/group';
 import userActions, { UserActionMapType } from '../redux/actions/user';
 
@@ -42,7 +44,6 @@ class ChatInput  extends React.Component<Props, State> {
             return;
         }
 
-/*
         let message: MessageType = {
             id: 0,
             groupID: 0,
@@ -50,9 +51,11 @@ class ChatInput  extends React.Component<Props, State> {
             firstName: this.props.user.firstName as string,
             lastName: this.props.user.lastName as string,
             content: this.state.message,
-            timestamp: moment().unix(),
+            timestamp: moment().unix() - 10,
         };
-*/
+
+        // immediately add new message to state so it shows up right away before loading from server
+        this.props.groupActions.setGroupMessages([message, ...this.props.group.selectedGroupMessages]);
 
         groupAPI.storeMessage(this.props.group.selectedGroup.id, this.state.message).then(() => {
             // get messages from server after sending

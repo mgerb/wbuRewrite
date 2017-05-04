@@ -42,7 +42,7 @@ class _MessageRealm {
     getMessages(groupID: number): Array<MessageType> {
 
         let messages: Array<MessageType> = [];
-        myRealm.objects('Message').filtered(`groupID = "${groupID}"`).sorted('timestamp').forEach((message: MessageType) => {
+        myRealm.objects('Message').filtered(`groupID = "${groupID}"`).sorted('timestamp', true).forEach((message: MessageType) => {
             // we need to convert the timestamp to a unix string
             let newMessage = {...message, timestamp: moment(message.timestamp).unix()};
             messages.push(newMessage);

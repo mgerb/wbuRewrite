@@ -23,7 +23,6 @@ interface Props {
 }
 
 interface State {
-    messages: Array<MessageType>;
     appState: string;
 }
 
@@ -34,7 +33,6 @@ class ChatScrollView extends React.Component<Props, State> {
     constructor(props: Props) {
         super(props);
         this.state = {
-            messages: [],
             appState: AppState.currentState,
         };
         this.ds = new ListView.DataSource({rowHasChanged: (r1, r2) => {return r1 !== r2;}});
@@ -42,25 +40,12 @@ class ChatScrollView extends React.Component<Props, State> {
     }
 
     componentDidMount() {
-        const reversedMessages = this.props.group.selectedGroupMessages.reverse();
-        this.setState({
-            messages: reversedMessages,
-        });
         
         AppState.addEventListener('change', this.handleAppStateChange);
     }
 
     componentWillUnmount() {
         AppState.removeEventListener('change', this.handleAppStateChange);
-    }
-
-    componentWillReceiveProps(nextProps: Props) {
-        if (this.props.group.selectedGroupMessages !== nextProps.group.selectedGroupMessages) {
-            const reversedMessages = nextProps.group.selectedGroupMessages.reverse();
-            this.setState({
-                messages: reversedMessages,
-            });
-        }
     }
 
     private handleAppStateChange(nextAppState: any): void {
@@ -103,7 +88,7 @@ class ChatScrollView extends React.Component<Props, State> {
                 <ListView contentContainerStyle={{paddingBottom: 10}}
                         renderScrollComponent={props => <InvertibleScrollView {...props} inverted />}
                         scrollRenderAheadDistance={20}
-                        dataSource={this.ds.cloneWithRows(this.state.messages)}
+                        dataSource={this.ds.cloneWithRows(this.props.group.selectedGroupMessages)}
                         renderRow={this.insertMessage.bind(this)}
                         enableEmptySections={true}/>
             </View>
