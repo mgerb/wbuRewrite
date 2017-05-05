@@ -49,17 +49,17 @@ function loginFetchFailed(): Action {
     };
 }
 
-function refreshJWTFetchRequested(jwt: string): any {
+function refreshJWTFetchRequested(): Action {
     return {
         type: types.REFRESH_JWT_FETCH_REQUESTED,
-        jwt,
     };
 }
 
-function refreshJWTFetchSucceeded(jwt: string): any {
+function refreshJWTFetchSucceeded(jwt: string, lastRefreshTime: number): any {
     return {
         type: types.REFRESH_JWT_FETCH_SUCCEEDED,
         jwt,
+        lastRefreshTime,
     };
 }
 

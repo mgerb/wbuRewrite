@@ -99,6 +99,8 @@ function user(state: UserStateType = defaultState, action: any): any {
 
         case types.REFRESH_JWT_FETCH_SUCCEEDED:
             return {...state,
+                jwt: action.jwt,
+                lastRefreshTime: action.lastRefreshTime,
                 refreshJWTFetchRequested: false,
                 refreshJWTFetchSucceeded: true,
                 refreshJWTFetchFailed: false,

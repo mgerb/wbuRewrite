@@ -1,5 +1,6 @@
 import React from 'react';
-import { StyleSheet, Text, TextStyle, View, ViewStyle } from 'react-native';
+import { AppState, StyleSheet, Text, TextStyle, View, ViewStyle } from 'react-native';
+import moment from 'moment';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import ChatScrollView from '../components/ChatScrollView';
 import ChatInput from '../components/ChatInput';
@@ -30,6 +31,7 @@ interface Props {
 
 interface State {
     showWelcomeMessage: boolean;
+    appState: string;
 }
 
 class Dashboard extends React.Component<Props, State> {
@@ -38,7 +40,9 @@ class Dashboard extends React.Component<Props, State> {
         super(props);
         this.state = {
             showWelcomeMessage :false,
+            appState: AppState.currentState,
         };
+        this.handleAppStateChange = this.handleAppStateChange.bind(this);
     }
 
     componentDidMount() {
@@ -54,11 +58,13 @@ class Dashboard extends React.Component<Props, State> {
             });
         }
         
+        AppState.addEventListener('change', this.handleAppStateChange);
         fcm.requestPermissions();
         fcm.startListeners();
     }
 
     componentWillUnmount() {
+        AppState.removeEventListener('change', this.handleAppStateChange);
         fcm.removeListeners();
     }
 
@@ -80,6 +86,26 @@ class Dashboard extends React.Component<Props, State> {
                 });
             }
         }
+    }
+
+    private handleAppStateChange(nextAppState: any): void {
+        if (!this.props.user.loggedIn) {
+            return;
+        }
+
+        // when the app comes into the foreground
+        if (this.state.appState === "background" && nextAppState === "active") {
+            this.props.groupActions.getGroupMessagesFetchRequested(this.props.group.selectedGroup.id);
+
+            // check refresh token time is more than 2 days old
+            if ((this.props.user.lastRefreshTime as number) < moment().subtract(2, "d").unix()) {
+                this.props.userActions.refreshJWTFetchRequested();
+            }
+        }
+
+        this.setState({
+            appState: nextAppState,
+        });
     }
 
     render() {

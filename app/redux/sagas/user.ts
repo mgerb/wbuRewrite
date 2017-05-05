@@ -52,9 +52,19 @@ function* logout(): any {
     }
 }
 
+function* fetchRefreshJWT(): any {
+    try {
+        const response = yield call(userAPI.refreshJWT);
+        yield put(userActions.refreshJWTFetchSucceeded(response.data.jwt, response.data.lastRefreshTime));
+    } catch(error) {
+        yield put(userActions.refreshJWTFetchFailed());
+    }
+}
+
 export default function* watches() {
     yield takeLatest(types.LOGIN_FETCH_REQUESTED, fetchLoginRequested);
     yield takeLatest(types.LOGIN_FACEBOOK_FETCH_REQUESTED, fetchFacebookLoginRequested);
     yield takeEvery(types.LOGIN_FETCH_SUCCEEDED, loginFetchSucceeded);
     yield takeEvery(types.LOGOUT, logout);
+    yield takeEvery(types.REFRESH_JWT_FETCH_REQUESTED, fetchRefreshJWT);
 }
