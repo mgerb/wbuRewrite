@@ -1,5 +1,6 @@
 import { delay } from 'redux-saga';
 import { call, put, takeEvery, throttle, select } from 'redux-saga/effects';
+import _ from 'lodash';
 
 import { GroupStateType } from '../reducers/group';
 import groupAPI from '../../api/group.api';
@@ -41,6 +42,20 @@ function* getUserGroupsFetchRequested(): any {
     // set the selected group if not selected yet
     if (!state.selectedGroup.id && state.groups.length > 0) {
         yield put(groupActions.setSelectedGroup(state.groups[0]));
+    }
+}
+
+function* setSelectedGroupByID(action: any): any {
+    // get the current state
+    const state: GroupStateType = yield select(getGroupState);
+
+    // find the group in groups state
+    let group = _.find(state.groups, (grp: GroupType) => {
+        return grp.id === action.groupID;
+    });
+
+    if (!!group) {
+        yield put(groupActions.setSelectedGroup(group));
     }
 }
 
@@ -112,4 +127,5 @@ export default function* watches() {
     yield throttle(2000, types.GET_GROUP_MESSAGES_FETCH_REQUESTED, getGroupMessagesFetchRequested);
     yield throttle(2000, types.GET_GROUP_USERS_FETCH_REQUESTED, getGroupUsersFetchRequested);
     yield takeEvery(types.SET_SELECTED_GROUP, setSelectedGroup);
+    yield takeEvery(types.SET_SELECTED_GROUP_BY_ID, setSelectedGroupByID);
 }

@@ -6,7 +6,14 @@ import { UserType } from '../reducers/user';
 function resetGroupState(): Action {
     return {
         type: types.RESET_GROUP_STATE,
-    }
+    };
+}
+
+function setSelectedGroupByID(groupID: number): any {
+    return {
+        type: types.SET_SELECTED_GROUP_BY_ID,
+        groupID,
+    };
 }
 
 function setSelectedGroup(selectedGroup: GroupType): any {
@@ -88,6 +95,7 @@ function setGroupMessages(messages: Array<MessageType>): any {
 }
 export interface GroupActionMapType extends ActionCreatorsMapObject {
     resetGroupState: any;
+    setSelectedGroupByID: any;
     setSelectedGroup: any;
     getUserGroupsFetchRequested: any;
     getUserGroupsFetchSucceeded: any;
@@ -105,6 +113,7 @@ export interface GroupActionMapType extends ActionCreatorsMapObject {
 const actionMap: GroupActionMapType = {
     resetGroupState,
     setSelectedGroup,
+    setSelectedGroupByID,
     getUserGroupsFetchRequested,
     getUserGroupsFetchSucceeded,
     getUserGroupsFetchFailed,

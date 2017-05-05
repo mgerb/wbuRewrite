@@ -32,14 +32,17 @@ class fcm {
             
             // if message notification update current group messages if the group is selected
             if (notif.type === 'message' && store.getState().group.selectedGroup.id === parseInt(notif.groupID)) {
-                store.dispatch(groupActions.getGroupMessagesFetchRequested(store.getState().group.selectedGroup.id));
+                store.dispatch(groupActions.getGroupMessagesFetchRequested(parseInt(notif.groupID)));
             }
 
             // there are two parts of notif. notif.notification contains the notification payload, notif.data contains data payload
             if (notif.local_notification) {
                 //this is a local notification
             } else if (notif.opened_from_tray) {
-
+                // set selected group if opened from tray with message
+                if (notif.type === 'message') {
+                    store.dispatch(groupActions.setSelectedGroupByID(parseInt(notif.groupID)));
+                }
             } else {
 
             }
