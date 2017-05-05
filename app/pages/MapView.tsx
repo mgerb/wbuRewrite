@@ -6,17 +6,8 @@ import MV from 'react-native-maps';
 const { width, height } = Dimensions.get('window');
 
 const ASPECT_RATIO = width / height;
-const LATITUDE = 37.78825;
-const LONGITUDE = -122.4324;
-const LATITUDE_DELTA = 0.0922;
+const LATITUDE_DELTA = 0.008;
 const LONGITUDE_DELTA = LATITUDE_DELTA * ASPECT_RATIO;
-
-const SAMPLE_REGION = {
-  latitude: LATITUDE,
-  longitude: LONGITUDE,
-  latitudeDelta: LATITUDE_DELTA,
-  longitudeDelta: LONGITUDE_DELTA,
-};
 
 // redux
 import { bindActionCreators, Dispatch } from 'redux';
@@ -36,8 +27,17 @@ interface Props {
     userActions: UserActionMapType;
 }
 
-interface State {
+interface RegionType {
+    latitude: number;
+    longitude: number;
+    latitudeDelta: number;
+    longitudeDelta: number;
+}
 
+interface State {
+    latitude: number;
+    longitude: number;
+    region?: RegionType;
 }
 
 class MapView extends React.Component<Props, State>  implements ClosableModal {
@@ -55,13 +55,28 @@ class MapView extends React.Component<Props, State>  implements ClosableModal {
         }
     }
 
+    componentDidMount() {
+        navigator.geolocation.getCurrentPosition((position: any) => {
+            console.log(position);
+            this.setState({
+                region: {
+                    latitude: position.coords.latitude,
+                    longitude: position.coords.longitude,
+                    latitudeDelta: LATITUDE_DELTA,
+                    longitudeDelta: LONGITUDE_DELTA,
+                },
+            });
+        });
+    }
+
     render() {
         return (
-            <View>
-                <MV liteMode
-                    style={styles.map}
-                    initialRegion={SAMPLE_REGION}/>
-            </View>
+            <View style={{flex:1}}>
+                {this.state && this.state.region ?
+                    <MV style={styles.map}
+                        initialRegion={this.state.region}/>
+                : null}
+             </View>
         );
     }
 }
@@ -84,7 +99,6 @@ export default connect(mapStateToProps, mapDispatchToProps)(MapView);
 
 const styles = StyleSheet.create({
   map: {
-    height: 200,
-    marginVertical: 50,
+    flex: 1,
   },
 });

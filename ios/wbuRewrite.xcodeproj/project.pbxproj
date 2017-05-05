@@ -50,6 +50,7 @@
 		8346CF03AAC44559B5F2BD78 /* Pods_wbuRewriteTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EEB7AC97D0FAF43729248F6C /* Pods_wbuRewriteTests.framework */; };
 		91819727014A4852A3C08FAA /* libRNFIRMessaging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F37B9E020554020BB293DE2 /* libRNFIRMessaging.a */; };
 		A2228BB61EA6E39300EC1C6F /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		A2678E7D1EBC1471001886D9 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2678E7C1EBC1471001886D9 /* MapKit.framework */; };
 		A2CA43431E822DAD0060E67B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A2CA43421E822DAD0060E67B /* GoogleService-Info.plist */; };
 		A2D859D6005F4C59BC995286 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0809538D4A2A4FEF9958AA2C /* libRNVectorIcons.a */; };
 		BCA6F78DE8664486849F52FD /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D36B3991BF364AC395316975 /* MaterialIcons.ttf */; };
@@ -338,6 +339,7 @@
 		91C7125BBE80421C876033F4 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		967671166E1B498691BA0F17 /* AirMaps.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/lib/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
 		97D53B558B2918F7E71370B0 /* Pods-wbuRewrite.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wbuRewrite.release.xcconfig"; path = "Pods/Target Support Files/Pods-wbuRewrite/Pods-wbuRewrite.release.xcconfig"; sourceTree = "<group>"; };
+		A2678E7C1EBC1471001886D9 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		A2CA43411E822BA80060E67B /* wbuRewrite.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = wbuRewrite.entitlements; path = wbuRewrite/wbuRewrite.entitlements; sourceTree = "<group>"; };
 		A2CA43421E822DAD0060E67B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "wbuRewrite/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A878A80F6B8C412DAC760FF9 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
@@ -370,6 +372,7 @@
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
 				00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */,
+				A2678E7D1EBC1471001886D9 /* MapKit.framework in Frameworks */,
 				00C302E81ABCBA2D00DB3ED1 /* libRCTImage.a in Frameworks */,
 				133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */,
 				00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */,
@@ -678,6 +681,7 @@
 		B2026274E70C9466B8FFEB4F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A2678E7C1EBC1471001886D9 /* MapKit.framework */,
 				BF8C67E86C89FB7FFF935342 /* Pods_wbuRewrite.framework */,
 				EEB7AC97D0FAF43729248F6C /* Pods_wbuRewriteTests.framework */,
 				D240330C0A78419C8B1C0659 /* libc++.tbd */,
@@ -785,6 +789,9 @@
 						DevelopmentTeam = JH7LP27F8M;
 						SystemCapabilities = {
 							com.apple.Keychain = {
+								enabled = 1;
+							};
+							com.apple.Maps.iOS = {
 								enabled = 1;
 							};
 							com.apple.Push = {
