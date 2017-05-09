@@ -37,7 +37,7 @@ export default class DashboardNavigator extends React.Component<Props, State> {
                 <View style={styles.buttonContainer}>
                     <Icon name="navicon" style={styles.icon} onPress={() => this.toggleDrawer('left')}/>
                     <Text style={styles.name} numberOfLines={1}>{this.props.selectedGroup.name}</Text>
-                    <Icon name="map-marker" style={[styles.icon, {color: colors.red}]} onPress={navigation.MapView}/>
+                    <Icon name="map" style={styles.icon} onPress={navigation.MapView}/>
                     <Icon name="group" style={styles.icon} onPress={() => this.toggleDrawer('right')}/>
                 </View>
             </View>
