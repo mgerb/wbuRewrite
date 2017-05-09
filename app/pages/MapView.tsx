@@ -57,7 +57,6 @@ class MapView extends React.Component<Props, State>  implements ClosableModal {
 
     componentDidMount() {
         navigator.geolocation.getCurrentPosition((position: any) => {
-            console.log(position);
             this.setState({
                 region: {
                     latitude: position.coords.latitude,
@@ -66,6 +65,9 @@ class MapView extends React.Component<Props, State>  implements ClosableModal {
                     longitudeDelta: LONGITUDE_DELTA,
                 },
             });
+        }, (error: any) => {
+            console.log(error);
+            alert("Please enable geolocation to use this feature.");
         });
     }
 

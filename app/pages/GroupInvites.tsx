@@ -50,7 +50,7 @@ export default class CreateGroup extends React.Component<Props, State> implement
         groupAPI.getGroupInvites().then((response: any) => {
             this.setState({
                 groupList: response.data,
-            })
+            });
         });
     }
 

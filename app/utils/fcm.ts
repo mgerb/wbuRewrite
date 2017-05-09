@@ -3,6 +3,7 @@ import FCM, { FCMEvent, RemoteNotificationResult, WillPresentNotificationResult,
 import store from '../redux/store';
 import groupActions from '../redux/actions/group';
 
+import navigation from '../navigation';
 import userAPI from '../api/user.api';
 
 class fcm {
@@ -29,7 +30,11 @@ class fcm {
     public startListeners(): void {
 
         this.notificationListener = FCM.on(FCMEvent.Notification, (notif: any) => {
-            
+            // return if user is not logged in
+            if (!store.getState().user.loggedIn) {
+                return;
+            } 
+
             // if message notification update current group messages if the group is selected
             if (notif.type === 'message' && store.getState().group.selectedGroup.id === parseInt(notif.groupID)) {
                 store.dispatch(groupActions.getGroupMessagesFetchRequested(parseInt(notif.groupID)));
@@ -43,6 +48,12 @@ class fcm {
                 if (notif.type === 'message') {
                     store.dispatch(groupActions.setSelectedGroupByID(parseInt(notif.groupID)));
                 }
+
+                // open group invites modal if groupInvite notification
+                if (notif.type === 'groupInvite') {
+                    navigation.GroupInvites();
+                }
+
             } else {
 
             }
