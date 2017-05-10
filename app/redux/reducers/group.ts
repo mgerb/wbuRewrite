@@ -68,7 +68,7 @@ function group(state: GroupStateType = defaultState, action: any): any {
 
         case types.SET_SELECTED_GROUP:
             return {...state,
-                selectedGroup: _.clone(action.selectedGroup),
+                selectedGroup: _.cloneDeep(action.selectedGroup),
                 // reset messages upon new selected group
                 selectedGroupMessages: [],
             };

@@ -6,11 +6,14 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 // redux
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { UserStateType } from '../redux/reducers/user';
+import { GeoStateType, GeoLocationType } from '../redux/reducers/geo';
 import { GroupStateType } from '../redux/reducers/group';
+import { UserStateType } from '../redux/reducers/user';
+import geoActions, { GeoActionMapType } from '../redux/actions/geo';
 import groupActions, { GroupActionMapType } from '../redux/actions/group';
 import userActions, { UserActionMapType } from '../redux/actions/user';
 
+import geoAPI from '../api/geo.api';
 import navigation, { ClosableModal } from '../navigation';
 import MV from 'react-native-maps';
 import time from '../utils/time';
@@ -28,6 +31,8 @@ interface Props {
     navigator: any;
     user: UserStateType;
     group: GroupStateType;
+    geo: GeoStateType;
+    geoActions: GeoActionMapType;
     groupActions: GroupActionMapType;
     userActions: UserActionMapType;
 }
@@ -78,6 +83,9 @@ class MapView extends React.Component<Props, State>  implements ClosableModal {
     }
 
     componentDidMount() {
+
+        this.props.geoActions.getGeoLocationsFetchRequested(this.props.group.selectedGroup.id);
+
         navigator.geolocation.getCurrentPosition((position: any) => {
             this.setState({
                 region: {
@@ -116,6 +124,8 @@ class MapView extends React.Component<Props, State>  implements ClosableModal {
                 description: time.timestamp(moment().unix()),
             };
 
+            this.storeGeoLocation(latlng.latitude, latlng.longitude, "true");
+
             setTimeout(() => {
                 this.setState({
                     waypointToggle: false,
@@ -125,11 +135,25 @@ class MapView extends React.Component<Props, State>  implements ClosableModal {
         }
     }
 
-    onPing() {
-        Vibration.vibrate([0], false);
+    storeGeoLocation(latitude: number, longitude: number, waypoint: string) {
+        geoAPI.storeGeoLocation(this.props.group.selectedGroup.id as number, latitude, longitude, waypoint).then(() => {
+        }).catch((error: any) => {
+            console.log(error);
+        });
     }
 
-    onWaypoint() {
+    onPing() {
+        Vibration.vibrate([0], false);
+
+        navigator.geolocation.getCurrentPosition((position: any) => {
+            const latitude = position.coords.latitude as number;
+            const longitude = position.coords.longitude as number;
+
+            this.storeGeoLocation(latitude, longitude, "false");
+        });
+    }
+
+    onWaypointToggle() {
         this.setState({
             waypointToggle: !this.state.waypointToggle,
         });
@@ -142,18 +166,23 @@ class MapView extends React.Component<Props, State>  implements ClosableModal {
                     <View style={{flex:1}}>
 
                         <MV style={{flex:1}}
-                        onRegionChange={this.onRegionChange.bind(this)}
-                        onPress={this.onMapPress.bind(this)}
-                        showsUserLocation={true}
-                        showsMyLocationButton={true}
-                        initialRegion={this.state.region}>
+                            onRegionChange={this.onRegionChange.bind(this)}
+                            onPress={this.onMapPress.bind(this)}
+                            showsUserLocation={true}
+                            showsMyLocationButton={true}
+                            initialRegion={this.state.region}>
                         
-                            {this.state.markers.map((marker: Marker, index: number) => {
+                            {this.props.geo.geoLocations.map((location: GeoLocationType, index: number) => {
+                                const latlng: LatLng = {
+                                    latitude: parseFloat(location.latitude as string),
+                                    longitude: parseFloat(location.longitude as string),
+                                };
+
                                 return (
                                     <MV.Marker  key={index}
-                                                coordinate={marker.latlng}
-                                                title={marker.title}
-                                                description={marker.description}>
+                                                coordinate={latlng}
+                                                title={location.firstName + " " + location.lastName}
+                                                description={time.timestamp(location.timestamp as number)}>
                                                     <Icon style={{fontSize: sizes.xLarge, color: colors.red}} name="map-marker"/>
                                                 </MV.Marker>
                                 );
@@ -163,7 +192,7 @@ class MapView extends React.Component<Props, State>  implements ClosableModal {
 
                             <View style={styles.buttonContainer}>
                                 <TouchableHighlight style={[styles.button, {backgroundColor: !this.state.waypointToggle ? colors.dark2 : colors.red}]}
-                                                    onPress={this.onWaypoint.bind(this)}
+                                                    onPress={this.onWaypointToggle.bind(this)}
                                                     underlayColor={colors.red}>
                                     <Icon style={styles.buttonText} name="map-marker"/>
                                 </TouchableHighlight>
@@ -182,13 +211,15 @@ class MapView extends React.Component<Props, State>  implements ClosableModal {
 
 function mapStateToProps(state: Props): any {
   return {
-    user: state.user,
+    geo: state.geo,
     group: state.group,
+    user: state.user,
   };
 }
 
 function mapDispatchToProps(dispatch: Dispatch<any>): any {
   return {
+    geoActions: bindActionCreators(geoActions, dispatch),
     groupActions: bindActionCreators(groupActions, dispatch),
     userActions: bindActionCreators(userActions, dispatch),
   };

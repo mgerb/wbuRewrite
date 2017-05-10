@@ -7,7 +7,6 @@ import { GroupType } from '../redux/reducers/group';
 import colors from '../style/colors';
 import sizes from '../style/sizes';
 
-
 interface Props {
     navigator: any;
     selectedGroup: GroupType;
@@ -31,13 +30,20 @@ export default class DashboardNavigator extends React.Component<Props, State> {
         });
     }
 
+    onMapPress() {
+        // prevent map from opening if no group is selected
+        if (!!this.props.selectedGroup.id) {
+            navigation.MapView(this.props.selectedGroup.name as string);
+        }
+    }
+
     render() {
         return (
             <View style={styles.container}>
                 <View style={styles.buttonContainer}>
                     <Icon name="navicon" style={styles.icon} onPress={() => this.toggleDrawer('left')}/>
                     <Text style={styles.name} numberOfLines={1}>{this.props.selectedGroup.name}</Text>
-                    <Icon name="map" style={styles.icon} onPress={navigation.MapView}/>
+                    <Icon name="map" style={styles.icon} onPress={this.onMapPress.bind(this)}/>
                     <Icon name="group" style={styles.icon} onPress={() => this.toggleDrawer('right')}/>
                 </View>
             </View>

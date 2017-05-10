@@ -1,9 +1,11 @@
-import userSagas from './user';
+import geoSagas from './geo';
 import groupSagas from './group';
+import userSagas from './user';
 
 export default function* rootSaga(): any {
     yield [
-        userSagas(),
+        geoSagas(),
         groupSagas(),
+        userSagas(),
     ];
 }

@@ -4,10 +4,12 @@ import querystring from 'query-string';
 
 class geoAPI {
 
-    public storeGeoLocation(latitude: number, longitude: number): AxiosPromise {
+    public storeGeoLocation(groupID: number, latitude: number, longitude: number, waypoint: string): AxiosPromise {
         return api.post('/geo/storeGeoLocation', querystring.stringify({
+            groupID,
             latitude,
             longitude,
+            waypoint,
         }));
     }
 

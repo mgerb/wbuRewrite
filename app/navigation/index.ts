@@ -95,10 +95,10 @@ class nav {
         });
     }
 
-    MapView(): void {
+    MapView(title: string): void {
         Navigation.showModal({
             screen: "MapView",
-            //title: "MapView",
+            title: title,
             navigatorButtons: {
                 leftButtons: [{
                     title: "Close",
