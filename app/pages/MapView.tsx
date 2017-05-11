@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, ViewStyle, Vibration, TextStyle, StyleSheet, Dimensions, TouchableHighlight } from 'react-native';
+import { Text, View, ViewStyle, Vibration, TextStyle, StyleSheet, Dimensions, TouchableHighlight } from 'react-native';
+import _ from 'lodash';
 import moment from 'moment';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -107,32 +108,52 @@ class MapView extends React.Component<Props, State>  implements ClosableModal {
     onMapPress(event: any) {
         if (this.state.waypointToggle) {
 
-            this.setState({
-                markers: [],
-            });
-
             // buzzzz!
             Vibration.vibrate([0], false);
 
             // get coords from tap
             let latlng: LatLng = event.nativeEvent.coordinate;
 
-            // create a new marker
-            let newMarker: Marker = {
-                latlng: latlng,
-                title: "test",
-                description: time.timestamp(moment().unix()),
-            };
+            this.updateGeoLocationState(latlng.latitude.toString(), latlng.longitude.toString(), true);
 
             this.storeGeoLocation(latlng.latitude, latlng.longitude, "true");
 
-            setTimeout(() => {
-                this.setState({
-                    waypointToggle: false,
-                    markers: [...this.state.markers, newMarker],
-                });
+            this.setState({
+                waypointToggle: false,
             });
         }
+    }
+
+    updateGeoLocationState(latitude: string, longitude: string, waypoint: boolean) {
+        
+        // create a new marker
+        let newGeoLocation: GeoLocationType = {
+            firstName: this.props.user.firstName,
+            lastName: this.props.user.lastName,
+            groupID: this.props.group.selectedGroup.id,
+            userID: this.props.user.id,
+            latitude: latitude,
+            longitude: longitude,
+            waypoint: waypoint,
+            timestamp: moment().unix(),
+        };
+
+        let newEntry = true;
+        let newGeoLocationList: Array<GeoLocationType> = _.map(this.props.geo.geoLocations, (geo: GeoLocationType) => {
+            if (geo.userID === this.props.user.id && geo.waypoint === waypoint) {
+                newEntry = false;
+                return newGeoLocation;
+            } else {
+                return geo;
+            }
+        });
+
+        // if there was no entry updated we still need to insert location into the list
+        if (newEntry) {
+            newGeoLocationList = _.concat(newGeoLocationList, newGeoLocation);
+        }
+
+        this.props.geoActions.setGeoLocations(newGeoLocationList);
     }
 
     storeGeoLocation(latitude: number, longitude: number, waypoint: string) {
@@ -149,6 +170,7 @@ class MapView extends React.Component<Props, State>  implements ClosableModal {
             const latitude = position.coords.latitude as number;
             const longitude = position.coords.longitude as number;
 
+            this.updateGeoLocationState(latitude.toString(), longitude.toString(), false);
             this.storeGeoLocation(latitude, longitude, "false");
         });
     }
@@ -156,6 +178,37 @@ class MapView extends React.Component<Props, State>  implements ClosableModal {
     onWaypointToggle() {
         this.setState({
             waypointToggle: !this.state.waypointToggle,
+        });
+    }
+
+    insertMarkers() {
+
+        return this.props.geo.geoLocations.map((location: GeoLocationType, index: number) => {
+            const latlng: LatLng = {
+                latitude: parseFloat(location.latitude as string),
+                longitude: parseFloat(location.longitude as string),
+            };
+
+            const iconColor = location.userID === this.props.user.id ? colors.purple : colors.red;
+            
+            // don't show markers if they are more than a day old
+            if (moment.unix(location.timestamp as number) < moment().subtract(1, 'd')) {
+                return null;
+            }
+
+            return (
+                <MV.Marker  key={index}
+                            coordinate={latlng}
+                            title={location.firstName + " " + location.lastName}
+                            description={time.timestamp(location.timestamp as number)}>
+                                <View style={{alignItems:'center'}}>
+                                    <Icon style={{ fontSize: sizes.xLarge,color:iconColor}}
+                                            name={location.waypoint ? 'map-marker' : 'map-marker-radius'}/>
+                                    <Text style={{color:colors.primary}}>{location.firstName}</Text>
+                                    <Text style={{color:colors.primary}}>{location.lastName}</Text>
+                                </View>
+                </MV.Marker>
+            );
         });
     }
 
@@ -172,22 +225,7 @@ class MapView extends React.Component<Props, State>  implements ClosableModal {
                             showsMyLocationButton={true}
                             initialRegion={this.state.region}>
                         
-                            {this.props.geo.geoLocations.map((location: GeoLocationType, index: number) => {
-                                const latlng: LatLng = {
-                                    latitude: parseFloat(location.latitude as string),
-                                    longitude: parseFloat(location.longitude as string),
-                                };
-
-                                return (
-                                    <MV.Marker  key={index}
-                                                coordinate={latlng}
-                                                title={location.firstName + " " + location.lastName}
-                                                description={time.timestamp(location.timestamp as number)}>
-                                                    <Icon style={{fontSize: sizes.xLarge, color: colors.red}} name="map-marker"/>
-                                                </MV.Marker>
-                                );
-                            })}
-
+                            {this.insertMarkers()}
                         </MV>
 
                             <View style={styles.buttonContainer}>
@@ -199,7 +237,7 @@ class MapView extends React.Component<Props, State>  implements ClosableModal {
                                 <TouchableHighlight style={[styles.button, {backgroundColor: colors.dark2, borderLeftWidth:1}]}
                                                     onPress={this.onPing.bind(this)}
                                                     underlayColor={colors.dark1}>
-                                    <Icon style={[styles.buttonText, {color: colors.cyan}]} name="map-marker-radius"/>
+                                    <Icon style={[styles.buttonText, {color: colors.white}]} name="map-marker-radius"/>
                                 </TouchableHighlight>
                             </View>
                     </View>

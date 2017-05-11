@@ -11,7 +11,7 @@ class nav {
         navBarBackgroundColor: colors.primary,
         navBarTextColor: colors.white,
         navBarButtonColor: colors.white,
-    }
+    };
 
     Dashboard(): void {
         Navigation.startSingleScreenApp({
