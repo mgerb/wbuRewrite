@@ -60,7 +60,8 @@ class ChatInput  extends React.Component<Props, State> {
 
         groupAPI.storeMessage(this.props.group.selectedGroup.id, this.state.message).then(() => {
             // get messages from server after sending
-            this.props.groupActions.getGroupMessagesFetchRequested(this.props.group.selectedGroup.id);
+            // don't need this anymore - messages are updated from FCM now to this fetch is unnecessary
+            //this.props.groupActions.getGroupMessagesFetchRequested(this.props.group.selectedGroup.id);
         }).catch(() => {
             toast.error("Error sending message. Our servers may be overwhelmed.");
         });
