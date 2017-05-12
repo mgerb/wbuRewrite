@@ -1,7 +1,7 @@
 import React from 'react';
 import { Text, View, ViewStyle, Vibration, TextStyle, StyleSheet, Dimensions, TouchableHighlight } from 'react-native';
 import _ from 'lodash';
-import moment from 'moment';
+import moment, { Moment } from 'moment';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 // redux
@@ -68,6 +68,9 @@ class MapView extends React.Component<Props, State>  implements ClosableModal {
 
     static navigatorStyle = {...navigation.NavStyle};
 
+    private mapRef: any;
+    private oneDay: Moment;
+
     constructor(props: Props) {
         super(props);
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
@@ -85,9 +88,11 @@ class MapView extends React.Component<Props, State>  implements ClosableModal {
 
     componentDidMount() {
 
-        this.props.geoActions.getGeoLocationsFetchRequested(this.props.group.selectedGroup.id);
+        this.oneDay = moment().subtract(1, "d");
+
 
         navigator.geolocation.getCurrentPosition((position: any) => {
+
             this.setState({
                 region: {
                     latitude: position.coords.latitude,
@@ -96,13 +101,39 @@ class MapView extends React.Component<Props, State>  implements ClosableModal {
                     longitudeDelta: LONGITUDE_DELTA,
                 },
             });
+
+            // get locations from storage/server after getting current position
+            this.props.geoActions.getGeoLocationsFromStorage(this.props.user.id as number, this.props.group.selectedGroup.id as number);
+
         }, () => {
             alert("Please enable geolocation to use this feature.");
         });
     }
 
-    onRegionChange(region: any) {
-        console.log(region);
+    componentWillReceiveProps(nextProps: Props) {
+        if (!!this.mapRef && this.props.geo.geoLocations !== nextProps.geo.geoLocations) {
+            const geoLocations = _.reject(nextProps.geo.geoLocations, (geo: GeoLocationType) => {
+                return moment.unix(geo.timestamp as number) < this.oneDay;
+            });
+
+            if (geoLocations.length === 1) {
+                setTimeout(() => {
+                    this.mapRef.animateToRegion({
+                        latitude: geoLocations[0].latitude,
+                        longitude: geoLocations[0].longitude,
+                        latitudeDelta: LATITUDE_DELTA,
+                        longitudeDelta: LONGITUDE_DELTA,
+                    });
+                });
+            } else if (geoLocations.length > 1) {
+                setTimeout(() => {
+                    this.mapRef.fitToCoordinates(geoLocations, {
+                        edgePadding: {top:50,right:50,bottom:50,left:50},
+                        animated: true,
+                    });
+                });
+            }
+        }
     }
 
     onMapPress(event: any) {
@@ -192,7 +223,7 @@ class MapView extends React.Component<Props, State>  implements ClosableModal {
             const iconColor = location.userID === this.props.user.id ? colors.purple : colors.red;
             
             // don't show markers if they are more than a day old
-            if (moment.unix(location.timestamp as number) < moment().subtract(1, 'd')) {
+            if (moment.unix(location.timestamp as number) < this.oneDay) {
                 return null;
             }
 
@@ -219,7 +250,7 @@ class MapView extends React.Component<Props, State>  implements ClosableModal {
                     <View style={{flex:1}}>
 
                         <MV style={{flex:1}}
-                            onRegionChange={this.onRegionChange.bind(this)}
+                            ref={(ref: any) => {this.mapRef = ref;}}
                             onPress={this.onMapPress.bind(this)}
                             showsUserLocation={true}
                             showsMyLocationButton={true}

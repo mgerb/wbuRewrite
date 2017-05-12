@@ -100,7 +100,7 @@ function* getGroupMessagesFromStorage(): any {
     yield put(groupActions.setGroupMessages(storedMessages));
     
     // fetch messages from server
-    yield put(groupActions.getGroupMessagesFetchRequested(groupID));
+    yield put(groupActions.getGroupMessagesFetchRequested(groupID as number));
 }
 
 function* getGroupMessagesFetchRequested(action: any): any {

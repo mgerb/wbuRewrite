@@ -2,9 +2,18 @@ import types from '../constants';
 import { Action, ActionCreatorsMapObject } from 'redux';
 import { GeoLocationType } from '../reducers/geo';
 
-function getGeoLocationsFetchRequested(groupID: number): any {
+function getGeoLocationsFromStorage(userID: number, groupID: number): any {
+    return {
+        type: types.GET_GEO_LOCATIONS_FROM_STORAGE,
+        userID,
+        groupID,
+    };
+}
+
+function getGeoLocationsFetchRequested(userID: number, groupID: number): any {
     return {
         type: types.GET_GEO_LOCATIONS_FETCH_REQUESTED,
+        userID,
         groupID,
     };
 }
@@ -29,13 +38,15 @@ function setGeoLocations(geoLocations: Array<GeoLocationType>): any {
 }
 
 export interface GeoActionMapType extends ActionCreatorsMapObject {
-    getGeoLocationsFetchRequested: any;
-    getGeoLocationsFetchSucceeded: any;
-    getGeoLocationsFetchFailed: any;
-    setGeoLocations: any;
+    getGeoLocationsFromStorage(userID: number, groupID: number): any;
+    getGeoLocationsFetchRequested(userID: number, groupID: number): any;
+    getGeoLocationsFetchSucceeded(): any;
+    getGeoLocationsFetchFailed(): any;
+    setGeoLocations(geoLocations: Array<GeoLocationType>): any;
 }
 
 const actionMap: GeoActionMapType = {
+    getGeoLocationsFromStorage,
     getGeoLocationsFetchRequested,
     getGeoLocationsFetchSucceeded,
     getGeoLocationsFetchFailed,

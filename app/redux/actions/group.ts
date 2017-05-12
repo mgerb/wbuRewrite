@@ -61,10 +61,9 @@ function getGroupUsersFetchFailed(): Action {
     };
 }
 
-function getGroupMessagesFromStorage(groupID: number): any {
+function getGroupMessagesFromStorage(): Action {
     return {
         type: types.GET_GROUP_MESSAGES_FROM_STORAGE,
-        groupID,
     };
 }
 
@@ -94,20 +93,20 @@ function setGroupMessages(messages: Array<MessageType>): any {
     };
 }
 export interface GroupActionMapType extends ActionCreatorsMapObject {
-    resetGroupState: any;
-    setSelectedGroupByID: any;
-    setSelectedGroup: any;
-    getUserGroupsFetchRequested: any;
-    getUserGroupsFetchSucceeded: any;
-    getUserGroupsFetchFailed: any;
-    getGroupUsersFetchRequested: any;
-    getGroupUsersFetchSucceeded: any;
-    getGroupUsersFetchFailed: any;
-    getGroupMessagesFromStorage: any;
-    getGroupMessagesFetchRequested: any;
-    getGroupMessagesFetchSucceeded: any;
-    getGroupMessagesFetchFailed: any;
-    setGroupMessages: any;
+    resetGroupState(): any;
+    setSelectedGroupByID(groupID: number): any;
+    setSelectedGroup(selectedGroup: GroupType): any;
+    getUserGroupsFetchRequested(): any;
+    getUserGroupsFetchSucceeded(groups: Array<GroupType>): any;
+    getUserGroupsFetchFailed(): any;
+    getGroupUsersFetchRequested(): any;
+    getGroupUsersFetchSucceeded(selectedGroupUsers: Array<UserType>): any;
+    getGroupUsersFetchFailed(): any;
+    getGroupMessagesFromStorage(): any;
+    getGroupMessagesFetchRequested(groupID: number): any;
+    getGroupMessagesFetchSucceeded(): any;
+    getGroupMessagesFetchFailed(): any;
+    setGroupMessages(messages: Array<MessageType>): any;
 }
 
 const actionMap: GroupActionMapType = {

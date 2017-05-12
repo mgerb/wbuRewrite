@@ -51,6 +51,8 @@ export default class CreateGroup extends React.Component<Props, State> implement
             this.setState({
                 groupList: response.data,
             });
+        }).catch(() => {
+            
         });
     }
 

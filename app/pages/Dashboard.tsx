@@ -95,7 +95,7 @@ class Dashboard extends React.Component<Props, State> {
 
         // when the app comes into the foreground
         if (this.state.appState === "background" && nextAppState === "active") {
-            this.props.groupActions.getGroupMessagesFetchRequested(this.props.group.selectedGroup.id);
+            this.props.groupActions.getGroupMessagesFetchRequested(this.props.group.selectedGroup.id as number);
 
             // check refresh token time is more than 2 days old
             if ((this.props.user.lastRefreshTime as number) < moment().subtract(2, "d").unix()) {

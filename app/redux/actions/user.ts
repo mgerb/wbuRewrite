@@ -70,15 +70,15 @@ function refreshJWTFetchFailed(): Action {
 }
 
 export interface UserActionMapType extends ActionCreatorsMapObject {
-    logout: any;
-    resetUserState: any;
-    loginFetchRequested: any;
-    loginFacebookFetchRequested: any;
-    loginFetchSucceeded: any;
-    loginFetchFailed: any;
-    refreshJWTFetchRequested: any;
-    refreshJWTFetchSucceeded: any;
-    refreshJWTFetchFailed: any;
+    logout(): any;
+    resetUserState(): any;
+    loginFetchRequested(email: string, password: string): any;
+    loginFacebookFetchRequested(facebookAccessToken: string): any;
+    loginFetchSucceeded(action: UserType): any;
+    loginFetchFailed(): any;
+    refreshJWTFetchRequested(): any;
+    refreshJWTFetchSucceeded(jwt: string, lastRefreshTime: number): any;
+    refreshJWTFetchFailed(): any;
 }
 
 const actionMap: UserActionMapType = {

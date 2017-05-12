@@ -2,10 +2,12 @@ import { AsyncStorage } from 'react-native';
 import { UserStateType } from '../redux/reducers/user';
 import { GroupType } from '../redux/reducers/group';
 import { UserType } from '../redux/reducers/user';
+import { GeoLocationType } from '../redux/reducers/geo';
 
 const USER_STATE_KEY = "USER_STATE_KEY";
 const GROUPS_KEY = "GROUPS_KEY";
 const GROUP_USERS_KEY = "GROUP_USERS_KEY:";
+const GEO_LOCATIONS_KEY = "GEO_LOCATIONS_KEY:";
 
 class storage {
 
@@ -42,6 +44,16 @@ class storage {
     getGroupUsers(groupID: number): Promise<Array<UserType>> {
         return AsyncStorage.getItem(GROUP_USERS_KEY + groupID.toString()).then((item) => {
             return JSON.parse(item);
+        });
+    }
+
+    storeGeoLocations(userID: number, groupID: number, geoLocations: Array<GeoLocationType>): Promise<any> {
+        return AsyncStorage.setItem(GEO_LOCATIONS_KEY + userID + groupID, JSON.stringify(geoLocations));
+    }
+
+    getGeoLocations(userID: number, groupID: number): Promise<Array<GeoLocationType>> {
+        return AsyncStorage.getItem(GEO_LOCATIONS_KEY + userID + groupID).then((data: string) => {
+            return JSON.parse(data);
         });
     }
 
