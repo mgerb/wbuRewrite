@@ -2,6 +2,7 @@ import { Platform } from 'react-native';
 import FCM, { FCMEvent, RemoteNotificationResult, WillPresentNotificationResult, NotificationType } from 'react-native-fcm';
 import store from '../redux/store';
 import groupActions from '../redux/actions/group';
+import geoActions from '../redux/actions/geo';
 
 import navigation from '../navigation';
 import userAPI from '../api/user.api';
@@ -36,8 +37,16 @@ class fcm {
             } 
 
             // if message notification update current group messages if the group is selected
-            if (notif.type === 'message' && store.getState().group.selectedGroup.id === parseInt(notif.groupID)) {
-                store.dispatch(groupActions.getGroupMessagesFetchRequested(parseInt(notif.groupID)));
+            if (store.getState().group.selectedGroup.id === parseInt(notif.groupID)) {
+                // fetch new messages
+                if (notif.type === 'message') {
+                    store.dispatch(groupActions.getGroupMessagesFetchRequested(parseInt(notif.groupID)));
+                }
+
+                // fetch new geo locations
+                if (notif.type === 'geoLocation') {
+                    store.dispatch(geoActions.getGeoLocationsFetchRequested(store.getState().user.id, parseInt(notif.groupID)));
+                }
             }
 
             // there are two parts of notif. notif.notification contains the notification payload, notif.data contains data payload
@@ -91,6 +100,10 @@ class fcm {
         // stop listening for events
         this.notificationListener.remove();
         this.refreshTokenListener.remove();
+    }
+
+    public removeAllDeliveredNotifications() {
+        FCM.removeAllDeliveredNotifications();
     }
 }
 

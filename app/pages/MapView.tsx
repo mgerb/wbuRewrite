@@ -70,6 +70,7 @@ class MapView extends React.Component<Props, State>  implements ClosableModal {
 
     private mapRef: any;
     private oneDay: Moment;
+    private throttledStoreGeoLocation: any;
 
     constructor(props: Props) {
         super(props);
@@ -78,6 +79,8 @@ class MapView extends React.Component<Props, State>  implements ClosableModal {
             waypointToggle: false,
             markers: [],
         };
+        
+        this.throttledStoreGeoLocation = _.throttle(this.storeGeoLocation, 2000);
     }
 
     onNavigatorEvent(event: any): void {
@@ -147,7 +150,7 @@ class MapView extends React.Component<Props, State>  implements ClosableModal {
 
             this.updateGeoLocationState(latlng.latitude.toString(), latlng.longitude.toString(), true);
 
-            this.storeGeoLocation(latlng.latitude, latlng.longitude, "true");
+            this.throttledStoreGeoLocation(latlng.latitude, latlng.longitude, "true");
 
             this.setState({
                 waypointToggle: false,
@@ -202,7 +205,7 @@ class MapView extends React.Component<Props, State>  implements ClosableModal {
             const longitude = position.coords.longitude as number;
 
             this.updateGeoLocationState(latitude.toString(), longitude.toString(), false);
-            this.storeGeoLocation(latitude, longitude, "false");
+            this.throttledStoreGeoLocation(latitude, longitude, "false");
         });
     }
 

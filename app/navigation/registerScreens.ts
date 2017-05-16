@@ -14,6 +14,7 @@ import GroupSearch from '../pages/GroupSearch';
 import GroupInfo from '../pages/GroupInfo';
 import Settings from '../pages/Settings';
 import MapView from '../pages/MapView';
+import Feedback from '../pages/Feedback';
 
 // register all screens of the app (including internal ones)
 export default function registerScreens(store: Store<any>, Provider: any) {
@@ -30,4 +31,5 @@ export default function registerScreens(store: Store<any>, Provider: any) {
   Navigation.registerComponent('GroupInfo', () => GroupInfo);
   Navigation.registerComponent('Settings', () => Settings, store, Provider);
   Navigation.registerComponent('MapView', () => MapView, store, Provider);
+  Navigation.registerComponent('Feedback', () => Feedback, store, Provider);
 }

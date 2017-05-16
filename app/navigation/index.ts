@@ -85,7 +85,7 @@ class nav {
     Settings(): void {
         Navigation.showModal({
             screen: "Settings",
-            title: "Settings",
+            //title: "Settings",
             navigatorButtons: {
                 leftButtons: [{
                     title: "Close",
@@ -107,6 +107,7 @@ class nav {
             },
         });
     }
+
 }
 
 export default new nav();

@@ -101,6 +101,9 @@ class Dashboard extends React.Component<Props, State> {
             if ((this.props.user.lastRefreshTime as number) < moment().subtract(2, "d").unix()) {
                 this.props.userActions.refreshJWTFetchRequested();
             }
+
+            // remove all deliverd FCM notifications
+            fcm.removeAllDeliveredNotifications();
         }
 
         this.setState({

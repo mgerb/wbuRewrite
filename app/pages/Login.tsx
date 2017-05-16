@@ -21,7 +21,7 @@ interface Props {
 }
 
 interface State {
-    errorMessage: string;
+    responseMessage: string;
     email: string;
     password: string;
 }
@@ -33,7 +33,7 @@ class Login extends React.Component<Props, State> {
     private defaultState: State = {
         email: "",
         password: "",
-        errorMessage: " ",
+        responseMessage: " ",
     };
 
     constructor(props: Props) {
@@ -78,7 +78,7 @@ class Login extends React.Component<Props, State> {
             <View style={styles.container}>
 
                 <View>
-                    {this.props.user.loginFetchFailed ? <Text style={styles.errorMessage}>Error logging in.</Text> : <Text> </Text>}
+                    {this.props.user.loginFetchFailed ? <Text style={styles.responseMessage}>Error logging in.</Text> : <Text> </Text>}
                 </View>
 
                 <TextInput placeholder="Email" autoCapitalize="none" style={wStyles.textInput} value={this.state.email} onChangeText={(email) => this.setState({email})}/>
@@ -126,7 +126,7 @@ const styles = StyleSheet.create({
         color: colors.primary,
         alignSelf: 'center',
     } as TextStyle,
-    errorMessage: {
+    responseMessage: {
         fontSize: sizes.default,
         color: "red",
         alignSelf: 'center',

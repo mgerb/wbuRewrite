@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ViewStyle, ScrollView, StyleSheet, Switch, Text, TextStyle, TouchableHighlight } from 'react-native';
+import { View, ViewStyle, StyleSheet, Text, TextStyle, TouchableHighlight } from 'react-native';
 
 // redux
 import { bindActionCreators, Dispatch } from 'redux';
@@ -10,7 +10,6 @@ import groupActions, { GroupActionMapType } from '../redux/actions/group';
 import userActions, { UserActionMapType } from '../redux/actions/user';
 
 import navigation, { ClosableModal } from '../navigation';
-import toast from '../utils/toast';
 
 import userAPI from '../api/user.api';
 
@@ -45,7 +44,6 @@ class Settings extends React.Component<Props, State> implements ClosableModal {
 
     onNavigatorEvent(event: any): void {
         if (event.type === "NavBarButtonPress" && event.id === "close") {
-            toast.hide();
             this.props.navigator.dismissModal();
         }
     }
@@ -65,6 +63,7 @@ class Settings extends React.Component<Props, State> implements ClosableModal {
         });
     }
 
+/* remove notification setting for now
     private onNotificationsToggle(notifications: boolean): void {
         this.setState({
             notifications,
@@ -75,23 +74,36 @@ class Settings extends React.Component<Props, State> implements ClosableModal {
             toast.error("Server error. Please try again later.");
         });
     }
+*/
 
     // reset states upon logout
     private logout() {
         this.props.userActions.logout();
     }
 
+    private leaveFeedback() {
+        this.props.navigator.push({
+            screen: "Feedback",
+            title: "Feedback",
+        });
+    }
+
     render() {
         return (
             <View style={styles.container}>
-                <ScrollView style={{flex:1}}>
-                    <View style={styles.setting}>
-                        <Text style={styles.settingText}>Notifications</Text>
-                        <Switch onValueChange={this.onNotificationsToggle.bind(this)}
-                                value={this.state.notifications}/>
-                    </View>
-                </ScrollView>
-                <TouchableHighlight style={[wStyles.button, styles.button]} underlayColor={colors.light1} onPress={this.logout.bind(this)}>
+                {/* remove notification setting for now
+                    <ScrollView style={{flex:1}}>
+                        <View style={styles.setting}>
+                            <Text style={styles.settingText}>Notifications</Text>
+                            <Switch onValueChange={this.onNotificationsToggle.bind(this)}
+                                    value={this.state.notifications}/>
+                        </View>
+                    </ScrollView>
+                */}
+                <TouchableHighlight style={[wStyles.button]} underlayColor={colors.light1} onPress={this.leaveFeedback.bind(this)}>
+                    <Text style={wStyles.buttonText}>Leave Feedback</Text>
+                </TouchableHighlight>
+                <TouchableHighlight style={[wStyles.button, {backgroundColor:colors.red}]} underlayColor={colors.light1} onPress={this.logout.bind(this)}>
                     <Text style={wStyles.buttonText}>Logout</Text>
                 </TouchableHighlight>
             </View>
@@ -102,6 +114,8 @@ class Settings extends React.Component<Props, State> implements ClosableModal {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        alignItems: 'stretch',
+        justifyContent: 'center',
     } as ViewStyle,
     button: {
         backgroundColor: colors.red,

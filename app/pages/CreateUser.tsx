@@ -3,7 +3,6 @@ import React from 'react';
 import { KeyboardAvoidingView, View, ViewStyle, TextStyle, Text, TextInput, StyleSheet, TouchableHighlight } from 'react-native';
 
 import userAPI from '../api/user.api';
-import toast from '../utils/toast';
 
 import colors from '../style/colors';
 import sizes from '../style/sizes';
@@ -19,7 +18,7 @@ interface State {
     email: string;
     password: string;
     confirmPassword: string;
-    errorMessage: string;
+    responseMessage: string;
 }
 
 export default class CreateUser extends React.Component<Props, State> {
@@ -30,17 +29,13 @@ export default class CreateUser extends React.Component<Props, State> {
         email: "",
         password: "",
         confirmPassword: "",
-        errorMessage: " ",
+        responseMessage: " ",
     };
 
     constructor(props: Props) {
         super(props);
 
         this.state = _.clone(this.defaultState);
-    }
-
-    componentWillUnmount() {
-        toast.hide();
     }
 
     fetchCreateUser(): void {
@@ -57,22 +52,21 @@ export default class CreateUser extends React.Component<Props, State> {
             lastName === "") {
 
             this.setState({
-                errorMessage: "Please fill in all fields.",
+                responseMessage: "Please fill in all fields.",
             });
 
             return;
         }
 
         if (password === confirmPassword) {
-            userAPI.createUser(email, password, firstName, lastName).then((response: any) => {
-                toast.success(response.data.message);
-                this.setState(this.defaultState);
-            }).catch(() => {
-                this.setState({...this.defaultState, errorMessage: "Error creating account."});
+            userAPI.createUser(email, password, firstName, lastName).then(() => {
+                this.setState({...this.defaultState, responseMessage: "Account created!"});
+            }).catch((error: any) => {
+                this.setState({responseMessage: error.response.data.message});
             });
         } else {
             this.setState({
-                errorMessage: "Passwords must match!",
+                responseMessage: "Passwords must match!",
             });
         }
     }
@@ -82,7 +76,7 @@ export default class CreateUser extends React.Component<Props, State> {
             <KeyboardAvoidingView behavior="padding" style={styles.container}>
 
                 <View>
-                    <Text style={styles.errorMessage}>{this.state.errorMessage}</Text>
+                    <Text style={styles.responseMessage}>{this.state.responseMessage}</Text>
                 </View>
 
                 <View>
@@ -117,9 +111,10 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
     } as ViewStyle,
-    errorMessage: {
-        color: "red",
+    responseMessage: {
+        color: colors.primary,
         alignSelf: "center",
         fontSize: sizes.default,
+        textAlign: 'center',
     } as TextStyle,
 });
