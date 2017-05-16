@@ -11,6 +11,8 @@ function* getGeoLocationsFromStorage(action: {userID:number,groupID:number}): an
 
         if (geoLocations && geoLocations.length > 0) {
             yield put(geoActions.setGeoLocations(geoLocations));
+        } else {
+            yield put(geoActions.setGeoLocations([]));
         }
 
     } catch(error) {
