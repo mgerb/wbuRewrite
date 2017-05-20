@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { View, ViewStyle, ScrollView, TextStyle, Text, TextInput, StyleSheet, TouchableHighlight, Keyboard } from 'react-native';
+import _ from 'lodash';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import userAPI from '../api/user.api';
@@ -28,6 +29,8 @@ class CreateGroup extends React.Component<Props, State> implements ClosableModal
 
     static navigatorStyle = {...navigation.NavStyle};
 
+    private throttledInviteUserToGroup: any;
+
     constructor(props: Props) {
         super(props);
         this.state = {
@@ -37,6 +40,7 @@ class CreateGroup extends React.Component<Props, State> implements ClosableModal
         };
 
         this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
+        this.throttledInviteUserToGroup = _.throttle(this.inviteUserToGroup, 2000);
     }
 
     onNavigatorEvent(event: any): void {
@@ -72,7 +76,7 @@ class CreateGroup extends React.Component<Props, State> implements ClosableModal
         }
     }
 
-    private fetchInviteUserToGroup(userID?: number): void {
+    inviteUserToGroup(userID: number): void {
         groupAPI.inviteUserToGroup(userID, this.props.group.selectedGroup.id).then(() => {
             toast.success("User invited!");
         }).catch(() => {
@@ -115,7 +119,7 @@ class CreateGroup extends React.Component<Props, State> implements ClosableModal
                                     </View>
                                     <Icon name="plus"
                                             style={{fontSize: sizes.large, color: colors.primary}}
-                                            onPress={() => {this.fetchInviteUserToGroup(user.id);}}/>
+                                            onPress={() => {this.throttledInviteUserToGroup(user.id);}}/>
                                 </View>
                             );
                         })}

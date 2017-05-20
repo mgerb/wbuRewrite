@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, ViewStyle, Text, StyleSheet, TextInput, TouchableHighlight, Keyboard} from 'react-native';
+import _ from 'lodash';
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import groupAPI from '../api/group.api';
 import store from '../redux/store';
@@ -22,16 +23,31 @@ interface State {
 
 export default class GroupInfo extends React.Component<Props, State> {
 
+    private throttledJoinPublicGroup: any;
+
     constructor() {
         super();
 
         this.state = {
             password: "",
         };
+
+        this.throttledJoinPublicGroup = _.throttle(this.joinPublicGroup, 2000);
     }
 
     componentWillUnmount() {
         toast.hide();
+    }
+
+    joinPublicGroup() {
+        groupAPI.joinPublicGroup(this.props.group.id, this.state.password).then(() => {
+            // refresh user groups after group creation
+            store.dispatch(groupActions.getUserGroupsFetchRequested());
+
+            toast.success("Group joined!");
+        }).catch(() => {
+            toast.error("Failed to join group.");
+        });
     }
 
     fetchJoinGroup() {
@@ -44,15 +60,8 @@ export default class GroupInfo extends React.Component<Props, State> {
         this.setState({
             password: "",
         });
-
-        groupAPI.joinPublicGroup(this.props.group.id, this.state.password).then(() => {
-            // refresh user groups after group creation
-            store.dispatch(groupActions.getUserGroupsFetchRequested());
-
-            toast.success("Group joined!");
-        }).catch(() => {
-            toast.error("Failed to join group.");
-        });
+        
+        this.throttledJoinPublicGroup();
     }
 
     public render() {

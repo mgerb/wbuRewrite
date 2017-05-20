@@ -11,7 +11,7 @@ import userActions, { UserActionMapType } from '../redux/actions/user';
 
 import navigation, { ClosableModal } from '../navigation';
 
-import userAPI from '../api/user.api';
+//import userAPI from '../api/user.api';
 
 import colors from '../style/colors';
 import sizes from '../style/sizes';
@@ -50,6 +50,7 @@ class Settings extends React.Component<Props, State> implements ClosableModal {
 
 
     componentDidMount() {
+        /*
         userAPI.getUserSettings().then((response: any) => {
             if (!response || !response.data || !response.data.notifications) {
                 return;
@@ -61,6 +62,7 @@ class Settings extends React.Component<Props, State> implements ClosableModal {
         }).catch(() => {
             
         });
+        */
     }
 
 /* remove notification setting for now
