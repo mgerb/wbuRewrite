@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, ViewStyle, StyleSheet, Text, TextStyle, TouchableHighlight } from 'react-native';
+import { Linking, View, ViewStyle, StyleSheet, Text, TextStyle, TouchableHighlight } from 'react-native';
 
 // redux
 import { bindActionCreators, Dispatch } from 'redux';
@@ -10,8 +10,6 @@ import groupActions, { GroupActionMapType } from '../redux/actions/group';
 import userActions, { UserActionMapType } from '../redux/actions/user';
 
 import navigation, { ClosableModal } from '../navigation';
-
-//import userAPI from '../api/user.api';
 
 import colors from '../style/colors';
 import sizes from '../style/sizes';
@@ -48,35 +46,12 @@ class Settings extends React.Component<Props, State> implements ClosableModal {
         }
     }
 
-
     componentDidMount() {
-        /*
-        userAPI.getUserSettings().then((response: any) => {
-            if (!response || !response.data || !response.data.notifications) {
-                return;
-            }
-
-            this.setState({
-                notifications: response.data.notifications,
-            });
-        }).catch(() => {
-            
-        });
-        */
     }
 
-/* remove notification setting for now
-    private onNotificationsToggle(notifications: boolean): void {
-        this.setState({
-            notifications,
-        });
-        userAPI.toggleNotifications(notifications ? "1" : "0").then(() => {
-
-        }).catch(() => {
-            toast.error("Server error. Please try again later.");
-        });
+    private openAppSettings() {
+        Linking.openURL('app-settings:');
     }
-*/
 
     // reset states upon logout
     private logout() {
@@ -93,15 +68,9 @@ class Settings extends React.Component<Props, State> implements ClosableModal {
     render() {
         return (
             <View style={styles.container}>
-                {/* remove notification setting for now
-                    <ScrollView style={{flex:1}}>
-                        <View style={styles.setting}>
-                            <Text style={styles.settingText}>Notifications</Text>
-                            <Switch onValueChange={this.onNotificationsToggle.bind(this)}
-                                    value={this.state.notifications}/>
-                        </View>
-                    </ScrollView>
-                */}
+                <TouchableHighlight style={[wStyles.button]} underlayColor={colors.light1} onPress={this.openAppSettings.bind(this)}>
+                    <Text style={wStyles.buttonText}>Notification Settings</Text>
+                </TouchableHighlight>
                 <TouchableHighlight style={[wStyles.button]} underlayColor={colors.light1} onPress={this.leaveFeedback.bind(this)}>
                     <Text style={wStyles.buttonText}>Leave Feedback</Text>
                 </TouchableHighlight>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, ViewStyle, Vibration, TextStyle, StyleSheet, Dimensions, TouchableHighlight } from 'react-native';
+import { Alert, Linking, Text, View, ViewStyle, Vibration, TextStyle, StyleSheet, Dimensions, TouchableHighlight } from 'react-native';
 import _ from 'lodash';
 import moment, { Moment } from 'moment';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -109,7 +109,7 @@ class MapView extends React.Component<Props, State>  implements ClosableModal {
             this.props.geoActions.getGeoLocationsFromStorage(this.props.user.id as number, this.props.group.selectedGroup.id as number);
 
         }, () => {
-            alert("Please enable geolocation to use this feature.");
+            this.locationDisabledHandler();
         });
     }
 
@@ -137,6 +137,20 @@ class MapView extends React.Component<Props, State>  implements ClosableModal {
                 });
             }
         }
+    }
+
+    locationDisabledHandler() {
+        Alert.alert(
+            'Location Services Disabled',
+            `You must enable location services to use this feature. Navigate to settings?`,
+            [
+                {text: 'No', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+                {text: 'Yes', onPress: () => Linking.openURL('app-settings:')},
+            ],
+            {
+                cancelable: false,
+            },
+        );
     }
 
     onMapPress(event: any) {
