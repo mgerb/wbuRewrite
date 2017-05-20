@@ -49,6 +49,16 @@ class userAPI {
     public getUserSettings(): AxiosPromise {
         return api.get('/user/getUserSettings');
     }
+
+    public removeFCMToken(): AxiosPromise {
+        return api.post('/user/removeFCMToken');
+    }
+
+    public storeUserFeedback(feedback: string): AxiosPromise {
+        return api.post('/user/storeUserFeedback', querystring.stringify({
+            feedback,
+        }));
+    }
 }
 
 export default new userAPI();

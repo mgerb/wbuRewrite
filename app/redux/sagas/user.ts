@@ -42,6 +42,7 @@ function* loginFetchSucceeded(action: any): any {
 function* logout(): any {
     try {
         // need to reset user state ASAP because we check if user is logged in when calling this
+        yield call(userAPI.removeFCMToken);
         yield put(userActions.resetUserState());
         yield put(groupActions.resetGroupState());
         yield resetAuthorizationHeader();
