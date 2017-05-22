@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, Text } from 'react-native';
+import { Keyboard, View, ViewStyle, Text, TextInput, TouchableHighlight, StyleSheet } from 'react-native';
+import KeyboardSpacer from 'react-native-keyboard-spacer';
 
 // redux
 import { bindActionCreators, Dispatch } from 'redux';
@@ -10,6 +11,13 @@ import { UserStateType } from '../redux/reducers/user';
 import geoActions, { GeoActionMapType } from '../redux/actions/geo';
 import groupActions, { GroupActionMapType } from '../redux/actions/group';
 import userActions, { UserActionMapType } from '../redux/actions/user';
+
+import colors from '../style/colors';
+import sizes from '../style/sizes';
+import wStyles from '../style/wStyles';
+
+import userAPI from '../api/user.api';
+import toast from '../utils/toast';
 
 interface Props {
     navigator: any;
@@ -22,23 +30,64 @@ interface Props {
 }
 
 interface State {
-
+    feedback: string;
 }
 
 class Feedback extends React.Component<Props, State> {
 
     constructor(props: Props) {
         super(props);
+        this.state = {
+            feedback: "",
+        };
+    }
+
+    componentWillUnmount() {
+        toast.hide();
+    }
+
+    private submitFeedback() {
+        if (this.state.feedback === "") {
+            return;
+        }
+
+        userAPI.storeUserFeedback(this.state.feedback).then(() => {
+            toast.success("Thank you for your feedback! It really helps!");
+        }).catch(() => {
+
+        });
+
+        Keyboard.dismiss();
+
+        this.setState({feedback:""});
     }
 
     render() {
         return (
-            <View style={{flex: 1}}>
-                <Text>This is a template</Text>
+            <View style={{flex:1}}>
+                <TextInput style={styles.input}
+                            multiline={true}
+                            value={this.state.feedback}
+                            placeholder="Feedback..."
+                            onChangeText={(feedback:string) => this.setState({feedback})}/>
+
+                <TouchableHighlight style={[wStyles.button, {marginBottom:0}]} underlayColor={colors.light1} onPress={this.submitFeedback.bind(this)}>
+                    <Text style={wStyles.buttonText}>Submit</Text>
+                </TouchableHighlight>
+
+                <KeyboardSpacer/>
             </View>
         );
     }
 }
+
+const styles = StyleSheet.create({
+    input: {
+        flex: 1,
+        fontSize: sizes.default,
+        padding: 10,
+    } as ViewStyle,
+});
 
 function mapStateToProps(state: Props): any {
   return {

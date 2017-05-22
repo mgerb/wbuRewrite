@@ -1,7 +1,6 @@
 import _ from 'lodash';
 import React from 'react';
-import { Keyboard, View, ViewStyle, TextStyle, Text, TextInput, StyleSheet, Switch, TouchableHighlight } from 'react-native';
-import KeyboardSpacer from 'react-native-keyboard-spacer';
+import { Keyboard, KeyboardAvoidingView, View, ViewStyle, TextStyle, Text, TextInput, StyleSheet, Switch, TouchableHighlight } from 'react-native';
 
 import groupAPI from '../api/group.api';
 import store from '../redux/store';
@@ -65,7 +64,7 @@ export default class CreateGroup extends React.Component<Props, State> {
 
     public render() {
         return (
-            <View style={styles.container}>
+            <KeyboardAvoidingView behavior="padding" style={styles.container}>
                 <View>
 
                     <TextInput style={wStyles.textInput}
@@ -105,8 +104,7 @@ export default class CreateGroup extends React.Component<Props, State> {
                     <Text style={styles.errorMessage}>{this.state.errorMessage}</Text>
                 </View>
 
-                <KeyboardSpacer/>
-            </View>
+            </KeyboardAvoidingView>
         );
     }
 }
