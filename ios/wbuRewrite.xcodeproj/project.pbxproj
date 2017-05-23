@@ -51,6 +51,7 @@
 		91819727014A4852A3C08FAA /* libRNFIRMessaging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F37B9E020554020BB293DE2 /* libRNFIRMessaging.a */; };
 		A2228BB61EA6E39300EC1C6F /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
 		A2678E7D1EBC1471001886D9 /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A2678E7C1EBC1471001886D9 /* MapKit.framework */; };
+		A27970391ED3EE8300482092 /* logo2.png in Resources */ = {isa = PBXBuildFile; fileRef = A27970381ED3EE8300482092 /* logo2.png */; };
 		A2CA43431E822DAD0060E67B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = A2CA43421E822DAD0060E67B /* GoogleService-Info.plist */; };
 		A2D859D6005F4C59BC995286 /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0809538D4A2A4FEF9958AA2C /* libRNVectorIcons.a */; };
 		BCA6F78DE8664486849F52FD /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D36B3991BF364AC395316975 /* MaterialIcons.ttf */; };
@@ -340,6 +341,7 @@
 		967671166E1B498691BA0F17 /* AirMaps.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = AirMaps.xcodeproj; path = "../node_modules/react-native-maps/lib/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; };
 		97D53B558B2918F7E71370B0 /* Pods-wbuRewrite.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-wbuRewrite.release.xcconfig"; path = "Pods/Target Support Files/Pods-wbuRewrite/Pods-wbuRewrite.release.xcconfig"; sourceTree = "<group>"; };
 		A2678E7C1EBC1471001886D9 /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		A27970381ED3EE8300482092 /* logo2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = logo2.png; sourceTree = "<group>"; };
 		A2CA43411E822BA80060E67B /* wbuRewrite.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = wbuRewrite.entitlements; path = wbuRewrite/wbuRewrite.entitlements; sourceTree = "<group>"; };
 		A2CA43421E822DAD0060E67B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "wbuRewrite/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		A878A80F6B8C412DAC760FF9 /* FontAwesome.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = FontAwesome.ttf; path = "../node_modules/react-native-vector-icons/Fonts/FontAwesome.ttf"; sourceTree = "<group>"; };
@@ -504,6 +506,7 @@
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				A2CA43421E822DAD0060E67B /* GoogleService-Info.plist */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
+				A27970381ED3EE8300482092 /* logo2.png */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 			);
@@ -1136,6 +1139,7 @@
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				A2CA43431E822DAD0060E67B /* GoogleService-Info.plist in Resources */,
+				A27970391ED3EE8300482092 /* logo2.png in Resources */,
 				81C22A40AC2642FC996BD581 /* Entypo.ttf in Resources */,
 				C54C9FFBF5C34F5D986BC4BE /* EvilIcons.ttf in Resources */,
 				03636C10860F477FA0C10758 /* FontAwesome.ttf in Resources */,
@@ -1435,7 +1439,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 8EAA88A59B678A6762B78A5A /* Pods-wbuRewrite.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-2";
 				CODE_SIGN_ENTITLEMENTS = wbuRewrite/wbuRewrite.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
@@ -1467,7 +1471,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 97D53B558B2918F7E71370B0 /* Pods-wbuRewrite.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-2";
 				CODE_SIGN_ENTITLEMENTS = wbuRewrite/wbuRewrite.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = JH7LP27F8M;
