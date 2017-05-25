@@ -22,6 +22,10 @@ class facebook {
             },
         );
     }
+
+    public logout(): void {
+        LoginManager.logOut();
+    }
 }
 
 export default new facebook();

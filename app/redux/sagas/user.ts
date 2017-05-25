@@ -9,6 +9,7 @@ import storage from '../../utils/storage';
 import { UserType } from '../reducers/user';
 import navigation from '../../navigation';
 import fcm from '../../utils/fcm';
+import facebook from '../../utils/facebook';
 
 function* fetchLoginRequested(action: UserType): any {
     try {
@@ -42,6 +43,7 @@ function* loginFetchSucceeded(action: any): any {
 function* logout(): any {
     try {
         // need to reset user state ASAP because we check if user is logged in when calling this
+        yield facebook.logout();
         yield call(userAPI.removeFCMToken);
         yield put(userActions.resetUserState());
         yield put(groupActions.resetGroupState());
