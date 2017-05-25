@@ -44,12 +44,12 @@ function* logout(): any {
     try {
         // need to reset user state ASAP because we check if user is logged in when calling this
         yield facebook.logout();
-        yield call(userAPI.removeFCMToken);
         yield put(userActions.resetUserState());
         yield put(groupActions.resetGroupState());
-        yield resetAuthorizationHeader();
         yield navigation.Login();
         yield call(storage.removeAllKeys);
+        yield call(userAPI.removeFCMToken);
+        yield resetAuthorizationHeader();
     } catch(error) {
         console.log(error);
     }

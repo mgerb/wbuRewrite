@@ -5,6 +5,8 @@
   "scripts": {
     "clean": "rm -rf ./build",
     "build": "npm run clean && tsc",
+    "bundle": "react-native bundle",
+    "code-push-release": "tsc && code-push release-react wherebaryou ios --deploymentName 'Production' -m --description 'test code push'",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
     "watch": "tsc --watch"
@@ -16,11 +18,12 @@
     "query-string": "^4.3.2",
     "react": "15.4.1",
     "react-native": "0.42.3",
+    "react-native-code-push": "^2.0.3-beta",
     "react-native-fbsdk": "^0.5.0",
     "react-native-fcm": "^6.1.0",
     "react-native-invertible-scroll-view": "^1.0.0",
     "react-native-keyboard-spacer": "^0.3.1",
-    "react-native-maps": "^0.14.0",
+    "react-native-maps": "^0.15.2",
     "react-native-navigation": "1.1.23",
     "react-native-root-toast": "^1.0.5",
     "react-native-vector-icons": "^4.0.1",
