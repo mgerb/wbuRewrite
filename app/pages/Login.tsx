@@ -99,7 +99,7 @@ class Login extends React.Component<Props, State> {
                 </TouchableHighlight>
 
                 <View>
-                    <Text style={styles.newUserText} onPress={this.navigateCreateUser.bind(this)}>Create User Account</Text>
+                    <Text style={styles.newUserText} onPress={this.navigateCreateUser.bind(this)}>Create Account</Text>
                 </View>
 
                 <KeyboardSpacer/>

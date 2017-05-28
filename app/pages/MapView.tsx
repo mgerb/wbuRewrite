@@ -90,7 +90,6 @@ class MapView extends React.Component<Props, State>  implements ClosableModal {
     }
 
     componentDidMount() {
-
         this.oneDay = moment().subtract(1, "d");
 
 
@@ -239,6 +238,18 @@ class MapView extends React.Component<Props, State>  implements ClosableModal {
 
             const iconColor = location.userID === this.props.user.id ? colors.purple : colors.red;
             
+            const iconStyle = {
+                fontSize: sizes.xLarge,
+                color: iconColor,
+                shadowColor: iconColor,
+                shadowRadius: 2,
+                shadowOpacity: .85,
+                shadowOffset: {
+                    width: 2,
+                    height: 2,
+                },
+            } as ViewStyle;
+
             // don't show markers if they are more than a day old
             if (moment.unix(location.timestamp as number) < this.oneDay) {
                 return null;
@@ -250,10 +261,12 @@ class MapView extends React.Component<Props, State>  implements ClosableModal {
                             title={location.firstName + " " + location.lastName}
                             description={time.timestamp(location.timestamp as number)}>
                                 <View style={{alignItems:'center'}}>
-                                    <Icon style={{ fontSize: sizes.xLarge,color:iconColor}}
+                                    <Text style={{fontSize:sizes.default,color:colors.primary}}>
+                                        {(location.firstName as string).charAt(0)}
+                                        {(location.lastName as string).charAt(0)}
+                                    </Text>
+                                    <Icon style={iconStyle}
                                             name={location.waypoint ? 'map-marker' : 'map-marker-radius'}/>
-                                    <Text style={{color:colors.primary}}>{location.firstName}</Text>
-                                    <Text style={{color:colors.primary}}>{location.lastName}</Text>
                                 </View>
                 </MV.Marker>
             );

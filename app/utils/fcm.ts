@@ -63,6 +63,11 @@ class fcm {
                     navigation.GroupInvites();
                 }
 
+                if (notif.type === 'geoLocation') {
+                    store.dispatch(groupActions.setSelectedGroupByID(parseInt(notif.groupID)));
+                    navigation.MapView(store.getState().group.selectedGroup.name);
+                }
+
             } else {
 
             }

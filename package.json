@@ -7,6 +7,7 @@
     "build": "npm run clean && tsc",
     "bundle": "react-native bundle",
     "code-push-release": "tsc && code-push release-react wherebaryou ios --deploymentName 'Production' -m --description 'test code push'",
+    "code-push-ls": "code-push deployment ls wherebaryou -k",
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
     "watch": "tsc --watch"
