@@ -46,7 +46,6 @@ export default class GroupInfo extends React.Component<Props, State> {
 
             toast.success("Group joined!");
         }).catch(() => {
-            toast.error("Failed to join group.");
         });
     }
 

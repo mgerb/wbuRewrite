@@ -65,7 +65,6 @@ export default class CreateGroup extends React.Component<Props, State> implement
 
             this.fetchGetGroupInvites();
         }).catch(() => {
-            toast.error("Failed to join group. Please try again later.");
         });
     }
 

@@ -78,7 +78,7 @@ class Login extends React.Component<Props, State> {
             <View style={styles.container}>
 
                 <View>
-                    {this.props.user.loginFetchFailed ? <Text style={styles.responseMessage}>Error logging in.</Text> : <Text> </Text>}
+                    {this.props.user.loginFetchFailed ? <Text style={styles.responseMessage}>Invalid login.</Text> : <Text> </Text>}
                 </View>
 
                 <TextInput placeholder="Email" autoCapitalize="none" style={wStyles.textInput} value={this.state.email} onChangeText={(email) => this.setState({email})}/>

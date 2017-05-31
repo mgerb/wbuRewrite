@@ -80,7 +80,6 @@ class CreateGroup extends React.Component<Props, State> implements ClosableModal
         groupAPI.inviteUserToGroup(userID, this.props.group.selectedGroup.id).then(() => {
             toast.success("User invited!");
         }).catch(() => {
-            toast.error("Error inviting user.");
         });
     }
 

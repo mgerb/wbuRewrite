@@ -52,7 +52,7 @@ class Feedback extends React.Component<Props, State> {
         }
 
         userAPI.storeUserFeedback(this.state.feedback).then(() => {
-            toast.success("Thank you for your feedback! It really helps!");
+            toast.success("We appreciate your feedback!");
         }).catch(() => {
 
         });

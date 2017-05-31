@@ -53,7 +53,6 @@ export default class GroupSearch extends React.Component<Props, State> {
                 noGroupsFound: response.data.length === 0,
             });
         }).catch(() => {
-            toast.error("Error fetching groups.");
         });
     }
 
