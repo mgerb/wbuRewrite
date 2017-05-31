@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, View, ViewStyle, Text, TextStyle, TextInput } from 'react-native';
 import moment from 'moment';
+import _ from 'lodash';
 
 import groupAPI from '../api/group.api';
 
@@ -30,6 +31,7 @@ interface State {
 
 class ChatInput  extends React.Component<Props, State> {
 
+    private throttledStoreMessage: any;
 
     constructor(props: Props) {
         super(props);
@@ -37,6 +39,8 @@ class ChatInput  extends React.Component<Props, State> {
             message: "",
             textInputContainerHeight: 40,
         };
+
+        this.throttledStoreMessage = _.throttle(this.storeMessage, 2000);
     }
 
     private fetchStoreMessage() {
@@ -59,15 +63,19 @@ class ChatInput  extends React.Component<Props, State> {
         // immediately add new message to state so it shows up right away before loading from server
         this.props.groupActions.setGroupMessages([message, ...this.props.group.selectedGroupMessages]);
 
-        groupAPI.storeMessage(this.props.group.selectedGroup.id, newMessageText).then(() => {
+        this.throttledStoreMessage(this.props.group.selectedGroup.id, newMessageText);
+
+        this.setState({
+            message: "",
+        });
+    }
+
+    storeMessage(id: number, message: string) {
+        groupAPI.storeMessage(id, message).then(() => {
             // get messages from server after sending
             // don't need this anymore - messages are updated from FCM now to this fetch is unnecessary
             //this.props.groupActions.getGroupMessagesFetchRequested(this.props.group.selectedGroup.id);
         }).catch(() => {
-        });
-
-        this.setState({
-            message: "",
         });
     }
 
