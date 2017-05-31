@@ -44,20 +44,22 @@ class ChatInput  extends React.Component<Props, State> {
             return;
         }
 
+        let newMessageText = this.state.message.trim();
+
         let message: MessageType = {
             id: 0,
             groupID: 0,
             userID: this.props.user.id as number,
             firstName: this.props.user.firstName as string,
             lastName: this.props.user.lastName as string,
-            content: this.state.message,
+            content: newMessageText,
             timestamp: moment().unix() - 10,
         };
 
         // immediately add new message to state so it shows up right away before loading from server
         this.props.groupActions.setGroupMessages([message, ...this.props.group.selectedGroupMessages]);
 
-        groupAPI.storeMessage(this.props.group.selectedGroup.id, this.state.message).then(() => {
+        groupAPI.storeMessage(this.props.group.selectedGroup.id, newMessageText).then(() => {
             // get messages from server after sending
             // don't need this anymore - messages are updated from FCM now to this fetch is unnecessary
             //this.props.groupActions.getGroupMessagesFetchRequested(this.props.group.selectedGroup.id);
