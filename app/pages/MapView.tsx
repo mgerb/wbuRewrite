@@ -219,6 +219,11 @@ class MapView extends React.Component<Props, State>  implements ClosableModal {
 
             this.updateGeoLocationState(latitude.toString(), longitude.toString(), false);
             this.throttledStoreGeoLocation(latitude, longitude, "false");
+        }, () => {
+            // error
+        }, {
+            // options
+            maximumAge: 1000,
         });
     }
 
