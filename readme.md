@@ -27,3 +27,9 @@ Not upgrading yet because it breaks the inverted scrollview
 - watchman watch-del-all
 - yarn start --reset-cache
 - remove libReact.a from build phases and readd it
+
+## Deploy to production
+- product > scheme > release
+- product > build
+- product > archive
+- upload build

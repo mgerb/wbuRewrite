@@ -1,5 +1,6 @@
 import { Navigation } from 'react-native-navigation';
 import colors from '../style/colors';
+import { GroupType } from '../redux/reducers/group';
 
 export interface ClosableModal {
     onNavigatorEvent(event: any): void;
@@ -108,6 +109,22 @@ class nav {
         });
     }
 
+    GroupInfo(group: GroupType, settingsPage?: boolean): void {
+        Navigation.showModal({
+            screen: "GroupInfo",
+            title: "Group Info",
+            passProps: {
+                group,
+                settingsPage,
+            },
+            navigatorButtons: {
+                leftButtons: [{
+                    title: "Close",
+                    id: "close",
+                }],
+            },
+        });
+    }
 }
 
 export default new nav();

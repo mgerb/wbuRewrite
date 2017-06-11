@@ -128,16 +128,21 @@ class RightDrawer extends React.Component<Props, State> {
                     })}
                 </ScrollView>
 
-                {this.props.group.selectedGroup.id ?
-                    <View style={styles.footer}>
-                        {this.props.user.id === this.props.group.selectedGroup.ownerID ? 
-                        <Icon name="delete-forever" style={styles.iconDelete} onPress={this.deleteGroupOnPress.bind(this)}/> : <View/>}
+                {this.props.group.selectedGroup.id &&
 
-                        {this.props.user.id === this.props.group.selectedGroup.ownerID ? 
-                        <Icon name="account-plus" style={styles.icon} onPress={() => navigation.InviteUser()}/> :
-                        <Icon name="logout" style={styles.icon} onPress={this.leaveGroupOnPress.bind(this)}/>}
-                    </View>
-                : null}
+                   this.props.user.id === this.props.group.selectedGroup.ownerID ? 
+                        <View style={styles.footer}>
+                            <Icon name="delete-forever" style={styles.iconDelete} onPress={this.deleteGroupOnPress.bind(this)}/>
+                            <Icon name="settings" style={styles.icon} onPress={() => navigation.GroupInfo(this.props.group.selectedGroup, true)}/>
+                            <Icon name="account-plus" style={styles.icon} onPress={() => navigation.InviteUser()}/>
+                        </View>
+                    : 
+                        <View style={styles.footer}>
+                            <View/>
+                            <Icon name="logout" style={styles.icon} onPress={this.leaveGroupOnPress.bind(this)}/>
+                        </View>
+                }
+
             </View>
         );
     }

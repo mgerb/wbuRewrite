@@ -85,6 +85,14 @@ class groupAPI {
     public getMessages(groupID: number, timestamp: number = 0): AxiosPromise {
         return api.get(`/group/getMessages/${groupID}/${timestamp}`);
     }
+
+    public updateGroupInfo(groupID: number, password: string, publicGroup: boolean): AxiosPromise {
+        return api.post('/group/updateGroupInfo', querystring.stringify({
+            groupID,
+            password,
+            public: publicGroup,
+        }));
+    }
 }
 
 export default new groupAPI();

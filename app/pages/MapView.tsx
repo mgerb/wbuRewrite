@@ -74,13 +74,13 @@ class MapView extends React.Component<Props, State>  implements ClosableModal {
 
     constructor(props: Props) {
         super(props);
-        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
         this.state = {
             waypointToggle: false,
             markers: [],
         };
         
         this.throttledStoreGeoLocation = _.throttle(this.storeGeoLocation, 2000);
+        this.props.navigator.setOnNavigatorEvent(this.onNavigatorEvent.bind(this));
     }
 
     onNavigatorEvent(event: any): void {

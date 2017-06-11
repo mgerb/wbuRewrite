@@ -3,7 +3,6 @@ import store from '../redux/store';
 import userActions from '../redux/actions/user';
 
 const serverURL = __DEV__ ? 'http://192.168.1.4:8080' : "https://prod.wherebaryou.com";
-//const serverURL = "https://prod.wherebaryou.com";
 
 let api = axios.create();
 api.defaults.baseURL = serverURL;
